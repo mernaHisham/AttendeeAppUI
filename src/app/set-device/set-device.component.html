@@ -1,1 +1,14 @@
-<p>set-device works!</p>
+
+<div class="card flex justify-content-center">
+    <p-card header="AttendeeApp" subheader="Code" [style]="{ width: '360px' }">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="../../assets/Images/logo.png" />
+        </ng-template>
+        <div class="field">
+            <input type="text" pInputText id="name" [(ngModel)]="code" required autofocus />
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button label="Save" icon="pi pi-check"></p-button>
+        </ng-template>
+    </p-card>
+</div>

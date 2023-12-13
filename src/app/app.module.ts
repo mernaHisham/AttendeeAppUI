@@ -99,6 +99,10 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { VacationComponent } from './vacation/vacation.component';
+import { VacationFormComponent } from './vacation/vacation-form/vacation-form.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { AttendanceFormComponent } from './attendance/attendance-form/attendance-form.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +113,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     DevicesComponent,
     DeviceFormComponent,
     UsersComponent,
-    UserFormComponent
+    UserFormComponent,
+    VacationComponent,
+    VacationFormComponent,
+    AttendanceComponent,
+    AttendanceFormComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,

@@ -11,22 +11,22 @@ export class HeaderComponent {
   items: MenuItem[] = [
     {
       label: 'Devices',
-      routerLink:'/Devices',
+      routerLink:'/devices',
       styleClass: ''
     },
     {
       label: 'Users',
-      routerLink:'/Users',
+      routerLink:'/users',
       styleClass: this.active
     },
     {
       label: 'Attendance',
-      routerLink:'/Attendance',
+      routerLink:'/attendance',
       styleClass: ''
     },
     {
-      label: 'Holydays',
-      routerLink:'/Holydays',
+      label: 'Vacations',
+      routerLink:'/vacation',
       styleClass: ''
     },
   ];

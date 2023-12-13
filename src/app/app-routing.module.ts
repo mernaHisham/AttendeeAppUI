@@ -3,11 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DevicesComponent } from './devices/devices.component';
 import { UsersComponent } from './users/users.component';
+import { SetDeviceComponent } from './set-device/set-device.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { VacationComponent } from './vacation/vacation.component';
 
 const routes: Routes = [
-  {path:'',component:LoginComponent},
-  {path:'Users',component:UsersComponent},
-  {path:'Devices',component:DevicesComponent}
+  {path:'setdevice',component:SetDeviceComponent},
+  {path:'login',component:LoginComponent},
+  {path:'users',component:UsersComponent},
+  {path:'devices',component:DevicesComponent},
+  {path:'attendance',component:AttendanceComponent},
+  {path:'vacation',component:VacationComponent}
 ];
 
 @NgModule({

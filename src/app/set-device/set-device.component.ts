@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./set-device.component.css']
 })
 export class SetDeviceComponent {
-
+  code:string="";
 }
