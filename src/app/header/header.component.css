@@ -4,15 +4,8 @@
     left: 0;
     right: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-.p-element .p-toolbar {
-    display: flex;
-    align-items: center;
+    z-index: 1;
     background-color: #fff;
     color: #517ca4;
-    font-weight: 600;
-    z-index: 1;
   }
-  .p-element.menuLi.p-menuitem {
-    border:2px solid #517ca4;
-  }
+  

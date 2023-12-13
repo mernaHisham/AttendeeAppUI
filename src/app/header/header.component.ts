@@ -7,21 +7,26 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  active:string="active";
   items: MenuItem[] = [
     {
       label: 'Devices',
-      styleClass: 'active'
-    },
-    {
-      label: 'Users',
+      routerLink:'/Devices',
       styleClass: ''
     },
     {
+      label: 'Users',
+      routerLink:'/Users',
+      styleClass: this.active
+    },
+    {
       label: 'Attendance',
+      routerLink:'/Attendance',
       styleClass: ''
     },
     {
       label: 'Holydays',
+      routerLink:'/Holydays',
       styleClass: ''
     },
   ];
