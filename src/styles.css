@@ -1,1 +1,40 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
 /* You can add global styles to this file, and also import other style files */
+body{
+    background-color: #eee;
+}
+.p-element.p-menuitem {
+ 
+  border-bottom:1px solid transparent;
+}
+.p-menuitem-text{
+  color: #517ca4;
+}
+.p-element.p-menuitem:hover {
+  border-bottom-color: #517ca4;
+  
+}
+.p-element.p-menuitem.active {
+  border-bottom-color: #517ca4;
+  background: #f3f4f6;
+}
+ /* scroll */
+   /* width */
+   ::-webkit-scrollbar {
+    width: 7px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-right: 1px solid #517ca4; 
+  } 
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #517ca486; 
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #517ca486; 
+  }
