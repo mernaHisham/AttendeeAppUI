@@ -1,1 +1,65 @@
-<p>user-form works!</p>
+    <div class="card flex justify-content-center formCard">
+        <div class="flex flex-wrap gap-3">
+            <div class="flex align-items-center">
+                <p-radioButton name="role" value="1" [(ngModel)]="userService.user.fkRoleId" inputId="fkRoleId1"></p-radioButton>
+                <label for="fkRoleId1" class="ml-2">Admin</label>
+            </div>
+            <div class="flex align-items-center">
+                <p-radioButton name="role" value="2" [(ngModel)]="userService.user.fkRoleId" inputId="fkRoleId2"></p-radioButton>
+                <label for="fkRoleId2" class="ml-2">Employee</label>
+            </div>
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <div class="field col-6">
+            <label for="firstName">First Name</label>
+            <input type="text" pInputText id="firstName" [(ngModel)]="userService.user.firstName" required autofocus />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.firstName">First Name is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="lastName">Last Name</label>
+            <input type="text" pInputText id="lastName" [(ngModel)]="userService.user.lastName" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.lastName">Last Name is required.</small>
+        </div> 
+        <div class="field col-6">
+            <label for="name">User Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="userService.user.userName" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.userName">User Name is required.</small>
+        </div> 
+        <div class="field col-6">
+            <label for="password">Password</label>
+            <input type="text" pInputText id="password" [(ngModel)]="userService.user.password" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.password">Password is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="email">E-mail</label>
+            <input type="text" pInputText id="email" [(ngModel)]="userService.user.email" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.email">Password is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" pInputText id="phoneNumber" [(ngModel)]="userService.user.phoneNumber" />
+        </div>
+        <div class="field col-6">
+            <label for="address">Address</label>
+            <input type="text" pInputText id="address" [(ngModel)]="userService.user.address" />
+        </div>
+        <div class="field col-6">
+            <label for="weeklyHours">Weekly Hours</label>
+            <input type="text" pInputText id="weeklyHours" [(ngModel)]="userService.user.weeklyHours" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.weeklyHours">Weekly Hours is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="startDate">Start Date</label>
+            <input type="date" pInputText id="startDate" [(ngModel)]="userService.user.startDate" required />
+            <small class="p-error" *ngIf="userService.submitted && !userService.user.startDate">startDate Hours is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="endDate">End Date</label>
+            <input type="date" pInputText id="endDate" [(ngModel)]="userService.user.endDate" />
+        </div>
+    </div>
+    <div class="field">
+        <label for="notes">Notes</label>
+        <textarea id="notes" pInputTextarea [(ngModel)]="userService.user.notes" required rows="3" cols="20"></textarea>
+    </div>

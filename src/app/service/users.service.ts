@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Users } from '../model/users';
+import { Users } from '../model/users.model';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,11 +7,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UsersService extends BaseService {
-  // user:Users;
-  // showModal:boolean=false;
-  // users:Users[];
-  // Header:string= "New User";
-
+  userDialog: boolean = false; 
+    users!: Users[];
+    user!: Users;
+    selectedUser!: Users[] | null;
+    submitted: boolean = false;
+    Delete:string="Delete";
   constructor(private http: HttpClient) { 
    super();
   }

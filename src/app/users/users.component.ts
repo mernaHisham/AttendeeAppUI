@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Product } from '../model/product.model';
-import { ProductService } from '../service/product.service';
-import { Users } from '../model/users';
+import { Users } from '../model/users.model';
 import { UsersService } from '../service/users.service';
 
 @Component({
@@ -11,55 +9,23 @@ import { UsersService } from '../service/users.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit{
-    userDialog: boolean = false;
-
-    users!: Users[];
-
-    user!: Users;
-
-    selectedUser!: Users[] | null;
-
-    submitted: boolean = false;
-    Delete:string="Delete";
-    status: any[]= [
-      { label: 'Active', value: 1 },
-      { label: 'UnActive', value: 2 }
-  ];
-
-    constructor(private userService: UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+    constructor(public userService: UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
     ngOnInit() {
-        this.userService.GetAllUsers().subscribe((data) => (this.users = data as Users[]));
-
-        // this.statuses = [
-        //     { label: 'INSTOCK', value: 'instock' },
-        //     { label: 'LOWSTOCK', value: 'lowstock' },
-        //     { label: 'OUTOFSTOCK', value: 'outofstock' }
-        // ];
+        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[]));
     }
 
     openNew() {
-     //   this.user = {};
-        this.submitted = false;
-        this.userDialog = true;
+        this.userService.user = new Users();
+        this.userService.submitted = false;
+        this.userService.userDialog = true;
     }
 
-    deleteSelectedUsers() {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected products?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.users = this.users.filter((val) => !this.selectedUser?.includes(val));
-                this.selectedUser = null;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-            }
-        });
-    }
+  
 
     editUser(user: Users) {
-        this.user = { ...user };
-        this.userDialog = true;
+        this.userService.user = { ...user };
+        this.userService.userDialog = true;
     }
 
     deleteUser(user: Users) {
@@ -68,50 +34,12 @@ export class UsersComponent implements OnInit{
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.users = this.users.filter((val) => val.id !== user.id);
-             //   this.user = {};
+                this.userService.users = this.userService.users.filter((val) => val.id !== user.id);
+                this.userService.user = new Users();
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
             }
         });
     }
-
-    hideDialog() {
-        this.userDialog = false;
-        this.submitted = false;
-    }
-
-    saveUser() {
-        this.submitted = true;
-
-        if (this.user.userName?.trim()) {
-            if (this.user.id) {
-                this.users[this.findIndexById(this.user.id.toString())] = this.user;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-              //  this.user.id = this.createId();
-              //  this.user.image = 'product-placeholder.svg';
-                this.users.push(this.user);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-
-            this.users = [...this.users];
-            this.userDialog = false;
-           // this.user = {};
-        }
-    }
-
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].id.toString() === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
     createId(): string {
         let id = '';
         var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -120,7 +48,43 @@ export class UsersComponent implements OnInit{
         }
         return id;
     }
-
+    hideDialog() {
+        this.userService.userDialog = false;
+        this.userService.submitted = false;
+    }
+  
+    saveUser() {
+        this.userService.submitted = true;
+  
+        if (this.userService.user.userName?.trim()) {
+            if (this.userService.user.id) {
+                this.userService.users[this.findIndexById(this.userService.user.id.toString())] = this.userService.user;
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+            } else {
+              //  this.user.id = this.createId();
+              //  this.user.image = 'product-placeholder.svg';
+                this.userService.users.push(this.userService.user);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+            }
+  
+            this.userService.users = [...this.userService.users];
+            this.userService.userDialog = false;
+            this.userService.user = new Users();
+        }
+    }
+  
+    findIndexById(id: string): number {
+      let index = -1;
+      for (let i = 0; i < this.userService.users.length; i++) {
+          if (this.userService.users[i].id.toString() === id) {
+              index = i;
+              break;
+          }
+      }
+  
+      return index;
+  }
+  
     getStatus(status: any) {
         switch (status) {
             case true:
