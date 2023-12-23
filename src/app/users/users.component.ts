@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Product } from '../model/product.model';
 import { ProductService } from '../service/product.service';
+import { Users } from '../model/users';
+import { UsersService } from '../service/users.service';
 
 @Component({
   selector: 'app-users',
@@ -9,26 +11,25 @@ import { ProductService } from '../service/product.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit{
-    productDialog: boolean = false;
+    userDialog: boolean = false;
 
-    products!: Product[];
+    users!: Users[];
 
-    product!: Product;
+    user!: Users;
 
-    selectedProducts!: Product[] | null;
+    selectedUser!: Users[] | null;
 
     submitted: boolean = false;
     Delete:string="Delete";
-    statuses: any[]= [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
+    status: any[]= [
+      { label: 'Active', value: 1 },
+      { label: 'UnActive', value: 2 }
   ];
 
-    constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+    constructor(private userService: UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
     ngOnInit() {
-        this.productService.getProducts().then((data) => (this.products = data));
+        this.userService.GetAllUsers().subscribe((data) => (this.users = data as Users[]));
 
         // this.statuses = [
         //     { label: 'INSTOCK', value: 'instock' },
@@ -38,71 +39,71 @@ export class UsersComponent implements OnInit{
     }
 
     openNew() {
-        this.product = {};
+     //   this.user = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.userDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deleteSelectedUsers() {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete the selected products?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-                this.selectedProducts = null;
+                this.users = this.users.filter((val) => !this.selectedUser?.includes(val));
+                this.selectedUser = null;
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
             }
         });
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+    editUser(user: Users) {
+        this.user = { ...user };
+        this.userDialog = true;
     }
 
-    deleteProduct(product: Product) {
+    deleteUser(user: Users) {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + product.name + '?',
+            message: 'Are you sure you want to delete ' + user.userName + '?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.products = this.products.filter((val) => val.id !== product.id);
-                this.product = {};
+                this.users = this.users.filter((val) => val.id !== user.id);
+             //   this.user = {};
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
             }
         });
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.userDialog = false;
         this.submitted = false;
     }
 
-    saveProduct() {
+    saveUser() {
         this.submitted = true;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                this.products[this.findIndexById(this.product.id)] = this.product;
+        if (this.user.userName?.trim()) {
+            if (this.user.id) {
+                this.users[this.findIndexById(this.user.id.toString())] = this.user;
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
             } else {
-                this.product.id = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                this.products.push(this.product);
+              //  this.user.id = this.createId();
+              //  this.user.image = 'product-placeholder.svg';
+                this.users.push(this.user);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             }
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+            this.users = [...this.users];
+            this.userDialog = false;
+           // this.user = {};
         }
     }
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].id.toString() === id) {
                 index = i;
                 break;
             }
@@ -120,16 +121,14 @@ export class UsersComponent implements OnInit{
         return id;
     }
 
-    getSeverity(status: any) {
+    getStatus(status: any) {
         switch (status) {
-            case 'INSTOCK':
+            case true:
                 return 'success';
-            case 'LOWSTOCK':
-                return 'warning';
-            case 'OUTOFSTOCK':
+            case false:
                 return 'danger';
              default:
-                return 'danger';
+                return 'info';
         }
     }
 }
