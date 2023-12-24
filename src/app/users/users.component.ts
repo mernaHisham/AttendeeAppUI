@@ -12,9 +12,11 @@ export class UsersComponent implements OnInit{
     constructor(public userService: UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
     ngOnInit() {
-        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[]));
+        this.GetAllUsers();
     }
-
+    GetAllUsers(){
+        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[])); 
+    }
     openNew() {
         this.userService.user = new Users();
         this.userService.submitted = false;
@@ -34,9 +36,11 @@ export class UsersComponent implements OnInit{
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.userService.users = this.userService.users.filter((val) => val.id !== user.id);
-                this.userService.user = new Users();
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                this.userService.DeleteUser(user.id).subscribe((res) =>{
+                    this.GetAllUsers();
+                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                });
+               
             }
         });
     }
@@ -55,22 +59,25 @@ export class UsersComponent implements OnInit{
   
     saveUser() {
         this.userService.submitted = true;
+  this.userService.PostUser(this.userService.user).subscribe(res=>{
+this.GetAllUsers();
+                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+
+  });
+        // if (this.userService.user.userName?.trim()) {
+        //     if (this.userService.user.id) {
+        //         this.userService.users[this.findIndexById(this.userService.user.id.toString())] = this.userService.user;
+        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        //     } else {
+        //         //this.userService.user.id = this.createId();
+        //         this.userService.users.push(this.userService.user);
+        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        //     }
   
-        if (this.userService.user.userName?.trim()) {
-            if (this.userService.user.id) {
-                this.userService.users[this.findIndexById(this.userService.user.id.toString())] = this.userService.user;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-              //  this.user.id = this.createId();
-              //  this.user.image = 'product-placeholder.svg';
-                this.userService.users.push(this.userService.user);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-  
-            this.userService.users = [...this.userService.users];
-            this.userService.userDialog = false;
-            this.userService.user = new Users();
-        }
+        //     this.userService.users = [...this.userService.users];
+        //     this.userService.userDialog = false;
+        //     this.userService.user = new Users();
+        // }
     }
   
     findIndexById(id: string): number {
@@ -81,18 +88,6 @@ export class UsersComponent implements OnInit{
               break;
           }
       }
-  
       return index;
   }
-  
-    getStatus(status: any) {
-        switch (status) {
-            case true:
-                return 'success';
-            case false:
-                return 'danger';
-             default:
-                return 'info';
-        }
-    }
 }

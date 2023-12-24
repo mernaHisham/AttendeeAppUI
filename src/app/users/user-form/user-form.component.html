@@ -1,5 +1,6 @@
     <div class="card flex justify-content-center formCard">
         <div class="flex flex-wrap gap-3">
+            <input type="hidden" name="id" id="id" [(ngModel)]="userService.user.id">
             <div class="flex align-items-center">
                 <p-radioButton name="role" value="1" [(ngModel)]="userService.user.fkRoleId" inputId="fkRoleId1"></p-radioButton>
                 <label for="fkRoleId1" class="ml-2">Admin</label>

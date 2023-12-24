@@ -26,7 +26,7 @@ export class UsersService extends BaseService {
  this.http.post(`${this.baseURl}Users/PostUser`,user);
  
  DeleteUser = (userId:number) =>
- this.http.get(`${this.baseURl}Users/DeleteUser?UserId=${userId}`);
+ this.http.delete(`${this.baseURl}Users/DeleteUser?UserId=${userId}`);
 
  UserActivation = (userId:number,active:boolean) =>
  this.http.get(`${this.baseURl}Users/UserActivation?UserId=${userId}&&active=${active}`);
