@@ -4,18 +4,18 @@ import { Users } from '../model/users.model';
 import { UsersService } from '../service/users.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit{
-    constructor(public userService: UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+export class UsersComponent implements OnInit {
+    constructor(public userService: UsersService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
     ngOnInit() {
         this.GetAllUsers();
     }
-    GetAllUsers(){
-        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[])); 
+    GetAllUsers() {
+        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[]));
     }
     openNew() {
         this.userService.user = new Users();
@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit{
         this.userService.userDialog = true;
     }
 
-  
+
 
     editUser(user: Users) {
         this.userService.user = { ...user };
@@ -36,12 +36,18 @@ export class UsersComponent implements OnInit{
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.userService.DeleteUser(user.id).subscribe((res) =>{
+                this.userService.DeleteUser(user.id).subscribe((res) => {
                     this.GetAllUsers();
                     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
                 });
-               
+
             }
+        });
+    }
+    ActivateUser(user: Users) {
+        this.userService.UserActivation(user.id, false).subscribe((res) => {
+            this.GetAllUsers();
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         });
     }
     createId(): string {
@@ -56,14 +62,16 @@ export class UsersComponent implements OnInit{
         this.userService.userDialog = false;
         this.userService.submitted = false;
     }
-  
+
     saveUser() {
         this.userService.submitted = true;
-  this.userService.PostUser(this.userService.user).subscribe(res=>{
-this.GetAllUsers();
-                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        this.userService.PostUser(this.userService.user).subscribe(res => {
+            this.GetAllUsers();
+            this.userService.userDialog = false;
+            this.userService.user = new Users();
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
-  });
+        });
         // if (this.userService.user.userName?.trim()) {
         //     if (this.userService.user.id) {
         //         this.userService.users[this.findIndexById(this.userService.user.id.toString())] = this.userService.user;
@@ -73,21 +81,21 @@ this.GetAllUsers();
         //         this.userService.users.push(this.userService.user);
         //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
         //     }
-  
+
         //     this.userService.users = [...this.userService.users];
         //     this.userService.userDialog = false;
         //     this.userService.user = new Users();
         // }
     }
-  
+
     findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.userService.users.length; i++) {
-          if (this.userService.users[i].id.toString() === id) {
-              index = i;
-              break;
-          }
-      }
-      return index;
-  }
+        let index = -1;
+        for (let i = 0; i < this.userService.users.length; i++) {
+            if (this.userService.users[i].id.toString() === id) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 }

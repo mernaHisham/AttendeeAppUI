@@ -8,7 +8,5 @@ import { UsersService } from '../../service/users.service';
 export class UserFormComponent {
   constructor(public userService: UsersService) {}
 
-  ngOnInit() {
-  }
  
 }
