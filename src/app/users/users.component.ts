@@ -50,14 +50,7 @@ export class UsersComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         });
     }
-    createId(): string {
-        let id = '';
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
+ 
     hideDialog() {
         this.userService.userDialog = false;
         this.userService.submitted = false;
@@ -72,30 +65,8 @@ export class UsersComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
         });
-        // if (this.userService.user.userName?.trim()) {
-        //     if (this.userService.user.id) {
-        //         this.userService.users[this.findIndexById(this.userService.user.id.toString())] = this.userService.user;
-        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-        //     } else {
-        //         //this.userService.user.id = this.createId();
-        //         this.userService.users.push(this.userService.user);
-        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-        //     }
-
-        //     this.userService.users = [...this.userService.users];
-        //     this.userService.userDialog = false;
-        //     this.userService.user = new Users();
-        // }
+      
     }
 
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.userService.users.length; i++) {
-            if (this.userService.users[i].id.toString() === id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
+   
 }
