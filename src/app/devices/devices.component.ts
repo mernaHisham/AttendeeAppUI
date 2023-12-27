@@ -9,25 +9,30 @@ import { DeviceService } from '../service/device.service';
   styleUrls: ['./devices.component.css']
 })
 export class DevicesComponent implements OnInit {
-  constructor(public deviceService: DeviceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+    isLoading:boolean=false;
+  constructor(public service: DeviceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
       this.GetAllDevices();
   }
   GetAllDevices() {
-      this.deviceService.GetAllDevices().subscribe((data) => (this.deviceService.devices = data as Device[]));
+    this.isLoading=true;
+      this.service.GetAllDevices().subscribe((data) => {
+        this.service.devices = data as Device[];
+        this.isLoading=false;
+  });
   }
   openNew() {
-      this.deviceService.device = new Device();
-      this.deviceService.submitted = false;
-      this.deviceService.deviceDialog = true;
+      this.service.device = new Device();
+      this.service.submitted = false;
+      this.service.deviceDialog = true;
   }
 
 
 
   editDevice(dev: Device) {
-      this.deviceService.device = { ...dev };
-      this.deviceService.deviceDialog = true;
+      this.service.device = { ...dev };
+      this.service.deviceDialog = true;
   }
 
   deleteDevice(dev: Device) {
@@ -36,7 +41,7 @@ export class DevicesComponent implements OnInit {
           header: 'Confirm',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
-              this.deviceService.DeleteDevice(dev.id).subscribe((res) => {
+              this.service.DeleteDevice(dev.id).subscribe((res) => {
                   this.GetAllDevices();
                   this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
               });
@@ -47,16 +52,16 @@ export class DevicesComponent implements OnInit {
  
 
   hideDialog() {
-      this.deviceService.deviceDialog = false;
-      this.deviceService.submitted = false;
+      this.service.deviceDialog = false;
+      this.service.submitted = false;
   }
 
   saveDevice() {
-      this.deviceService.submitted = true;
-      this.deviceService.PostDevice(this.deviceService.device).subscribe(res => {
+      this.service.submitted = true;
+      this.service.PostDevice(this.service.device).subscribe(res => {
           this.GetAllDevices();
-          this.deviceService.deviceDialog = false;
-          this.deviceService.device = new Device();
+          this.service.deviceDialog = false;
+          this.service.device = new Device();
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
       });

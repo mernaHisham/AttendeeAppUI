@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AttendanceService extends BaseService {
-  userDialog: boolean = false; 
+  attenDialog: boolean = false; 
   attends!: Attendance[];
   attendance!: Attendance;
   selectedAttendance!: Attendance[] | null;

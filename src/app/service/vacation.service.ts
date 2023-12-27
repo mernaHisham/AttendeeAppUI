@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VacationService extends BaseService {
-  userDialog: boolean = false; 
+  vacationDialog: boolean = false; 
   vacations!: Vacation[];
   vacation!: Vacation;
   selectedVacation!: Vacation[] | null;

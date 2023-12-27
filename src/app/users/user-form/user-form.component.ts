@@ -6,7 +6,7 @@ import { UsersService } from '../../service/users.service';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent {
-  constructor(public userService: UsersService) {}
+  constructor(public service: UsersService) {}
 
  
 }

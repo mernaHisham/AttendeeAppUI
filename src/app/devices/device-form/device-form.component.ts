@@ -7,5 +7,5 @@ import { DeviceService } from 'src/app/service/device.service';
   styleUrls: ['./device-form.component.css']
 })
 export class DeviceFormComponent {
-constructor(public deviceService:DeviceService){}
+constructor(public service:DeviceService){}
 }

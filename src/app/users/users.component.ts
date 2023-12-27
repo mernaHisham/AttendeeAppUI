@@ -9,25 +9,30 @@ import { UsersService } from '../service/users.service';
     styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-    constructor(public userService: UsersService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+    isLoading:boolean=false;
+    constructor(public service: UsersService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
     ngOnInit() {
         this.GetAllUsers();
     }
     GetAllUsers() {
-        this.userService.GetAllUsers().subscribe((data) => (this.userService.users = data as Users[]));
+        this.isLoading=true;
+        this.service.GetAllUsers().subscribe((data) => {
+            this.service.users = data as Users[];
+            this.isLoading=false;
+        });
     }
     openNew() {
-        this.userService.user = new Users();
-        this.userService.submitted = false;
-        this.userService.userDialog = true;
+        this.service.user = new Users();
+        this.service.submitted = false;
+        this.service.userDialog = true;
     }
 
 
 
     editUser(user: Users) {
-        this.userService.user = { ...user };
-        this.userService.userDialog = true;
+        this.service.user = { ...user };
+        this.service.userDialog = true;
     }
 
     deleteUser(user: Users) {
@@ -36,7 +41,7 @@ export class UsersComponent implements OnInit {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.userService.DeleteUser(user.id).subscribe((res) => {
+                this.service.DeleteUser(user.id).subscribe((res) => {
                     this.GetAllUsers();
                     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
                 });
@@ -45,23 +50,23 @@ export class UsersComponent implements OnInit {
         });
     }
     ActivateUser(user: Users) {
-        this.userService.UserActivation(user.id, false).subscribe((res) => {
+        this.service.UserActivation(user.id, false).subscribe((res) => {
             this.GetAllUsers();
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         });
     }
  
     hideDialog() {
-        this.userService.userDialog = false;
-        this.userService.submitted = false;
+        this.service.userDialog = false;
+        this.service.submitted = false;
     }
 
     saveUser() {
-        this.userService.submitted = true;
-        this.userService.PostUser(this.userService.user).subscribe(res => {
+        this.service.submitted = true;
+        this.service.PostUser(this.service.user).subscribe(res => {
             this.GetAllUsers();
-            this.userService.userDialog = false;
-            this.userService.user = new Users();
+            this.service.userDialog = false;
+            this.service.user = new Users();
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 
         });

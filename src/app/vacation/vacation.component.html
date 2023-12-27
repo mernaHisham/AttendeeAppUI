@@ -1,1 +1,76 @@
-<p>vacation works!</p>
+
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+            <h2>Vacations</h2>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+    
+<div class="card flex justify-content-center" *ngIf="isLoading"> 
+    <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
+</div>
+    <p-table
+    *ngIf="!isLoading"
+        #dt
+        [value]="service.vacations"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="service.selectedVacation"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        styleClass="small"
+    >
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="userName">userName <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="vacationType">vacationType <p-sortIcon field="vacationType"></p-sortIcon></th>
+                <th pSortableColumn="vacationDate">vacationDate <p-sortIcon field="vacationDate"></p-sortIcon></th>
+                <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vac>
+            <tr>
+                <td>{{ vac.userName }}</td>
+                <td>{{ vac.vacationType }}</td>
+                <td>{{ vac.vacationDate |date:'dd.MM.yyyy'}}</td>
+                
+           
+                <td>
+                    <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVacation(vac)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVacation(vac)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ service.vacations ? service.vacations?.length : 0 }} users.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="service.vacationDialog" [style]="{ width: '50vw' }" header="User Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-vacation-form></app-vacation-form>
+    </ng-template>
+    
+   <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveVacation()"></button>
+</ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
