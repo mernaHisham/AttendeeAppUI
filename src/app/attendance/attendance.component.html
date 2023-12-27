@@ -1,1 +1,78 @@
-<p>attendance works!</p>
+
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+            <h2>Attendance</h2>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+    <div class="card flex justify-content-center" *ngIf="isLoading"> 
+        <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
+    </div>
+        <p-table
+        *ngIf="!isLoading"
+        #dt
+        [value]="service.attends"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="service.selectedAttendance"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        styleClass="small"
+    >
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="attendanceDate">attendanceDate <p-sortIcon field="attendanceDate"></p-sortIcon></th>
+                <th pSortableColumn="startDay">startDay <p-sortIcon field="startDay"></p-sortIcon></th>
+                <th pSortableColumn="startBreak"> startBreak <p-sortIcon field="startBreak"></p-sortIcon></th>
+                <th pSortableColumn="endBreak">endBreak  <p-sortIcon field="endBreak"></p-sortIcon></th>
+                <th pSortableColumn="endDay">endDay  <p-sortIcon field="endDay"></p-sortIcon></th>
+                <th pSortableColumn="lag">lag  <p-sortIcon field="lag"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-attnd>
+            <tr>
+                <td>{{ attnd.userName }}</td>
+                <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
+                <td>{{ attnd.startDay|date:'hh.mm.ss aa' }}</td>
+                <td>{{ attnd.startBreak |date:'hh.mm.ss aa'}}</td>
+                <td>{{ attnd.endBreak |date:'hh.mm.ss aa'}}</td>
+                <td>{{ attnd.endDay |date:'hh.mm.ss aa'}}</td>
+                <td>{{ attnd.lag }}</td>
+               
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editAttendance(attnd)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteAttendance(attnd)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ service.attends ? service.attends?.length : 0 }} users.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="service.attenDialog" [style]="{ width: '50vw' }" header="User Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-attendance-form></app-attendance-form>
+    </ng-template>
+    
+   <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveAttendance()"></button>
+</ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

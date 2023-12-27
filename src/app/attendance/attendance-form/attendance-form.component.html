@@ -1,1 +1,31 @@
-<p>attendance-form works!</p>
+<div class="formgrid grid">
+    <div class="field col-12">
+        <label for="attendanceDate"> attendanceDate</label>
+        <input type="date" pInputText id="attendanceDate" [(ngModel)]="service.attendance.attendanceDate" required autofocus />
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.attendanceDate">First Name is required.</small>
+    </div>
+    <div class="field col-6">
+        <label for="startDay"> startDay</label>
+        <input type="time" pInputText id="startDay" [(ngModel)]="service.attendance.startDay" required autofocus />
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.startDay">First Name is required.</small>
+    </div>
+    <div class="field col-6">
+        <label for="startBreak"> startBreak</label>
+        <input type="time" pInputText id="startBreak" [(ngModel)]="service.attendance.startBreak" required autofocus />
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.startBreak">First Name is required.</small>
+    </div>
+    <div class="field col-6">
+        <label for="endBreak"> endBreak</label>
+        <input type="time" pInputText id="endBreak" [(ngModel)]="service.attendance.endBreak" required autofocus />
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.endBreak">First Name is required.</small>
+    </div>
+    <div class="field col-6">
+        <label for="endDay"> endDay</label>
+        <input type="time" pInputText id="endDay" [(ngModel)]="service.attendance.endDay" required autofocus />
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.endDay">First Name is required.</small>
+    </div>
+</div>
+<div class="field">
+    <label for="notes">Notes</label>
+    <textarea id="notes" pInputTextarea [(ngModel)]="service.attendance.notes" required rows="3" cols="20"></textarea>
+</div>
