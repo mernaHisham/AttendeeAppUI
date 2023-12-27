@@ -1,14 +1,15 @@
 <div class="formgrid grid">
     <div class="field col-6">
+        <label for="vacationType">vacationType</label>
+        <p-dropdown [options]="vacationTypes" [(ngModel)]="service.vacation.vacationType" optionLabel="name" optionValue="code" [showClear]="true" placeholder="Select a Type"></p-dropdown>
+        <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationType">confirmation Code is required.</small>
+    </div> 
+    <div class="field col-6">
         <label for="vacationDate">vacationDate</label>
         <input type="date" pInputText id="vacationDate" [(ngModel)]="service.vacation.vacationDate" required autofocus />
         <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationDate">Device is required.</small>
     </div>
-    <div class="field col-6">
-        <label for="vacationType">vacationType</label>
-        <input type="text" pInputText id="vacationType" [(ngModel)]="service.vacation.vacationType" required />
-        <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationType">confirmation Code is required.</small>
-    </div> 
+   
 </div>
 <div class="field">
     <label for="notes">Notes</label>

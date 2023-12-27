@@ -37,7 +37,7 @@
                 <th pSortableColumn="userName">userName <p-sortIcon field="userName"></p-sortIcon></th>
                 <th pSortableColumn="vacationType">vacationType <p-sortIcon field="vacationType"></p-sortIcon></th>
                 <th pSortableColumn="vacationDate">vacationDate <p-sortIcon field="vacationDate"></p-sortIcon></th>
-                <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                <!-- <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th> -->
                 <th></th>
             </tr>
         </ng-template>
@@ -46,11 +46,9 @@
                 <td>{{ vac.userName }}</td>
                 <td>{{ vac.vacationType }}</td>
                 <td>{{ vac.vacationDate |date:'dd.MM.yyyy'}}</td>
-                
-           
-                <td>
+                <!-- <td>
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
-                </td>
+                </td> -->
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVacation(vac)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVacation(vac)"></button>

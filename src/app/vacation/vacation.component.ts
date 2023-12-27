@@ -58,6 +58,9 @@ hideDialog() {
 
 saveVacation() {
     this.service.submitted = true;
+    this.service.vacation.userId=1;
+    this.service.vacation.userName="admin";
+
     this.service.PostVacation(this.service.vacation).subscribe(res => {
         this.GetAllVacations();
         this.service.vacationDialog = false;
