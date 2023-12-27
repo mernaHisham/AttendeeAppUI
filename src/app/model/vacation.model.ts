@@ -1,14 +1,14 @@
-export interface Vacation {
-    id: number;
-    userId: number;
-    userName: string;
-    vacationDate: Date;
-    vacationType: number;
-    status: number;
-    notes: string;
-    createdBy: number;
-    createdData: Date;
-    updatedBy: number;
-    updatedDate: Date;
-    isDeleted: boolean;
+export class Vacation {
+    id: number=0;
+    userId: number=0;
+    userName: string="";
+    vacationDate: Date=new Date;
+    vacationType: number=0;
+    status: number=0;
+    notes: string="";
+    createdBy: number=0;
+    createdData: Date=new Date;
+    updatedBy: number=0;
+    updatedDate: Date=new Date;
+    isDeleted: boolean=false;
 }

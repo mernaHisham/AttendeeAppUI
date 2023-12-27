@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DeviceService extends BaseService {
-    userDialog: boolean = false; 
+  deviceDialog: boolean = false; 
     devices!: Device[];
     device!: Device;
     selectedDevice!: Device[] | null;
