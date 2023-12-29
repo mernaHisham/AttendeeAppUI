@@ -11,13 +11,16 @@ export class AppComponent {
   title = 'AttendeeApp';
   showHeader:boolean = true;
   deviceInfo:any = null;
+  urlVal:string = "";
  
   constructor(private router: Router, private deviceService: DeviceDetectorService){
     this.epicFunction();
 
     router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        if(e.url.toLowerCase() =="/login"||e.url.toLowerCase() =="/setdevice") this.showHeader=false
+        this.urlVal = e.url.toLowerCase();
+
+        if(this.urlVal =="/login"||this.urlVal =="/setdevice") this.showHeader=false
         else this.showHeader=true
       }
      

@@ -12,7 +12,7 @@
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
-    <div class="card flex justify-content-center" *ngIf="isLoading"> 
+    <div class="flex justify-content-center" *ngIf="isLoading"> 
         <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
     </div>
         <p-table

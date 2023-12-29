@@ -103,6 +103,8 @@ import { VacationComponent } from './vacation/vacation.component';
 import { VacationFormComponent } from './vacation/vacation-form/vacation-form.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { AttendanceFormComponent } from './attendance/attendance-form/attendance-form.component';
+import { ClockComponent } from './clock/clock.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,9 @@ import { AttendanceFormComponent } from './attendance/attendance-form/attendance
     VacationComponent,
     VacationFormComponent,
     AttendanceComponent,
-    AttendanceFormComponent
+    AttendanceFormComponent,
+    ClockComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,
