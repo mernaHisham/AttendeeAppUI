@@ -10,6 +10,7 @@ import { UsersService } from '../service/users.service';
 })
 export class UsersComponent implements OnInit {
     isLoading:boolean=false;
+    loginUser: any = localStorage.getItem("user");
     constructor(public service: UsersService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
     ngOnInit() {
@@ -63,6 +64,13 @@ export class UsersComponent implements OnInit {
 
     saveUser() {
         this.service.submitted = true;
+        if(this.service.user.id>0){
+            this.service.user.updatedBy =JSON.parse(this.loginUser).id;
+            this.service.user.updatedDate=new Date();
+          }else{
+            this.service.user.createdBy =JSON.parse(this.loginUser).id;
+            this.service.user.createdData=new Date();
+          }
         this.service.PostUser(this.service.user).subscribe(res => {
             this.GetAllUsers();
             this.service.userDialog = false;

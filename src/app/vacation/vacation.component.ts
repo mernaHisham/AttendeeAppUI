@@ -10,6 +10,7 @@ import { VacationService } from '../service/vacation.service';
 })
 export class VacationComponent implements OnInit {
   isLoading:boolean=false;
+  loginUser: any = localStorage.getItem("user");
 constructor(public service: VacationService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
 ngOnInit() {
@@ -58,9 +59,15 @@ hideDialog() {
 
 saveVacation() {
     this.service.submitted = true;
-    this.service.vacation.userId=1;
-    this.service.vacation.userName="admin";
-
+    this.service.vacation.userId=JSON.parse(this.loginUser).id;
+      this.service.vacation.userName=JSON.parse(this.loginUser).name;
+      if(this.service.vacation.id>0){
+        this.service.vacation.updatedBy =JSON.parse(this.loginUser).id;
+        this.service.vacation.updatedDate=new Date();
+      }else{
+        this.service.vacation.createdBy =JSON.parse(this.loginUser).id;
+        this.service.vacation.createdData=new Date();
+      }
     this.service.PostVacation(this.service.vacation).subscribe(res => {
         this.GetAllVacations();
         this.service.vacationDialog = false;

@@ -5,11 +5,10 @@
             <img alt="Card" src="../../assets/Images/logo.png" />
         </ng-template>
         <div class="field">
-            <input type="text" pInputText id="oldConfirmationCode" [(ngModel)]="oldConfirmationCode" required autofocus />
-            <input type="text" pInputText id="newConfirmationCode" [(ngModel)]="newConfirmationCode" required />
+            <input type="text" pInputText id="confirmationCode" [(ngModel)]="confirmationCode" required autofocus />
         </div>
         <ng-template pTemplate="footer">
-            <p-button label="Save" icon="pi pi-check" (click)="SerDevice()"></p-button>
+            <p-button label="Save" icon="pi pi-check" (click)="CheckDevice()"></p-button>
         </ng-template>
     </p-card>
 </div>

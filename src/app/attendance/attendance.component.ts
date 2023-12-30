@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Attendance } from '../model/attendance.model';
 import { AttendanceService } from '../service/attendance.service';
+import { LoginResponse } from '../model/login-response.model';
 
 @Component({
   selector: 'app-attendance',
@@ -10,6 +11,7 @@ import { AttendanceService } from '../service/attendance.service';
 })
 export class AttendanceComponent implements OnInit {
   isLoading:boolean=false;
+  loginUser: any = localStorage.getItem("user");
   constructor(public service: AttendanceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
@@ -58,8 +60,16 @@ export class AttendanceComponent implements OnInit {
 
   saveAttendance() {
       this.service.submitted = true;
-      this.service.attendance.userId=1;
-      this.service.attendance.userName="merna";
+      this.service.attendance.userId=JSON.parse(this.loginUser).id;
+      this.service.attendance.userName=JSON.parse(this.loginUser).name;
+      if(this.service.attendance.id>0){
+        this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
+        this.service.attendance.updatedDate=new Date();
+      }else{
+        this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
+        this.service.attendance.createdData=new Date();
+      }
+     
       this.service.PostAttendance(this.service.attendance).subscribe(res => {
           this.GetAllAttendance();
           this.service.attenDialog = false;

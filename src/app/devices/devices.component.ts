@@ -10,6 +10,7 @@ import { DeviceService } from '../service/device.service';
 })
 export class DevicesComponent implements OnInit {
     isLoading:boolean=false;
+    loginUser: any = localStorage.getItem("user");
   constructor(public service: DeviceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
@@ -58,6 +59,13 @@ export class DevicesComponent implements OnInit {
 
   saveDevice() {
       this.service.submitted = true;
+      if(this.service.device.id>0){
+        this.service.device.updatedBy =JSON.parse(this.loginUser).id;
+        this.service.device.updatedDate=new Date();
+      }else{
+        this.service.device.createdBy =JSON.parse(this.loginUser).id;
+        this.service.device.createdData=new Date();
+      }
       this.service.PostDevice(this.service.device).subscribe(res => {
           this.GetAllDevices();
           this.service.deviceDialog = false;

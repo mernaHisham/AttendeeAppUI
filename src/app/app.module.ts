@@ -105,6 +105,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { AttendanceFormComponent } from './attendance/attendance-form/attendance-form.component';
 import { ClockComponent } from './clock/clock.component';
 import { HomeComponent } from './home/home.component';
+import { CheckDeviceComponent } from './check-device/check-device.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { HomeComponent } from './home/home.component';
     AttendanceComponent,
     AttendanceFormComponent,
     ClockComponent,
-    HomeComponent
+    HomeComponent,
+    CheckDeviceComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,

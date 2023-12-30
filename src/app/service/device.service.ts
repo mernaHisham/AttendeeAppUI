@@ -28,4 +28,9 @@ export class DeviceService extends BaseService {
  DeleteDevice = (deviceId:number) =>
  this.http.delete(`${this.baseURl}Devices/DeleteDevice?DeviceId=${deviceId}`);
 
+ SetDevice=( oldConfirmationCode:string,  newConfirmationCode:string)=>
+ this.http.get(`${this.baseURl}Devices/SetDevice?oldConfirmationCode=${oldConfirmationCode}&newConfirmationCode=${newConfirmationCode}`);
+ CheckDevice=( confirmationCode:string)=>
+ this.http.get(`${this.baseURl}Devices/CheckDevice?confirmationCode=${confirmationCode}`);
+
 }

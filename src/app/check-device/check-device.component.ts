@@ -4,22 +4,21 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-set-device',
-  templateUrl: './set-device.component.html',
-  styleUrls: ['./set-device.component.css']
+  selector: 'app-check-device',
+  templateUrl: './check-device.component.html',
+  styleUrls: ['./check-device.component.css']
 })
-export class SetDeviceComponent {
-  oldConfirmationCode: string = "";
-  newConfirmationCode: string = "";
+export class CheckDeviceComponent {
+  confirmationCode: string = "";
   constructor(public service: DeviceService, public messageService: MessageService,private router:Router) {
 
   }
-  SerDevice = () => {
-    this.service.SetDevice(this.oldConfirmationCode, this.newConfirmationCode).subscribe((res:any) => {
+  CheckDevice = () => {
+    this.service.CheckDevice(this.confirmationCode).subscribe((res:any) => {
      if(res.result){
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
       this.router.navigate(["/login"]);
-      localStorage.setItem("ConfirmationCode",this.newConfirmationCode);
+      localStorage.setItem("ConfirmationCode",this.confirmationCode);
      }
      else
      this.messageService.add({ severity: 'error', summary: 'Failed', detail:  res.message, life: 3000 });
@@ -27,3 +26,4 @@ export class SetDeviceComponent {
     });
   }
 }
+
