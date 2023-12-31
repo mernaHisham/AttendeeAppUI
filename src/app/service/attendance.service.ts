@@ -32,6 +32,7 @@ export class AttendanceService extends BaseService {
     this.http.get(`${this.baseURl}Attendance/EndBreak?AttendanceId=${AttendanceId}`);
   EndDay = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/EndDay?AttendanceId=${AttendanceId}`);
-
+    GetAttendance=(userId:number)=>
+    this.http.get(`${this.baseURl}Attendance/GetAttendance?userId=${userId}`);
 
 }

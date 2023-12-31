@@ -4,9 +4,9 @@ export class Attendance {
     userName: string="";
     attendanceDate: Date=new Date;
     startDay: Date=new Date;
-    endDay: Date=new Date;
-    startBreak: Date=new Date;
-    endBreak: Date=new Date;
+    endDay: any=null;
+    startBreak: any=null;
+    endBreak: any=null;
     lag: number=0;
     comment: string="";
     notes: string="";

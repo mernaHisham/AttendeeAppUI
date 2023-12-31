@@ -21,6 +21,8 @@ this.http.get(`${this.baseURl}Vacations/GetAll`);
 
 GetById = (VacationId:number) =>
 this.http.get(`${this.baseURl}Vacations/GetById?VacationId=${VacationId}`);
+GetUserVacations=(userId:number)=>
+this.http.get(`${this.baseURl}Vacations/GetUserVacations?userId=${userId}`);
 
 PostVacation = (vacation:Vacation) =>
 this.http.post(`${this.baseURl}Vacations/PostVacation`,vacation);

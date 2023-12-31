@@ -36,7 +36,12 @@ export class HeaderComponent {
       //command:()=>{ this.urlVal= '/vacation' }
     },
   ];
-  constructor(){ }
+  constructor(private router:Router){ }
   ngOnInit() {
+  }
+  Logout(){
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    this.router.navigate(['/login']);
   }
 }

@@ -44,7 +44,7 @@
         <ng-template pTemplate="body" let-vac>
             <tr>
                 <td>{{ vac.userName }}</td>
-                <td>{{ vac.vacationType }}</td>
+                <td>{{ vacationTypes[vac.vacationType-1].name }}</td>
                 <td>{{ vac.vacationDate |date:'dd.MM.yyyy'}}</td>
                 <!-- <td>
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
