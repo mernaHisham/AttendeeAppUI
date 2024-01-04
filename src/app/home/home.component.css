@@ -5,3 +5,9 @@ h2{
 .card-container{
     width: 100%;
 }
+.vac-card{
+    background-color: #f9fafb;
+}
+.cd-container{
+    box-shadow: 1px 1px 10px  #bbb0e7;
+}

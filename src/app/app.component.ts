@@ -23,7 +23,7 @@ export class AppComponent {
       if (e instanceof NavigationEnd) {
         this.urlVal = e.url.toLowerCase();
 
-        if (this.urlVal == "/login" || this.urlVal == "/setdevice") this.showHeader = false
+        if (this.urlVal == "/login" || this.urlVal == "/setdevice"||this.urlVal =="/checkdevice") this.showHeader = false
         else this.showHeader = true
       }
 

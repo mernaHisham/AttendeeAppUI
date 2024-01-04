@@ -9,9 +9,9 @@ export class BaseService {
  requestOptions: any;
 
  constructor() {
-    
-    //  if (!isDevMode()) {
-    //      this.baseURl = "http://localhost:5193/api/";
-    //  }
+    //ng build --output-path publish
+     if (!isDevMode()) {
+         this.baseURl = "https://attendeapi.royal-tek.com/api/";
+     }
  }
 }

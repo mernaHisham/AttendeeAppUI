@@ -17,12 +17,12 @@ export class HomeComponent {
   attnd: Attendance = new Attendance();
   loginUser: any = localStorage.getItem("user");
   vacationTypes:any=[
-    {code:1,name:	"U-Urlaub",color:"#3b82f6",bgColor:"rgb(195 215 247)"},
-    {code:2,name:	"PF-Pflegeurlaub",color:"#22c55e",bgColor:"rgb(199 255 247)"},
-    {code:3,name:	"K-Krankenstand",color:"#0ea5e9",bgColor:"rgb(235 249 247)"},
-    {code:4,name:	"UU-Unbezahlter Urlaub",color:"#f97316",bgColor:"rgb(255 233 247)"},
-    {code:5,name:	"UM-Umzugsurlaub",color:"#ef4444",bgColor:"rgb(255 217 247)"},
-    {code:6,name:	"T-Termin",color:"#a855f7",bgColor:"rgb(236 224 247)"},
+    {code:1,name:	"U-Urlaub",color:"#3b82f6",bgColor:"#f9fafb"},
+    {code:2,name:	"PF-Pflegeurlaub",color:"#22c55e",bgColor:"#f9fafb"},
+    {code:3,name:	"K-Krankenstand",color:"#0ea5e9",bgColor:"#f9fafb"},
+    {code:4,name:	"UU-Unbezahlter Urlaub",color:"#f97316",bgColor:"#f9fafb"},
+    {code:5,name:	"UM-Umzugsurlaub",color:"#ef4444",bgColor:"#f9fafb"},
+    {code:6,name:	"T-Termin",color:"#a855f7",bgColor:"#f9fafb"},
   ]
   constructor(public vacService: VacationService, public service: AttendanceService, public messageService: MessageService) { }
 

@@ -9,7 +9,7 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
     
@@ -50,8 +50,8 @@
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
                 </td> -->
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVacation(vac)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVacation(vac)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editVacation(vac)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteVacation(vac)"></button>
                 </td>
             </tr>
         </ng-template>
