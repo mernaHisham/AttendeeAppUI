@@ -1,15 +1,17 @@
 <p-toast></p-toast>
-<div class="card flex justify-content-center">
+<div class="card flex justify-content-center text-center">
     <p-card header="AttendeeApp" subheader="Login" [style]="{ width: '360px' }">
         <ng-template pTemplate="header">
             <img alt="Card" src="../../assets/Images/logo.png" />
         </ng-template>
-        <div class="field">
+        <div class="field text-center">
             <input type="text" pInputText id="userName" placeholder="User name" [(ngModel)]="service.request.userName" required autofocus />
             <input type="text" pInputText id="password" placeholder="Password" [(ngModel)]="service.request.password" required />
         </div>
         <ng-template pTemplate="footer">
+            <div class="text-center">
             <p-button label="Login" (click)="Login()"></p-button>
+            </div>
         </ng-template>
     </p-card>
 </div>

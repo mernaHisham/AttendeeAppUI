@@ -1,5 +1,5 @@
 
-<div class="card">
+<div class="card" [style]="{ 'min-width': '85vw' }">
     <p-toast></p-toast>
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
@@ -23,7 +23,7 @@
         [rows]="10"
         [paginator]="true"
         [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        [tableStyle]="{ 'min-width': '75rem' }"
+        [tableStyle]="{ 'min-width': '85vw' }"
         [(selection)]="service.selectedVacation"
         [rowHover]="true"
         dataKey="id"
