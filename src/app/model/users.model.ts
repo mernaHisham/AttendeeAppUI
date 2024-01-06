@@ -19,3 +19,7 @@ export class Users {
     updatedDate: Date= new Date;
     isDeleted: boolean=false;
 }
+export enum Roles{
+    Admin=1,
+    Employee=2
+}

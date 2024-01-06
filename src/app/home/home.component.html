@@ -10,25 +10,25 @@
     </p-toolbar>
     <div class="grid">
        <div class="col-12 md:col-4">
-           <div class="text-center p-3 border-round-sm">
+           <div class="p-3 border-round-sm">
                <div class="col">
                    <app-clock></app-clock>
                </div>
-                   <div class="col">
-                       <p-button (click)="StartDay()" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary"></p-button>
-                       <p-button (click)="EndDay()" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger"></p-button>
+                   <div class="px-6 col">
+                       <p-button (click)="StartDay()" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Start day"></p-button>
+                       <p-button (click)="EndDay()" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger" pTooltip="End day"></p-button>
                    </div>
-                   <div class="col">
-                       <p>Start: <span>{{ attnd?.startDay|date:'hh:mm:ss aa'}}</span></p>
-                       <p>End: <span>{{ attnd?.endDay|date:'hh:mm:ss aa'}}</span></p>
+                   <div class="px-6 col">
+                       <p><span class="font-bold text-primary">Start : </span> <span>{{ attnd?.startDay|date:'hh:mm:ss aa'}}</span></p>
+                       <p><span class="font-bold text-primary">End : </span> <span>{{ attnd?.endDay|date:'hh:mm:ss aa'}}</span></p> 
                     </div>
-                   <div class="col">
-                       <p-button (click)="StartBreak()" icon="pi pi-pause" class="m-1" [text]="true" [raised]="true" severity="success"></p-button>
-                       <p-button (click)="EndBreak()" icon="pi pi-replay" class="m-1" [text]="true" [raised]="true" severity="warning"></p-button>
+                   <div class="px-6 col">
+                       <p-button (click)="StartBreak()" icon="pi pi-pause" class="m-1" [text]="true" [raised]="true" severity="success" pTooltip="Start break"></p-button>
+                       <p-button (click)="EndBreak()" icon="pi pi-replay" class="m-1" [text]="true" [raised]="true" severity="warning" pTooltip="End break"></p-button>
                    </div>
-                   <div class="col">
-                       <p>Pause: <span>{{ attnd?.startBreak|date:'hh:mm:ss aa'}}</span></p>
-                       <p>Continue: <span>{{ attnd?.endBreak|date:'hh:mm:ss aa'}}</span></p>
+                   <div class="px-6 col">
+                       <p><span class="font-bold text-primary">From : </span> <span>{{ attnd?.startBreak|date:'hh:mm:ss aa'}}</span></p>
+                       <p><span class="font-bold text-primary">To : </span> <span>{{ attnd?.endBreak|date:'hh:mm:ss aa'}}</span></p> 
                     </div>
                
            </div>

@@ -16,9 +16,10 @@ export class VacationService extends BaseService {
 constructor(private http: HttpClient) { 
  super();
 }
-GetAllVacations = () =>
-this.http.get(`${this.baseURl}Vacations/GetAll`);
-
+GetAllVacations = (userId:number) =>
+this.http.get(`${this.baseURl}Vacations/GetAll?userId=${userId}`);
+GetAllByUser=(userId:number)=>
+this.http.get(`${this.baseURl}Vacations/GetAllByUser?userId=${userId}`);
 GetById = (VacationId:number) =>
 this.http.get(`${this.baseURl}Vacations/GetById?VacationId=${VacationId}`);
 GetUserVacations=(userId:number)=>

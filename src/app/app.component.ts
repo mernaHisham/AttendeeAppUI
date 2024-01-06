@@ -30,8 +30,6 @@ export class AppComponent {
     });
   }
   ngOnInit() {
-    console.log(JSON.parse(this.user));
-    
     if (this.ConfirmationCode == null||this.ConfirmationCode == "")
       this.router.navigate(['/checkdevice']);
     else if (this.accessToken == null||this.accessToken == "")

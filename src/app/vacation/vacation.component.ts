@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Vacation } from '../model/vacation.model';
 import { VacationService } from '../service/vacation.service';
+import { Roles } from '../model/users.model';
 
 @Component({
   selector: 'app-vacation',
@@ -26,7 +27,9 @@ ngOnInit() {
 }
 GetAllVacations() {
   this.isLoading=true;
-    this.service.GetAllVacations().subscribe((data) => {
+  let userRole=JSON.parse(this.loginUser).fkRoleId;
+  let userId=userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+    this.service.GetAllVacations(userId).subscribe((data) => {
       this.service.vacations = data as Vacation[];
       this.isLoading=false;
 });

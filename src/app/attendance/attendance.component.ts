@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Attendance } from '../model/attendance.model';
 import { AttendanceService } from '../service/attendance.service';
 import { LoginResponse } from '../model/login-response.model';
+import { Roles } from '../model/users.model';
 
 @Component({
   selector: 'app-attendance',
@@ -18,8 +19,10 @@ export class AttendanceComponent implements OnInit {
       this.GetAllAttendance();
   }
   GetAllAttendance() {
-      this.isLoading=true;
-      this.service.GetAll().subscribe((data) => {
+    this.isLoading=true;
+    let userRole=JSON.parse(this.loginUser).fkRoleId;
+    let userId=userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+      this.service.GetAll(userId).subscribe((data) => {
           this.service.attends = data as Attendance[];
           this.isLoading=false;
       });

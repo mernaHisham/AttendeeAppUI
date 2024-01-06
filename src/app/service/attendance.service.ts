@@ -16,8 +16,10 @@ export class AttendanceService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
-  GetAll = () =>
-    this.http.get(`${this.baseURl}Attendance/GetAll`);
+  GetAll = (userId:number) =>
+    this.http.get(`${this.baseURl}Attendance/GetAll?userId=${userId}`);
+  GetAllByUser=(userId:number)=>
+    this.http.get(`${this.baseURl}Attendance/GetAllByUser?userId=${userId}`);
   GetById = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/GetById?AttendanceId=${AttendanceId}`);
   PostAttendance = (attendance: Attendance) =>
