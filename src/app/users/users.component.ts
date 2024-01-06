@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Users } from '../model/users.model';
 import { UsersService } from '../service/users.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-users',
@@ -11,9 +12,12 @@ import { UsersService } from '../service/users.service';
 export class UsersComponent implements OnInit {
     isLoading:boolean=false;
     loginUser: any = localStorage.getItem("user");
-    constructor(public service: UsersService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+    loginUserRole: number = 0;
+    constructor(public service: UsersService, public messageService: MessageService,
+         public confirmationService: ConfirmationService,public router:Router) { }
 
     ngOnInit() {
+        this.loginUserRole= JSON.parse(this.loginUser).fkRoleId;
         this.GetAllUsers();
     }
     GetAllUsers() {

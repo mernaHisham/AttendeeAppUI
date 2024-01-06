@@ -8,6 +8,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { VacationComponent } from './vacation/vacation.component';
 import { HomeComponent } from './home/home.component';
 import { CheckDeviceComponent } from './check-device/check-device.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'users',component:UsersComponent},
   {path:'devices',component:DevicesComponent},
   {path:'attendance',component:AttendanceComponent},
+  {path:'accessdenied',component:AccessDeniedComponent},
   {path:'vacation',component:VacationComponent}
 ];
 

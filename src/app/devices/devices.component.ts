@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Device } from '../model/device.model';
 import { DeviceService } from '../service/device.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-devices',
@@ -11,9 +12,12 @@ import { DeviceService } from '../service/device.service';
 export class DevicesComponent implements OnInit {
     isLoading:boolean=false;
     loginUser: any = localStorage.getItem("user");
-  constructor(public service: DeviceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+    loginUserRole: number = 0;
+  constructor(public service: DeviceService, public messageService: MessageService,
+     public confirmationService: ConfirmationService,private router:Router) { }
 
   ngOnInit() {
+    this.loginUserRole= JSON.parse(this.loginUser).fkRoleId;
       this.GetAllDevices();
   }
   GetAllDevices() {

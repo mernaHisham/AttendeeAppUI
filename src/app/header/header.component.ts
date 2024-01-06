@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
+import { Component } from '@angular/core';
+import {  Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -10,34 +10,32 @@ import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 export class HeaderComponent {
   urlVal:string = "";
   active:string="active";
-  items: MenuItem[]=[
-    {
-      label: 'Devices',
-      routerLink:'/devices',
-      //styleClass:this.urlVal=='/devices'?this.active:"",
-      //command:()=>{ this.urlVal= '/devices' }
-    },
-    {
-      label: 'Users',
-      routerLink:'/users',
-      //styleClass:this.urlVal=='/users'?this.active:"",
-      //command:()=>{ this.urlVal= '/users'}
-    },
-    {
-      label: 'Attendance',
-      routerLink:'/attendance',
-      //styleClass:this.urlVal=='/attendance'?this.active:"",
-      //command:()=>{ this.urlVal= '/attendance'}
-    },
-    {
-      label: 'Vacations',
-      routerLink:'/vacation',
-      //styleClass:this.urlVal=='/vacation'?this.active:"",
-      //command:()=>{ this.urlVal= '/vacation' }
-    },
-  ];
+  loginUser: any = localStorage.getItem("user");
+  loginUserRole: number = 0;
+  items: MenuItem[]=[];
   constructor(private router:Router){ }
   ngOnInit() {
+   this.loginUserRole= JSON.parse(this.loginUser).fkRoleId;
+    this.items=[
+      {
+        label: 'Devices',
+        routerLink:'/devices',
+        styleClass:this.loginUserRole==2?"hidden":"" 
+      },
+      {
+        label: 'Users',
+        routerLink:'/users',
+        styleClass:this.loginUserRole==2?"hidden":""
+      },
+      {
+        label: 'Attendance',
+        routerLink:'/attendance'
+      },
+      {
+        label: 'Vacations',
+        routerLink:'/vacation'
+      }
+    ];
   }
   Logout(){
     localStorage.removeItem("user");

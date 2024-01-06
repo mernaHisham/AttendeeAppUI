@@ -1,5 +1,5 @@
-
-<div class="card" [style]="{ 'min-width': '85vw' }">
+<app-access-denied *ngIf="loginUserRole==2"></app-access-denied>
+<div class="card" [style]="{ 'min-width': '85vw' }" *ngIf="loginUserRole==1">
     <p-toast></p-toast>
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
