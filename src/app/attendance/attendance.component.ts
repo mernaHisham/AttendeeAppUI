@@ -4,16 +4,21 @@ import { Attendance } from '../model/attendance.model';
 import { AttendanceService } from '../service/attendance.service';
 import { LoginResponse } from '../model/login-response.model';
 import { Roles } from '../model/users.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
-  styleUrls: ['./attendance.component.css']
+  styleUrls: ['./attendance.component.css'],
+  providers:[DatePipe]
 })
 export class AttendanceComponent implements OnInit {
   isLoading:boolean=false;
   loginUser: any = localStorage.getItem("user");
-  constructor(public service: AttendanceService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+  constructor(public service: AttendanceService, 
+    public messageService: MessageService, 
+    private datePipe:DatePipe,
+    public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
       this.GetAllAttendance();
