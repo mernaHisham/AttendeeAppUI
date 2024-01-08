@@ -15,7 +15,7 @@
                    <app-clock></app-clock>
                </div>
                    <div class="px-6 col">
-                       <p-button (click)="StartDay()"  label="Allgemein" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Allgemein"></p-button>
+                       <p-button (click)="StartDay()" [disabled]="attnd!=null"  label="Allgemein" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Allgemein"></p-button>
                        <p-button (click)="EndDay()"  label="Beenden" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger" pTooltip="Beenden"></p-button>
                    </div>
                    <div class="px-6 col">

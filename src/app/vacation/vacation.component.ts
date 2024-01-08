@@ -71,8 +71,8 @@ hideDialog() {
 
 saveVacation() {
     this.service.submitted = true;
-    this.service.vacation.userId=JSON.parse(this.loginUser).id;
-      this.service.vacation.userName=JSON.parse(this.loginUser).name;
+    this.service.vacation.userId=JSON.parse(this.loginUser)?.id;
+      this.service.vacation.userName=JSON.parse(this.loginUser)?.name;
       if(this.service.vacation.id>0){
         this.service.vacation.updatedBy =JSON.parse(this.loginUser).id;
         this.service.vacation.updatedDate=new Date();

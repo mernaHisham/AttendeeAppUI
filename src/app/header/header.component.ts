@@ -15,7 +15,7 @@ export class HeaderComponent {
   items: MenuItem[]=[];
   constructor(private router:Router){ }
   ngOnInit() {
-   this.loginUserRole= JSON.parse(this.loginUser).fkRoleId;
+   this.loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
     this.items=[
       {
         label: 'Devices',

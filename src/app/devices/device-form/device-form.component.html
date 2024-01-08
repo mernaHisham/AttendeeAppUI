@@ -5,7 +5,7 @@
         <small class="p-error" *ngIf="service.submitted && !service.device.deviceId">Device is required.</small>
     </div>
     <div class="field col-6">
-        <label for="lastName">confirmation Code</label>
+        <label for="confirmationCode">confirmation Code</label>
         <input type="text" pInputText id="confirmationCode" [(ngModel)]="service.device.confirmationCode" required />
         <small class="p-error" *ngIf="service.submitted && !service.device.confirmationCode">confirmation Code is required.</small>
     </div> 

@@ -1,7 +1,7 @@
 <div class="formgrid grid">
     <div class="field col-6">
-        <label for="vacationType">Art</label>
-        <p-dropdown [options]="vacationTypes" [(ngModel)]="service.vacation.vacationType" optionLabel="name" optionValue="code" [showClear]="true" placeholder="Art aussuchen"></p-dropdown>
+        <label>Art</label>
+        <p-dropdown [options]="vacationTypes"  [(ngModel)]="service.vacation.vacationType" optionLabel="name" optionValue="code" [showClear]="true" placeholder="Art aussuchen"></p-dropdown>
         <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationType">Art aussuchen is required.</small>
     </div> 
     <div class="field col-6">

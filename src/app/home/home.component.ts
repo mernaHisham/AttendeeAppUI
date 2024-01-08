@@ -40,8 +40,6 @@ export class HomeComponent {
     var userId = JSON.parse(this.loginUser).id;
     this.service.GetAttendance(userId).subscribe((res:any)=>{ 
      this.attnd= res as Attendance;
-     console.log(this.attnd);
-     
     })
   }
   StartDay = () => {
