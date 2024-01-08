@@ -1,27 +1,27 @@
 <div class="formgrid grid">
     <div class="field col-12">
-        <label for="attendanceDate"> attendanceDate</label>
+        <label for="attendanceDate"> Datum</label>
         <input type="date" pInputText id="attendanceDate" [(ngModel)]="service.attendance.attendanceDate" required autofocus />
         <small class="p-error" *ngIf="service.submitted && !service.attendance.attendanceDate">Attendance Date is required.</small>
     </div>
     <div class="field col-6">
-        <label for="startDay"> startDay</label>
+        <label for="startDay"> Allgemein</label>
         <input type="time" pInputText id="startDay" [(ngModel)]="service.attendance.startDay"/>
     </div>
     <div class="field col-6">
-        <label for="startBreak"> startBreak</label>
+        <label for="startBreak"> Pause</label>
         <input type="time" pInputText id="startBreak" [(ngModel)]="service.attendance.startBreak"/>
     </div>
     <div class="field col-6">
-        <label for="endBreak"> endBreak</label>
+        <label for="endBreak"> Pause beendet</label>
         <input type="time" pInputText id="endBreak" [(ngModel)]="service.attendance.endBreak"/>
     </div>
     <div class="field col-6">
-        <label for="endDay"> endDay</label>
+        <label for="endDay"> Beenden</label>
         <input type="time" pInputText id="endDay" [(ngModel)]="service.attendance.endDay"/>
     </div>
 </div>
 <div class="field">
-    <label for="notes">Notes</label>
+    <label for="notes">Notizen</label>
     <textarea id="notes" pInputTextarea [(ngModel)]="service.attendance.notes" required rows="3" cols="20"></textarea>
 </div>

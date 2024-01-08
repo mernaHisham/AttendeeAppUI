@@ -5,11 +5,11 @@
         <ng-template pTemplate="left">
             <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
-            <h2>Attendance</h2>
+            <h2>Teilnahme</h2>
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
+        <ng-template pTemplate="right" *ngIf="userRole==1">
+            <button pButton pRipple label="NEU" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
     <div class="flex justify-content-center" *ngIf="isLoading"> 
@@ -34,13 +34,13 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
-                <th pSortableColumn="attendanceDate">attendanceDate <p-sortIcon field="attendanceDate"></p-sortIcon></th>
-                <th pSortableColumn="startDay">startDay <p-sortIcon field="startDay"></p-sortIcon></th>
-                <th pSortableColumn="startBreak"> startBreak <p-sortIcon field="startBreak"></p-sortIcon></th>
-                <th pSortableColumn="endBreak">endBreak  <p-sortIcon field="endBreak"></p-sortIcon></th>
-                <th pSortableColumn="endDay">endDay  <p-sortIcon field="endDay"></p-sortIcon></th>
-                <th pSortableColumn="lag">lag  <p-sortIcon field="lag"></p-sortIcon></th>
-                <th></th>
+                <th pSortableColumn="attendanceDate">Datum <p-sortIcon field="attendanceDate"></p-sortIcon></th>
+                <th pSortableColumn="startDay">Allgemein <p-sortIcon field="startDay"></p-sortIcon></th>
+                <th pSortableColumn="startBreak"> Pause <p-sortIcon field="startBreak"></p-sortIcon></th>
+                <th pSortableColumn="endBreak">Pause beendet<p-sortIcon field="endBreak"></p-sortIcon></th>
+                <th pSortableColumn="endDay">Beenden<p-sortIcon field="endDay"></p-sortIcon></th>
+                <th pSortableColumn="lag">Verzögerung  <p-sortIcon field="lag"></p-sortIcon></th>
+                <th *ngIf="userRole==1"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-attnd>
@@ -53,7 +53,7 @@
                 <td>{{ attnd.endDay |date:'hh.mm.ss aa'}}</td>
                 <td>{{ attnd.lag }}</td>
                
-                <td>
+                <td *ngIf="userRole==1">
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editAttendance(attnd)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteAttendance(attnd)"></button>
                 </td>

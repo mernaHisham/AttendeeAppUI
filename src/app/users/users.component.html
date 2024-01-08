@@ -35,7 +35,8 @@
             <tr>
                 <th pSortableColumn="Name">Name <p-sortIcon field="Name"></p-sortIcon></th>
                 <th pSortableColumn="fkRoleId">Role <p-sortIcon field="Name"></p-sortIcon></th>
-                <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="userName">User Name <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="userName"> Password <p-sortIcon field="userName"></p-sortIcon></th>
                 <th pSortableColumn="weeklyHours">Weekly Hours <p-sortIcon field="weeklyHours"></p-sortIcon></th>
                 <th pSortableColumn="startDate">Start Date <p-sortIcon field="startDate"></p-sortIcon></th>
                 <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
@@ -47,6 +48,7 @@
                 <td>{{ user.firstName + " " + user.lastName }}</td>
                 <td>{{ user.fkRoleId==1?"Admin":"Employee" }}</td>
                 <td>{{ user.userName }}</td>
+                <td>{{ user.password }}</td>
                 <td>{{ user.weeklyHours }}</td>
                 <td>{{ user.startDate|date:'dd.MM.yyyy' }}</td>
                 <td>

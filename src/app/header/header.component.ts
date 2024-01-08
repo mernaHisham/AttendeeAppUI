@@ -28,11 +28,11 @@ export class HeaderComponent {
         styleClass:this.loginUserRole==2?"hidden":""
       },
       {
-        label: 'Attendance',
+        label: 'Teilnahme',
         routerLink:'/attendance'
       },
       {
-        label: 'Vacations',
+        label: 'Abwesenheit',
         routerLink:'/vacation'
       }
     ];

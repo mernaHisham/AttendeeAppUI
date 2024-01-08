@@ -15,18 +15,19 @@ import { DatePipe } from '@angular/common';
 export class AttendanceComponent implements OnInit {
   isLoading:boolean=false;
   loginUser: any = localStorage.getItem("user");
+  userRole:number=0;
   constructor(public service: AttendanceService, 
     public messageService: MessageService, 
     private datePipe:DatePipe,
     public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
+    this.userRole=JSON.parse(this.loginUser).fkRoleId;
       this.GetAllAttendance();
   }
   GetAllAttendance() {
     this.isLoading=true;
-    let userRole=JSON.parse(this.loginUser).fkRoleId;
-    let userId=userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+    let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
       this.service.GetAll(userId).subscribe((data) => {
           this.service.attends = data as Attendance[];
           this.isLoading=false;

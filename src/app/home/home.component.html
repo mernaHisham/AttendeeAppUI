@@ -2,10 +2,10 @@
 <div style="min-width: 85vw;">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <h2>Attendance</h2>
+            <h2>Teilnahme</h2>
         </ng-template>
         <ng-template pTemplate="right">
-            <button pButton pRipple (click)="openNew()" label="Request Vacation" icon="pi pi-plus" class="p-button-success mr-2"></button>
+            <button pButton pRipple (click)="openNew()" label="Abwesenheitsanfrage" icon="pi pi-plus" class="p-button-success mr-2"></button>
         </ng-template>
     </p-toolbar>
     <div class="grid">
@@ -15,20 +15,20 @@
                    <app-clock></app-clock>
                </div>
                    <div class="px-6 col">
-                       <p-button (click)="StartDay()" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Start day"></p-button>
-                       <p-button (click)="EndDay()" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger" pTooltip="End day"></p-button>
+                       <p-button (click)="StartDay()"  label="Allgemein" icon="pi pi-play" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Allgemein"></p-button>
+                       <p-button (click)="EndDay()"  label="Beenden" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger" pTooltip="Beenden"></p-button>
                    </div>
                    <div class="px-6 col">
                        <p><span class="font-bold text-primary">Start : </span> <span>{{ attnd?.startDay|date:'hh:mm:ss aa'}}</span></p>
-                       <p><span class="font-bold text-primary">End : </span> <span>{{ attnd?.endDay|date:'hh:mm:ss aa'}}</span></p> 
+                       <p><span class="font-bold text-primary">Beendet : </span> <span>{{ attnd?.endDay|date:'hh:mm:ss aa'}}</span></p> 
                     </div>
                    <div class="px-6 col">
-                       <p-button (click)="StartBreak()" icon="pi pi-pause" class="m-1" [text]="true" [raised]="true" severity="success" pTooltip="Start break"></p-button>
-                       <p-button (click)="EndBreak()" icon="pi pi-replay" class="m-1" [text]="true" [raised]="true" severity="warning" pTooltip="End break"></p-button>
+                       <p-button (click)="StartBreak()"  label="Pause" icon="pi pi-pause" class="m-1" [text]="true" [raised]="true" severity="success" pTooltip="Pause"></p-button>
+                       <p-button (click)="EndBreak()" label="Pause beendet" icon="pi pi-replay" class="m-1" [text]="true" [raised]="true" severity="warning" pTooltip="Pause beendet"></p-button>
                    </div>
                    <div class="px-6 col">
-                       <p><span class="font-bold text-primary">From : </span> <span>{{ attnd?.startBreak|date:'hh:mm:ss aa'}}</span></p>
-                       <p><span class="font-bold text-primary">To : </span> <span>{{ attnd?.endBreak|date:'hh:mm:ss aa'}}</span></p> 
+                       <p><span class="font-bold text-primary">Von : </span> <span>{{ attnd?.startBreak|date:'hh:mm:ss aa'}}</span></p>
+                       <p><span class="font-bold text-primary">Bis : </span> <span>{{ attnd?.endBreak|date:'hh:mm:ss aa'}}</span></p> 
                     </div>
                
            </div>
@@ -65,13 +65,13 @@
    </div>
 </div>
 
-<p-dialog [(visible)]="vacService.vacationDialog" [style]="{ width: '50vw' }" header="User Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="vacService.vacationDialog" [style]="{ width: '50vw' }" header="Einzelheiten" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <app-vacation-form></app-vacation-form>
     </ng-template>
     
    <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveVacation()"></button>
+    <button pButton pRipple label="Löschen" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Speichern" icon="pi pi-check" class="p-button-text" (click)="saveVacation()"></button>
 </ng-template>
 </p-dialog>

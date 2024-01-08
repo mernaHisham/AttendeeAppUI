@@ -11,6 +11,7 @@ import { Roles } from '../model/users.model';
 })
 export class VacationComponent implements OnInit {
   isLoading:boolean=false;
+  userRole:number=0;
   loginUser: any = localStorage.getItem("user");
   vacationTypes:any=[
     {code:1,name:	"U-Urlaub",color:"primary",bgColor:""},
@@ -23,12 +24,12 @@ export class VacationComponent implements OnInit {
 constructor(public service: VacationService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
 ngOnInit() {
+  this.userRole=JSON.parse(this.loginUser).fkRoleId;
     this.GetAllVacations();
 }
 GetAllVacations() {
   this.isLoading=true;
-  let userRole=JSON.parse(this.loginUser).fkRoleId;
-  let userId=userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+  let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
     this.service.GetAllVacations(userId).subscribe((data) => {
       this.service.vacations = data as Vacation[];
       this.isLoading=false;

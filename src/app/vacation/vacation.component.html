@@ -8,8 +8,8 @@
             <h2>Vacations</h2>
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
+        <ng-template pTemplate="right" *ngIf="userRole==1">
+            <button pButton pRipple  label="NEU" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
     
@@ -34,11 +34,11 @@
         
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="userName">userName <p-sortIcon field="userName"></p-sortIcon></th>
-                <th pSortableColumn="vacationType">vacationType <p-sortIcon field="vacationType"></p-sortIcon></th>
-                <th pSortableColumn="vacationDate">vacationDate <p-sortIcon field="vacationDate"></p-sortIcon></th>
+                <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="vacationType">Abwesenheitsgrund <p-sortIcon field="vacationType"></p-sortIcon></th>
+                <th pSortableColumn="vacationDate">Datum <p-sortIcon field="vacationDate"></p-sortIcon></th>
                 <!-- <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th> -->
-                <th></th>
+                <th *ngIf="userRole==1"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-vac>
@@ -49,7 +49,7 @@
                 <!-- <td>
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
                 </td> -->
-                <td>
+                <td *ngIf="userRole==1">
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editVacation(vac)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteVacation(vac)"></button>
                 </td>
@@ -60,14 +60,14 @@
         </ng-template>
     </p-table>
 </div>
-<p-dialog [(visible)]="service.vacationDialog" [style]="{ width: '50vw' }" header="User Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="service.vacationDialog" [style]="{ width: '50vw' }" header="Einzelheiten" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <app-vacation-form></app-vacation-form>
     </ng-template>
     
    <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveVacation()"></button>
+    <button pButton pRipple label="Löschen" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Speichern" icon="pi pi-check" class="p-button-text" (click)="saveVacation()"></button>
 </ng-template>
 </p-dialog>
 
