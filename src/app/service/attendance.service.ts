@@ -25,7 +25,7 @@ export class AttendanceService extends BaseService {
   PostAttendance = (attendance: Attendance) =>
     this.http.post(`${this.baseURl}Attendance/PostAttendance`, attendance);
   DeleteAttendance = (AttendanceId: number) =>
-    this.http.delete(`${this.baseURl}Attendance/DeleteAttendance?AttendanceId=${AttendanceId}`);
+    this.http.get(`${this.baseURl}Attendance/DeleteAttendance?AttendanceId=${AttendanceId}`);
   StartDay = (Attend: Attendance) =>
     this.http.post(`${this.baseURl}Attendance/StartDay`, Attend);
   StartBreak = (AttendanceId: number) =>
