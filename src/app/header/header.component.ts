@@ -12,10 +12,12 @@ export class HeaderComponent {
   active:string="active";
   loginUser: any = localStorage.getItem("user");
   loginUserRole: number = 0;
+  loginUserName:string="";
   items: MenuItem[]=[];
   constructor(private router:Router){ }
   ngOnInit() {
    this.loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
+   this.loginUserName= JSON.parse(this.loginUser)?.name;
     this.items=[
       {
         label: 'Devices',

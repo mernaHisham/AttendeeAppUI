@@ -8,4 +8,17 @@
     background-color: #fff;
     color: #517ca4;
   }
-  
+  .userNameSpn{
+    font-weight: bold;
+    color: #959fbb;
+    text-transform: uppercase;
+  }
+  a.logoutCls{
+    border: 1px solid #959fbf;
+    padding: 7px;
+    border-radius: 5px;
+    background: #eee;
+  }
+  a.logoutCls:hover{
+    background: #fff;
+  }

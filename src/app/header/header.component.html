@@ -6,7 +6,7 @@
           </div>
         </ng-template>
         <ng-template pTemplate="end">
-          <a  (click)="Logout()"> <i class="pi pi-sign-out"></i></a>
+          <a  class="logoutCls" (click)="Logout()"><span class="userNameSpn">{{loginUserName}} </span>  <i class="pi pi-sign-out"></i></a>
         </ng-template>
   </p-menubar>
 </div>
