@@ -43,6 +43,13 @@ export class AttendanceComponent implements OnInit {
 
   editAttendance(attnd: Attendance) {
       this.service.attendance = { ...attnd };
+      this.service.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
+      this.service.attendance.startDay =new Date(attnd.startDay).toTimeString().substring(0,8);
+      this.service.attendance.startBreak =new Date(attnd.startBreak).toTimeString().substring(0,8);
+      this.service.attendance.endBreak =new Date(attnd.endBreak).toTimeString().substring(0,8);
+      this.service.attendance.endDay =new Date(attnd.endDay).toTimeString().substring(0,8);
+console.log(this.service.attendance.attendanceDate);
+
       this.service.attenDialog = true;
   }
 
@@ -54,7 +61,7 @@ export class AttendanceComponent implements OnInit {
           accept: () => {
               this.service.DeleteAttendance(attnd.id).subscribe((res) => {
                   this.GetAllAttendance();
-                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Deleted', life: 3000 });
               });
 
           }
@@ -83,7 +90,7 @@ export class AttendanceComponent implements OnInit {
           this.GetAllAttendance();
           this.service.attenDialog = false;
           this.service.attendance = new Attendance();
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
 
       });
     

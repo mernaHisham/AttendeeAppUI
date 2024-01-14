@@ -2,8 +2,8 @@ export class Attendance {
     id: number=0;
     userId: number=0;
     userName: string="";
-    attendanceDate: Date=new Date;
-    startDay: Date=new Date;
+    attendanceDate: any=null;
+    startDay: any=null;
     endDay: any=null;
     startBreak: any=null;
     endBreak: any=null;

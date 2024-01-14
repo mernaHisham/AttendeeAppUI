@@ -13,8 +13,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductService } from "./service/product.service";
-
 // Import PrimeNG modules
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -141,7 +139,7 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     InputTextareaModule,InputGroupAddonModule,InputGroupModule,ImageModule,KnobModule,ListboxModule,MegaMenuModule,MenuModule,MessageModule,MessagesModule,
     MultiSelectModule,OverlayPanelModule,PaginatorModule
   ],
-  providers: [ProductService,MessageService,ConfirmationService],
+  providers: [MessageService,ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

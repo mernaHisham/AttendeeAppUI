@@ -48,7 +48,7 @@ export class DevicesComponent implements OnInit {
           accept: () => {
               this.service.DeleteDevice(dev.id).subscribe((res) => {
                   this.GetAllDevices();
-                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Device Deleted', life: 3000 });
               });
 
           }
@@ -74,7 +74,7 @@ export class DevicesComponent implements OnInit {
           this.GetAllDevices();
           this.service.deviceDialog = false;
           this.service.device = new Device();
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Device Updated', life: 3000 });
 
       });
     

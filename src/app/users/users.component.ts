@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
             accept: () => {
                 this.service.DeleteUser(user.id).subscribe((res) => {
                     this.GetAllUsers();
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Deleted', life: 3000 });
                 });
 
             }
@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit {
     ActivateUser(user: Users) {
         this.service.UserActivation(user.id, false).subscribe((res) => {
             this.GetAllUsers();
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Deleted', life: 3000 });
         });
     }
  
@@ -79,7 +79,7 @@ export class UsersComponent implements OnInit {
             this.GetAllUsers();
             this.service.userDialog = false;
             this.service.user = new Users();
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000 });
 
         });
       

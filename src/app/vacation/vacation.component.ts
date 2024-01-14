@@ -56,7 +56,7 @@ deleteVacation(vac: Vacation) {
         accept: () => {
             this.service.DeleteVacation(vac.id).subscribe((res) => {
                 this.GetAllVacations();
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Vacation Deleted', life: 3000 });
             });
 
         }
@@ -84,7 +84,7 @@ saveVacation() {
         this.GetAllVacations();
         this.service.vacationDialog = false;
         this.service.vacation = new Vacation();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Vacation Updated', life: 3000 });
     });
   
 }
