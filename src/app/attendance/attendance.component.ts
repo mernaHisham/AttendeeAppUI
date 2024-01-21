@@ -5,6 +5,8 @@ import { AttendanceService } from '../service/attendance.service';
 import { LoginResponse } from '../model/login-response.model';
 import { Roles } from '../model/users.model';
 import { DatePipe } from '@angular/common';
+import { AttendanceRequestService } from '../service/attendance-request.service';
+import { AttendanceRequest } from '../model/attendance-request.model';
 
 @Component({
   selector: 'app-attendance',
@@ -16,7 +18,7 @@ export class AttendanceComponent implements OnInit {
   isLoading:boolean=false;
   loginUser: any = localStorage.getItem("user");
   userRole:number=0;
-  constructor(public service: AttendanceService, 
+  constructor(public service: AttendanceService, public attReqService:AttendanceRequestService,
     public messageService: MessageService, 
     private datePipe:DatePipe,
     public confirmationService: ConfirmationService) { }
@@ -42,14 +44,24 @@ export class AttendanceComponent implements OnInit {
 
 
   editAttendance(attnd: Attendance) {
+    if(this.userRole==1){
       this.service.attendance = { ...attnd };
       this.service.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
       this.service.attendance.startDay =new Date(attnd.startDay).toTimeString().substring(0,8);
       this.service.attendance.startBreak =new Date(attnd.startBreak).toTimeString().substring(0,8);
       this.service.attendance.endBreak =new Date(attnd.endBreak).toTimeString().substring(0,8);
       this.service.attendance.endDay =new Date(attnd.endDay).toTimeString().substring(0,8);
-console.log(this.service.attendance.attendanceDate);
-
+    }
+    else{
+      this.attReqService.attendance = new AttendanceRequest();
+      this.attReqService.attendance.AttendanceId = attnd.id;
+      this.attReqService.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
+      this.attReqService.attendance.startDay =new Date(attnd.startDay).toTimeString().substring(0,8);
+      this.attReqService.attendance.startBreak =new Date(attnd.startBreak).toTimeString().substring(0,8);
+      this.attReqService.attendance.endBreak =new Date(attnd.endBreak).toTimeString().substring(0,8);
+      this.attReqService.attendance.endDay =new Date(attnd.endDay).toTimeString().substring(0,8);
+    }
+      
       this.service.attenDialog = true;
   }
 
@@ -77,22 +89,40 @@ console.log(this.service.attendance.attendanceDate);
   saveAttendance() {
       this.service.submitted = true;
       if(this.service.attendance.id>0){
-        this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
-        this.service.attendance.updatedDate=new Date();
+        if(this.userRole==1){
+          this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
+          this.service.attendance.updatedDate=new Date();
+        }else{
+        this.attReqService.attendance.createdBy =JSON.parse(this.loginUser).id;
+        this.attReqService.attendance.createdData=new Date();
+        this.attReqService.attendance.userName=JSON.parse(this.loginUser).name;
+        this.attReqService.attendance.isApproved=false;
+        }
+        
       }else{
         this.service.attendance.userId=JSON.parse(this.loginUser).id;
         this.service.attendance.userName=JSON.parse(this.loginUser).name;
         this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
         this.service.attendance.createdData=new Date();
       }
-     
+     if(this.userRole==1){
       this.service.PostAttendance(this.service.attendance).subscribe(res => {
-          this.GetAllAttendance();
-          this.service.attenDialog = false;
-          this.service.attendance = new Attendance();
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+        this.GetAllAttendance();
+        this.service.attenDialog = false;
+        this.service.attendance = new Attendance();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
 
-      });
+    });
+     }else{
+      this.attReqService.PostAttendance(this.attReqService.attendance).subscribe(res => {
+        this.GetAllAttendance();
+        this.service.attenDialog = false;
+        this.service.attendance = new Attendance();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+
+    });
+     }
+     
     
   }
 

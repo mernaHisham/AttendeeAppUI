@@ -39,8 +39,8 @@ export class UsersComponent implements OnInit {
         this.service.user = { ...user };
         this.service.user.startDate = user.startDate?.substring(0,10);
         this.service.user.endDate = user.endDate?.substring(0,10);
-        // this.service.user.startTime = user?.startTime?.toTimeString()?.substring(0,8);
-        // this.service.user.endTime = user?.endTime?.toTimeString()?.substring(0,8);
+        this.service.user.startTime =new Date(user.startTime).toTimeString().substring(0,8);
+        this.service.user.endTime = new Date(user.endTime).toTimeString()?.substring(0,8);
         this.service.userDialog = true;
     }
 
