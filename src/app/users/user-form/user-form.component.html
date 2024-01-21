@@ -59,6 +59,16 @@
             <label for="endDate">End Date</label>
             <input type="date" pInputText id="endDate" [(ngModel)]="service.user.endDate" />
         </div>
+        <div class="field col-6">
+            <label for="startTime">Von</label>
+            <input type="time" pInputText id="startTime" [(ngModel)]="service.user.startTime" required />
+            <small class="p-error" *ngIf="service.submitted && !service.user.startTime">startTime is required.</small>
+        </div>
+        <div class="field col-6">
+            <label for="endTime">Bis</label>
+            <input type="time" pInputText id="endTime" [(ngModel)]="service.user.endTime" required />
+            <small class="p-error" *ngIf="service.submitted && !service.user.endTime">endTime is required.</small>
+        </div>
     </div>
     <div class="field">
         <label for="notes">Notes</label>

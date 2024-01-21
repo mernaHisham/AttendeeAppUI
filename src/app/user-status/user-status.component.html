@@ -1,0 +1,17 @@
+<p-toast></p-toast>
+<div style="min-width: 85vw;">
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <h2>Statusübersicht</h2>
+        </ng-template>
+    </p-toolbar>
+    <div class="grid">
+               <div *ngFor="let user of service.users" class="col-12 md:col-4 lg:col-3">
+                <p-card header="MH">
+                    <p class="m-0">
+                      {{user.firstName}} {{ user.lastName}}
+                    </p>
+                </p-card>
+               </div>
+           </div>
+       </div>

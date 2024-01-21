@@ -36,6 +36,9 @@ export class HeaderComponent {
       {
         label: 'Abwesenheit',
         routerLink:'/vacation'
+      },{
+        label: 'Statusübersicht',
+        routerLink:'/userstatus'
       }
     ];
   }

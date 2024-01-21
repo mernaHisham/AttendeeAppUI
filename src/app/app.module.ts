@@ -105,6 +105,9 @@ import { ClockComponent } from './clock/clock.component';
 import { HomeComponent } from './home/home.component';
 import { CheckDeviceComponent } from './check-device/check-device.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { AttendanceRequestComponent } from './attendance-request/attendance-request.component';
+import { AttendanceRequestFormComponent } from './attendance-request/attendance-request-form/attendance-request-form.component';
+import { UserStatusComponent } from './user-status/user-status.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +126,10 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     ClockComponent,
     HomeComponent,
     CheckDeviceComponent,
-    AccessDeniedComponent
+    AccessDeniedComponent,
+    AttendanceRequestComponent,
+    AttendanceRequestFormComponent,
+    UserStatusComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,

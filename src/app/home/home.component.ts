@@ -47,7 +47,7 @@ export class HomeComponent {
     this.attnd.attendanceDate = new Date();
     this.attnd.startDay = new Date();
 
-    this.service.StartDay(this.attnd).subscribe((res: any) => {
+    this.service.StartDay(this.attnd,JSON.parse(this.loginUser).startTime).subscribe((res: any) => {
       if (res.result) {
         this.GetAttendance();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });
@@ -78,7 +78,7 @@ export class HomeComponent {
     })
   }
   EndDay = () => {
-    this.service.EndDay(this.attnd.id).subscribe((res: any) => {
+    this.service.EndDay(this.attnd.id,JSON.parse(this.loginUser).endTime).subscribe((res: any) => {
       if (res.result) {
         this.GetAttendance();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });

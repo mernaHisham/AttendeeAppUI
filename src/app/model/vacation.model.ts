@@ -2,7 +2,9 @@ export class Vacation {
     id: number=0;
     userId: number=0;
     userName: string="";
-    vacationDate: Date=new Date;
+    vacationDate: any;
+    startTime: any;
+    endTime: any;
     vacationType: number=0;
     status: number=0;
     notes: string="";

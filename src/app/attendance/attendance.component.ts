@@ -76,12 +76,12 @@ console.log(this.service.attendance.attendanceDate);
 
   saveAttendance() {
       this.service.submitted = true;
-      this.service.attendance.userId=JSON.parse(this.loginUser).id;
-      this.service.attendance.userName=JSON.parse(this.loginUser).name;
       if(this.service.attendance.id>0){
         this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
         this.service.attendance.updatedDate=new Date();
       }else{
+        this.service.attendance.userId=JSON.parse(this.loginUser).id;
+        this.service.attendance.userName=JSON.parse(this.loginUser).name;
         this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
         this.service.attendance.createdData=new Date();
       }

@@ -13,6 +13,7 @@ export class VacationService extends BaseService {
   selectedVacation!: Vacation[] | null;
   submitted: boolean = false;
   Delete:string="Delete";
+  dateType:string = "date";
 constructor(private http: HttpClient) { 
  super();
 }

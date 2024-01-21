@@ -45,6 +45,17 @@ openNew() {
 
 editVacation(vac: Vacation) {
     this.service.vacation = { ...vac };
+    this.service.vacation.vacationDate =vac.vacationDate?.substring(0,10);
+    if(vac.vacationType==6){
+      this.service.vacation.startTime =vac.startTime?.toTimeString().substring(0,8);
+      this.service.vacation.endTime =vac.endTime?.toTimeString().substring(0,8);
+      this.service.dateType="time"; 
+    }else{
+      this.service.vacation.startTime =vac.startTime?.substring(0,10);
+    this.service.vacation.endTime =vac.endTime?.substring(0,10);
+    this.service.dateType="date"; 
+    }
+    
     this.service.vacationDialog = true;
 }
 
@@ -71,12 +82,12 @@ hideDialog() {
 
 saveVacation() {
     this.service.submitted = true;
-    this.service.vacation.userId=JSON.parse(this.loginUser)?.id;
-      this.service.vacation.userName=JSON.parse(this.loginUser)?.name;
       if(this.service.vacation.id>0){
         this.service.vacation.updatedBy =JSON.parse(this.loginUser).id;
         this.service.vacation.updatedDate=new Date();
       }else{
+        this.service.vacation.userId=JSON.parse(this.loginUser)?.id;
+        this.service.vacation.userName=JSON.parse(this.loginUser)?.name;
         this.service.vacation.createdBy =JSON.parse(this.loginUser).id;
         this.service.vacation.createdData=new Date();
       }

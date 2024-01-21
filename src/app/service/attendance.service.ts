@@ -26,14 +26,14 @@ export class AttendanceService extends BaseService {
     this.http.post(`${this.baseURl}Attendance/PostAttendance`, attendance);
   DeleteAttendance = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/DeleteAttendance?AttendanceId=${AttendanceId}`);
-  StartDay = (Attend: Attendance) =>
-    this.http.post(`${this.baseURl}Attendance/StartDay`, Attend);
+  StartDay = (Attend: Attendance,loginUserStartTime:Date) =>
+    this.http.post(`${this.baseURl}Attendance/StartDay?loginUserStartTime=${loginUserStartTime}`, Attend);
   StartBreak = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/StartBreak?AttendanceId=${AttendanceId}`);
   EndBreak = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/EndBreak?AttendanceId=${AttendanceId}`);
-  EndDay = (AttendanceId: number) =>
-    this.http.get(`${this.baseURl}Attendance/EndDay?AttendanceId=${AttendanceId}`);
+  EndDay = (AttendanceId: number,loginUserEndTime:Date) =>
+    this.http.get(`${this.baseURl}Attendance/EndDay?AttendanceId=${AttendanceId}&&loginUserEndTime=${loginUserEndTime}`);
     GetAttendance=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAttendance?userId=${userId}`);
 

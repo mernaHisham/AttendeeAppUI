@@ -7,8 +7,10 @@ export class Users {
     email: string='';
     phoneNumber: string='';
     weeklyHours: number=0;
-    startDate: Date= new Date;
-    endDate: Date= new Date;
+    startDate: any;
+    endDate: any;
+    startTime:any;
+    endTime:any;
     isActive: boolean=true;
     address: string='';
     fkRoleId: number=0;
