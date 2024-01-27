@@ -1,8 +1,14 @@
 <div class="formgrid grid">
-    <div class="field col-12">
+    <div class="field col-6" *ngIf="!userEdit">
         <label for="attendanceDate"> Datum</label>
         <input type="date" pInputText id="attendanceDate" [(ngModel)]="service.attendance.attendanceDate" required autofocus />
         <small class="p-error" *ngIf="service.submitted && !service.attendance.attendanceDate">Attendance Date is required.</small>
+    </div>
+    <div class="field col-6" *ngIf="!userEdit">
+        <label>Employees</label>
+        <p-dropdown [options]="Employees" 
+        [(ngModel)]="service.attendance.userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
+        <small class="p-error" *ngIf="service.submitted && !service.attendance.userId">Art aussuchen is required.</small>
     </div>
     <div class="field col-6">
         <label for="startDay"> Allgemein</label>

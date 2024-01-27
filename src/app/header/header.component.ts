@@ -38,7 +38,8 @@ export class HeaderComponent {
         routerLink:'/vacation'
       },{
         label: 'Statusübersicht',
-        routerLink:'/userstatus'
+        routerLink:'/userstatus',
+        styleClass:this.loginUserRole==2?"hidden":""
       }
     ];
   }

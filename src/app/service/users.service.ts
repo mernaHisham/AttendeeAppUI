@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class UsersService extends BaseService {
   userDialog: boolean = false; 
     users!: Users[];
+    userStatus: any;
     user!: Users;
     selectedUser!: Users[] | null;
     submitted: boolean = false;
@@ -30,4 +31,9 @@ export class UsersService extends BaseService {
 
  UserActivation = (userId:number,active:boolean) =>
  this.http.get(`${this.baseURl}Users/UserActivation?UserId=${userId}&&active=${active}`);
+ GetUsersSelectList =() =>
+ this.http.get(`${this.baseURl}Users/GetUsersSelectList`);
+ GetUsersStatus=() =>
+ this.http.get(`${this.baseURl}Users/GetUsersStatus`);
+
 }

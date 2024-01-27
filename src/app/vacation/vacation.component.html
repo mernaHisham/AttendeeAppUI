@@ -37,6 +37,7 @@
                 <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
                 <th pSortableColumn="vacationType">Abwesenheitsgrund <p-sortIcon field="vacationType"></p-sortIcon></th>
                 <th pSortableColumn="vacationDate">Datum <p-sortIcon field="vacationDate"></p-sortIcon></th>
+                <th pSortableColumn="startTime">Von - Bis <p-sortIcon field="startTime"></p-sortIcon></th>
                 <!-- <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th> -->
                 <th *ngIf="userRole==1"></th>
             </tr>
@@ -46,6 +47,8 @@
                 <td>{{ vac.userName }}</td>
                 <td>{{ vacationTypes[vac.vacationType-1]?.name }}</td>
                 <td>{{ vac.vacationDate |date:'dd.MM.yyyy'}}</td>
+                <td *ngIf="vac.vacationType==6">{{ vac.startTime |date:'HH.mm.ss'}} - {{ vac.endTime |date:'HH.mm.ss'}}</td>
+                <td *ngIf="vac.vacationType!=6">{{ vac.startTime |date:'dd.MM.yyyy'}} - {{ vac.endTime |date:'dd.MM.yyyy'}}</td>
                 <!-- <td>
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
                 </td> -->

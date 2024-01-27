@@ -25,3 +25,12 @@ export enum Roles{
     Admin=1,
     Employee=2
 }
+
+export enum AttendanceEnum
+{
+    OffLine = 1,
+    Active = 2,
+    OnBreak = 3,
+    EndDay = 4,
+    OnOverTime = 5
+}

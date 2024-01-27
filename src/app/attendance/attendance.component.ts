@@ -47,19 +47,19 @@ export class AttendanceComponent implements OnInit {
     if(this.userRole==1){
       this.service.attendance = { ...attnd };
       this.service.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
-      this.service.attendance.startDay =new Date(attnd.startDay).toTimeString().substring(0,8);
-      this.service.attendance.startBreak =new Date(attnd.startBreak).toTimeString().substring(0,8);
-      this.service.attendance.endBreak =new Date(attnd.endBreak).toTimeString().substring(0,8);
-      this.service.attendance.endDay =new Date(attnd.endDay).toTimeString().substring(0,8);
+      this.service.attendance.startDay =attnd.startDay==null?null:new Date(attnd.startDay).toTimeString().substring(0,8);
+      this.service.attendance.startBreak =attnd.startBreak==null?null:new Date(attnd.startBreak).toTimeString().substring(0,8);
+      this.service.attendance.endBreak =attnd.endBreak==null?null:new Date(attnd.endBreak).toTimeString().substring(0,8);
+      this.service.attendance.endDay =attnd.endDay==null?null:new Date(attnd.endDay).toTimeString().substring(0,8);
     }
     else{
       this.attReqService.attendance = new AttendanceRequest();
       this.attReqService.attendance.AttendanceId = attnd.id;
       this.attReqService.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
-      this.attReqService.attendance.startDay =new Date(attnd.startDay).toTimeString().substring(0,8);
-      this.attReqService.attendance.startBreak =new Date(attnd.startBreak).toTimeString().substring(0,8);
-      this.attReqService.attendance.endBreak =new Date(attnd.endBreak).toTimeString().substring(0,8);
-      this.attReqService.attendance.endDay =new Date(attnd.endDay).toTimeString().substring(0,8);
+      this.attReqService.attendance.startDay =attnd.startDay==null?null:new Date(attnd.startDay).toTimeString().substring(0,8);
+      this.attReqService.attendance.startBreak =attnd.startBreak==null?null:new Date(attnd.startBreak).toTimeString().substring(0,8);
+      this.attReqService.attendance.endBreak =attnd.endBreak==null?null:new Date(attnd.endBreak).toTimeString().substring(0,8);
+      this.attReqService.attendance.endDay =attnd.endDay==null?null:new Date(attnd.endDay).toTimeString().substring(0,8);
     }
       
       this.service.attenDialog = true;

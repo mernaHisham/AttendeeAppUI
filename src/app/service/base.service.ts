@@ -11,9 +11,8 @@ export class BaseService {
  constructor() {
     //ng build --output-path publish
      if (!isDevMode()) {
-        // this.baseURl = "https://attendeapi.royal-tek.com/api/";
-         this.baseURl = "https://sterntimeapi.kindersterne.com/api/";
-         
+   // this.baseURl = "https://attendeapi.royal-tek.com/api/";
+      this.baseURl = "https://sterntimeapi.kindersterne.com/api/";   
      }
  }
 }

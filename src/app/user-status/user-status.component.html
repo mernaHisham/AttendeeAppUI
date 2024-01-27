@@ -6,12 +6,35 @@
         </ng-template>
     </p-toolbar>
     <div class="grid">
-               <div *ngFor="let user of service.users" class="col-12 md:col-4 lg:col-3">
-                <p-card header="MH">
-                    <p class="m-0">
-                      {{user.firstName}} {{ user.lastName}}
-                    </p>
-                </p-card>
-               </div>
-           </div>
-       </div>
+        <div *ngFor="let user of service.userStatus" class="col-12 md:col-4 lg:col-3">
+            <p-card>
+                <ng-template pTemplate="header">
+                    <div class="flex justify-content-between gap-2 p-3">
+                        <p-avatar [label]="user.title" styleClass="mr-2 text-white font-bold" size="xlarge" shape="circle"></p-avatar>
+                        <p-button icon="pi pi-ellipsis-h" [rounded]="true" [text]="true" (onClick)="GetAttendance(user.id,user.name)"></p-button>
+                    </div>
+                 
+                </ng-template>
+                <div class="card flex gap-2">
+                    <p-tag
+                     [severity]="user.status==1?'Primary':user.status==2?'success':user.status==3?'warning':'danger'" 
+                     [value]="user.status==1?'OffLine':user.status==2?'Active':user.status==3?'OnBreak':'EndDay'">
+                    </p-tag>
+                </div>
+                <p class="m-0 font-bold">
+                    {{user.name}}
+                </p>
+            </p-card>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="attndService.attenDialog" [style]="{ width: '50vw' }" header="Attendance Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-attendance-form [userEdit]="true"></app-attendance-form>
+    </ng-template>
+    
+   <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveAttendance()"></button>
+</ng-template>
+</p-dialog>
