@@ -16,3 +16,8 @@ export class Attendance {
     updatedDate: Date=new Date;
     isDeleted: boolean=false;
 }
+export class AttendanceFilterRequest{
+    userId:number=0;
+    from :any;
+    to:any;
+}

@@ -1,0 +1,16 @@
+<div class="formgrid grid">
+    <div class="field col-4">
+        <label>Employees</label>
+        <p-dropdown [options]="Employees"
+        [(ngModel)]="service.filterForm.userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
+    </div>
+    <div class="field col-4">
+        <label for="from"> Von</label>
+        <input type="date" pInputText id="from" [(ngModel)]="service.filterForm.from"/>
+    </div>
+    <div class="field col-4">
+        <label for="to"> Bis</label>
+        <input type="date" pInputText id="to" [(ngModel)]="service.filterForm.to" />
+    </div>
+   
+</div>

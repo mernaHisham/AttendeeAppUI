@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Attendance } from '../model/attendance.model';
+import { Attendance, AttendanceFilterRequest } from '../model/attendance.model';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,6 +13,7 @@ export class AttendanceService extends BaseService {
   selectedAttendance!: Attendance[] | null;
   submitted: boolean = false;
   Delete: string = "Delete";
+  filterForm :AttendanceFilterRequest= new AttendanceFilterRequest();
   constructor(private http: HttpClient) {
     super();
   }
@@ -37,4 +38,6 @@ export class AttendanceService extends BaseService {
     GetAttendance=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAttendance?userId=${userId}`);
 
+    FilterAttendance=()=>
+    this.http.post(`${this.baseURl}AttendanceReport/FilterAttendance`, this.filterForm);
 }

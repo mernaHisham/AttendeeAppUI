@@ -1,6 +1,6 @@
 export class AttendanceRequest {
     id: number=0;
-    AttendanceId: number=0;
+    attendanceId: number=0;
     userName: string="";
     attendanceDate: any=null;
     startDay: any=null;

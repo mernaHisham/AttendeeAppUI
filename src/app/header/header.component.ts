@@ -41,6 +41,16 @@ export class HeaderComponent {
         routerLink:'/userstatus',
         styleClass:this.loginUserRole==2?"hidden":""
       }
+      ,{
+        label: 'Requests',
+        routerLink:'/requests',
+        styleClass:this.loginUserRole==2?"hidden":""
+      }
+      ,{
+        label: 'Reports',
+        routerLink:'/report',
+        styleClass:this.loginUserRole==2?"hidden":""
+      }
     ];
   }
   Logout(){

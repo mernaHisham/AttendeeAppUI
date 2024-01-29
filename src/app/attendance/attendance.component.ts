@@ -29,7 +29,8 @@ export class AttendanceComponent implements OnInit {
   }
   GetAllAttendance() {
     this.isLoading=true;
-    let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+   // let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
+    let userId=JSON.parse(this.loginUser).id;
       this.service.GetAll(userId).subscribe((data) => {
           this.service.attends = data as Attendance[];
           this.isLoading=false;
@@ -54,7 +55,8 @@ export class AttendanceComponent implements OnInit {
     }
     else{
       this.attReqService.attendance = new AttendanceRequest();
-      this.attReqService.attendance.AttendanceId = attnd.id;
+      this.attReqService.attendance.attendanceId = attnd.id;
+      this.attReqService.attendance.userName = attnd.userName;
       this.attReqService.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
       this.attReqService.attendance.startDay =attnd.startDay==null?null:new Date(attnd.startDay).toTimeString().substring(0,8);
       this.attReqService.attendance.startBreak =attnd.startBreak==null?null:new Date(attnd.startBreak).toTimeString().substring(0,8);
@@ -88,43 +90,33 @@ export class AttendanceComponent implements OnInit {
 
   saveAttendance() {
       this.service.submitted = true;
-      if(this.service.attendance.id>0){
-        if(this.userRole==1){
-          this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
-          this.service.attendance.updatedDate=new Date();
+      if(this.userRole==1){
+        if(this.service.attendance.id>0){
+            this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
+            this.service.attendance.updatedDate=new Date();
         }else{
-        this.attReqService.attendance.createdBy =JSON.parse(this.loginUser).id;
-        this.attReqService.attendance.createdData=new Date();
-        this.attReqService.attendance.userName=JSON.parse(this.loginUser).name;
-        this.attReqService.attendance.isApproved=false;
+          this.service.attendance.userId=JSON.parse(this.loginUser).id;
+          this.service.attendance.userName=JSON.parse(this.loginUser).name;
+          this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
+          this.service.attendance.createdData=new Date();
         }
-        
+        this.service.PostAttendance(this.service.attendance).subscribe(res => {
+          this.GetAllAttendance();
+          this.service.attenDialog = false;
+          this.service.attendance = new Attendance();
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+      });
+      
       }else{
-        this.service.attendance.userId=JSON.parse(this.loginUser).id;
-        this.service.attendance.userName=JSON.parse(this.loginUser).name;
-        this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
-        this.service.attendance.createdData=new Date();
-      }
-     if(this.userRole==1){
-      this.service.PostAttendance(this.service.attendance).subscribe(res => {
-        this.GetAllAttendance();
-        this.service.attenDialog = false;
-        this.service.attendance = new Attendance();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
-
-    });
-     }else{
-      this.attReqService.PostAttendance(this.attReqService.attendance).subscribe(res => {
-        this.GetAllAttendance();
-        this.service.attenDialog = false;
-        this.service.attendance = new Attendance();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
-
-    });
-     }
-     
+          this.attReqService.attendance.createdBy =JSON.parse(this.loginUser)?.id;
+          this.attReqService.attendance.createdData=new Date();
+          this.attReqService.PostAttendance(this.attReqService.attendance).subscribe(res => {
+            this.GetAllAttendance();
+            this.service.attenDialog = false;
+            this.service.attendance = new Attendance();
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
     
+        });
+      }
   }
-
- 
 }

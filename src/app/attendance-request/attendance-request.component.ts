@@ -4,7 +4,6 @@ import { AttendanceRequest } from '../model/attendance-request.model';
 import { AttendanceRequestService } from '../service/attendance-request.service';
 import { LoginResponse } from '../model/login-response.model';
 import { Roles } from '../model/users.model';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-attendance-request',
@@ -17,7 +16,6 @@ export class AttendanceRequestComponent {
   userRole:number=0;
   constructor(public service: AttendanceRequestService, 
     public messageService: MessageService, 
-    private datePipe:DatePipe,
     public confirmationService: ConfirmationService) { }
 
     ngOnInit() {
@@ -91,6 +89,10 @@ export class AttendanceRequestComponent {
         });
       
     }
-  
+    ApproveAttendance = (attendanceId:number) =>{
+      this.service.ApproveAttendance(attendanceId).subscribe(res =>{
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+      })
+    }
    
   }

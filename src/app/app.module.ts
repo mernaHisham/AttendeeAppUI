@@ -108,6 +108,8 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { AttendanceRequestComponent } from './attendance-request/attendance-request.component';
 import { AttendanceRequestFormComponent } from './attendance-request/attendance-request-form/attendance-request-form.component';
 import { UserStatusComponent } from './user-status/user-status.component';
+import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import { FilterFormComponent } from './attendance-report/filter-form/filter-form.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +131,9 @@ import { UserStatusComponent } from './user-status/user-status.component';
     AccessDeniedComponent,
     AttendanceRequestComponent,
     AttendanceRequestFormComponent,
-    UserStatusComponent
+    UserStatusComponent,
+    AttendanceReportComponent,
+    FilterFormComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,
