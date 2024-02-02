@@ -2,3 +2,15 @@ h2{
     color: #517ca4;
     font-weight: bold;
 }
+.success-bg{
+    background-color: rgba(228, 248, 240, 0.7);
+}
+.info-bg{
+    background-color: rgba(219, 234, 254, 0.7);
+}
+.warning-bg{
+    background-color: rgba(255, 242, 226, 0.7);
+}
+.danger-bg{
+    background-color: rgba(255, 231, 230, 0.7);
+}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AttendanceService } from '../service/attendance.service';
 import { Attendance } from '../model/attendance.model';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { VacationService } from '../service/vacation.service';
 import { Vacation } from '../model/vacation.model';
 
@@ -22,7 +22,8 @@ export class HomeComponent {
     { code: 5, name: "UM-Umzugsurlaub", color: "#ef4444", bgColor: "#f9fafb" },
     { code: 6, name: "T-Termin", color: "#a855f7", bgColor: "#f9fafb" },
   ]
-  constructor(public vacService: VacationService, public service: AttendanceService, public messageService: MessageService) { }
+  constructor(public vacService: VacationService, public confirmationService: ConfirmationService,
+    public service: AttendanceService, public messageService: MessageService) { }
 
   ngOnInit() {
     this.GetAllVacations();
@@ -78,14 +79,24 @@ export class HomeComponent {
     })
   }
   EndDay = () => {
-    this.service.EndDay(this.attnd.id,JSON.parse(this.loginUser).endTime).subscribe((res: any) => {
-      if (res.result) {
-        this.GetAttendance();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });
+    this.confirmationService.confirm({
+      message: 'Hello '+ JSON.parse(this.loginUser).name +',Are you sure you want to Logout?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.service.EndDay(this.attnd.id,JSON.parse(this.loginUser).endTime).subscribe((res: any) => {
+          if (res.result) {
+            this.GetAttendance();
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });
+          }
+          else
+            this.messageService.add({ severity: 'error', summary: 'Failed', detail: res.msg, life: 3000 });
+        })
+
       }
-      else
-        this.messageService.add({ severity: 'error', summary: 'Failed', detail: res.msg, life: 3000 });
-    })
+  });
+
+ 
   }
   openNew() {
     this.vacService.vacation = new Vacation();
