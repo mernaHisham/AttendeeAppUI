@@ -11,12 +11,14 @@ export class ReportApprovalService extends BaseService {
    reports!: ReportApproval[];
   // status: any;
    report!: ReportApproval;
-  // selectedReport!: ReportApproval[] | null;
-  // submitted: boolean = false;
+   selectedReport!: ReportApproval[] | null;
+   submitted: boolean = false;
   // Delete:string="Delete";
 constructor(private http: HttpClient) { 
  super();
 }
+GetAllReportApprovals = ()=>
+this.http.get(`${this.baseURl}ReportApprovals/GetAllReportApprovals`);
 GetReportApproval=(userId:number)=>
 this.http.get(`${this.baseURl}ReportApprovals/GetReportApproval?userId=${userId}`);
 ApproveReport=()=>

@@ -1,1 +1,68 @@
-<p>report-approval works!</p>
+
+<app-access-denied *ngIf="loginUserRole==2"></app-access-denied>
+<div class="card" [style]="{ 'min-width': '85vw' }" *ngIf="loginUserRole==1">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+            <h2>Report Approvals</h2>
+        </ng-template>
+
+        <!-- <ng-template pTemplate="right">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
+        </ng-template> -->
+    </p-toolbar>
+    
+<div class="card flex justify-content-center" *ngIf="isLoading"> 
+    <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
+</div>
+    <p-table
+    *ngIf="!isLoading"
+        #dt
+        [value]="service.reports"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '85vw' }"
+        [(selection)]="service.selectedReport"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        styleClass="small"
+    >
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
+                <th pSortableColumn="reportMonth">Month <p-sortIcon field="reportMonth"></p-sortIcon></th>
+                <th pSortableColumn="reportYear">Year <p-sortIcon field="reportYear"></p-sortIcon></th>
+                <th pSortableColumn="notes">Notes <p-sortIcon field="notes"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+            <tr>
+                <td>{{ report.userName }}</td>
+                <td>{{ report.reportMonth }}</td>
+                <td>{{ report.reportYear }}</td>
+                <td>{{ report.notes }}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ service.reports ? service.reports?.length : 0 }}</div>
+        </ng-template>
+    </p-table>
+</div>
+<!-- <p-dialog [(visible)]="service.deviceDialog" [style]="{ width: '50vw' }" header="User Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-device-form></app-device-form>
+    </ng-template>
+    
+   <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveDevice()"></button>
+</ng-template>
+</p-dialog> -->
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

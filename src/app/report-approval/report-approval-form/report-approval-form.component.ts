@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ReportApprovalService } from 'src/app/service/report-approval.service';
 
 @Component({
   selector: 'app-report-approval-form',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./report-approval-form.component.css']
 })
 export class ReportApprovalFormComponent {
-
+constructor(public service:ReportApprovalService){}
 }

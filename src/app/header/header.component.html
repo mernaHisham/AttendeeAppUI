@@ -10,3 +10,15 @@
         </ng-template>
   </p-menubar>
 </div>
+
+
+ <p-dialog [(visible)]="service.reportDialog" [style]="{ width: '50vw' }" header="Confirmation" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-report-approval-form></app-report-approval-form>
+    </ng-template>
+    
+   <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Approve" icon="pi pi-check" class="p-button-text" (click)="ApproveReport()"></button>
+</ng-template>
+</p-dialog> 
