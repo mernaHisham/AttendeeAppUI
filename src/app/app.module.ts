@@ -110,6 +110,8 @@ import { AttendanceRequestFormComponent } from './attendance-request/attendance-
 import { UserStatusComponent } from './user-status/user-status.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { FilterFormComponent } from './attendance-report/filter-form/filter-form.component';
+import { ReportApprovalComponent } from './report-approval/report-approval.component';
+import { ReportApprovalFormComponent } from './report-approval/report-approval-form/report-approval-form.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +135,9 @@ import { FilterFormComponent } from './attendance-report/filter-form/filter-form
     AttendanceRequestFormComponent,
     UserStatusComponent,
     AttendanceReportComponent,
-    FilterFormComponent
+    FilterFormComponent,
+    ReportApprovalComponent,
+    ReportApprovalFormComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,
