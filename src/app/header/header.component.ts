@@ -16,11 +16,45 @@ export class HeaderComponent {
   loginUserRole: number = 0;
   loginUserName:string="";
   items: MenuItem[]=[];
+  userRep! :ReportApproval;
   constructor(private router:Router,public service:ReportApprovalService,
     public messageService: MessageService){ }
   ngOnInit() {
    this.loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
    this.loginUserName= JSON.parse(this.loginUser)?.name;
+      // if(new Date().getDate() === 1){
+        this.GetReportApproval();
+        // }
+    
+
+  }
+  openNew() {
+    this.service.report = new ReportApproval();
+    this.service.submitted = false;
+    this.service.reportDialog = true;
+}
+
+  hideDialog() {
+    this.service.reportDialog = false;
+    this.service.submitted = false;
+}
+  ApproveReport = () =>{
+    this.service.report.createdBy = JSON.parse(this.loginUser).id;
+    this.service.report.createdData = new Date();
+    this.service.report.userId  = JSON.parse(this.loginUser).id;
+    this.service.report.userName = JSON.parse(this.loginUser).name;
+    this.service.report.reportMonth = new Date().getMonth();
+    this.service.report.reportYear = new Date().getFullYear();
+
+
+    this.service.ApproveReport().subscribe(res=>{
+      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000 });
+    })
+
+  }
+  GetReportApproval = () =>{
+  this.service.GetReportApproval(JSON.parse(this.loginUser).id).subscribe(res=>{
+    this.userRep= res as ReportApproval;
     this.items=[
       {
         label: 'Devices',
@@ -61,35 +95,12 @@ export class HeaderComponent {
       }
       ,{
         label: 'Approve',
-        command:()=>this.openNew()
+        styleClass:this.userRep?.id>0?"text-white bg-red-700 font-bold border-round":"",
+        command:()=>this.openNew(),
       }
     ];
-  }
-  openNew() {
-    this.service.report = new ReportApproval();
-    this.service.submitted = false;
-    this.service.reportDialog = true;
+  })
 }
-
-  hideDialog() {
-    this.service.reportDialog = false;
-    this.service.submitted = false;
-}
-  ApproveReport = () =>{
-    this.service.report.createdBy = JSON.parse(this.loginUser).id;
-    this.service.report.createdData = new Date();
-    this.service.report.userId  = JSON.parse(this.loginUser).id;
-    this.service.report.userName = JSON.parse(this.loginUser).name;
-    this.service.report.reportMonth = new Date().getMonth();
-    this.service.report.reportYear = new Date().getFullYear();
-
-
-    this.service.ApproveReport().subscribe(res=>{
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000 });
-    })
-
-  }
-
   Logout(){
     localStorage.removeItem("user");
     localStorage.removeItem("accessToken");

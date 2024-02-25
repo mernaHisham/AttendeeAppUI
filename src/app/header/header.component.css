@@ -22,3 +22,6 @@
   a.logoutCls:hover{
     background: #fff;
   }
+  a.text-white{
+    color: #fff !important;
+  }
