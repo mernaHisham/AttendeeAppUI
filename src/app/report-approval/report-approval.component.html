@@ -38,7 +38,6 @@
                 <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
                 <th pSortableColumn="reportMonth">Month <p-sortIcon field="reportMonth"></p-sortIcon></th>
                 <th pSortableColumn="reportYear">Year <p-sortIcon field="reportYear"></p-sortIcon></th>
-                <th pSortableColumn="notes">Notes <p-sortIcon field="notes"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
@@ -46,7 +45,6 @@
                 <td>{{ report.userName }}</td>
                 <td>{{ report.reportMonth }}</td>
                 <td>{{ report.reportYear }}</td>
-                <td>{{ report.notes }}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">

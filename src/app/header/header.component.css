@@ -1,4 +1,4 @@
-.p-element{
+p-menubar.p-element{
   position: fixed;
     top: 0;
     left: 0;
@@ -25,3 +25,24 @@
   a.text-white{
     color: #fff !important;
   }
+
+
+  .lbl{
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  a.approveCls{
+    border: 1px solid rgb(239, 68, 68);
+    padding: 7px;
+    border-radius: 5px;
+    background: rgb(239, 68, 68);
+    margin-right: 2px;
+  }
+  a.approveCls:hover{
+    background: #fff;
+  }
+  a.approveCls:hover .lbl{
+    color: rgb(239, 68, 68);
+  }
+  

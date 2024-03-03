@@ -48,7 +48,10 @@ export class HeaderComponent {
 
 
     this.service.ApproveReport().subscribe(res=>{
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000 });
+      this.GetReportApproval();
+      this.hideDialog();
+      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'report approved', life: 3000 });
+  
     })
 
   }
@@ -93,11 +96,11 @@ export class HeaderComponent {
         routerLink:'/reportapprovals',
         styleClass:this.loginUserRole==2?"hidden":""
       }
-      ,{
-        label: 'Approve',
-        styleClass:this.userRep?.id>0?"text-white bg-red-700 font-bold border-round":"",
-        command:()=>this.openNew(),
-      }
+      // ,{
+      //   label: 'Approve',
+      //   styleClass:this.userRep?.id>0?"text-white bg-red-700 font-bold border-round":"",
+      //   command:()=>this.openNew(),
+      // }
     ];
   })
 }

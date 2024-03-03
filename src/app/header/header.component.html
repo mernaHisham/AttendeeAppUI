@@ -6,19 +6,20 @@
           </div>
         </ng-template>
         <ng-template pTemplate="end">
+          <a *ngIf="!userRep || userRep.id <= 0"  class="approveCls" (click)="openNew()"><span class="lbl">Approve </span> </a>
           <a  class="logoutCls" (click)="Logout()"><span class="userNameSpn">{{loginUserName}} </span>  <i class="pi pi-sign-out"></i></a>
         </ng-template>
   </p-menubar>
 </div>
 
 
- <p-dialog [(visible)]="service.reportDialog" [style]="{ width: '50vw' }" header="Confirmation" [modal]="true" styleClass="p-fluid">
+ <p-dialog [(visible)]="service.reportDialog" [style]="{ width: '50vw' }" header="Bestätigung der Zeiterfassung" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <app-report-approval-form></app-report-approval-form>
     </ng-template>
     
    <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Approve" icon="pi pi-check" class="p-button-text" (click)="ApproveReport()"></button>
-</ng-template>
-</p-dialog> 
+    <button pButton pRipple label="Später" icon="pi pi-times" class="p-button-text p-button-danger" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Bestätigen" icon="pi pi-check" class="p-button-text p-button-success" (click)="ApproveReport()"></button>
+</ng-template> 
+</p-dialog>  

@@ -7,6 +7,7 @@ import { Roles } from '../model/users.model';
 import { DatePipe } from '@angular/common';
 import { AttendanceRequestService } from '../service/attendance-request.service';
 import { AttendanceRequest } from '../model/attendance-request.model';
+import { UsersService } from '../service/users.service';
 
 @Component({
   selector: 'app-attendance',
@@ -18,21 +19,38 @@ export class AttendanceComponent implements OnInit {
   isLoading:boolean=false;
   loginUser: any = localStorage.getItem("user");
   userRole:number=0;
+  userId:number=0;
+  from:any;
+  to:any;
   constructor(public service: AttendanceService, public attReqService:AttendanceRequestService,
-    public messageService: MessageService, 
+    public messageService: MessageService ,public userService: UsersService,
     private datePipe:DatePipe,
     public confirmationService: ConfirmationService) { }
-
+    Employees:any;
   ngOnInit() {
     this.userRole=JSON.parse(this.loginUser).fkRoleId;
       this.GetAllAttendance();
+      if(this.userRole==1)
+      this.GetAllEmployees();
   }
+  GetAllEmployees() {
+    this.userService.GetUsersSelectList().subscribe((data) => {
+        this.Employees = data;
+    });
+}
   GetAllAttendance() {
     this.isLoading=true;
-   // let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
-    let userId=JSON.parse(this.loginUser).id;
-      this.service.GetAll(userId).subscribe((data) => {
+    let userId=this.userRole==Roles.Admin?this.userId:JSON.parse(this.loginUser).id;
+   // let userId=JSON.parse(this.loginUser).id;
+      this.service.GetAll(userId,this.from,this.to).subscribe((data) => {
           this.service.attends = data as Attendance[];
+          this.isLoading=false;
+      });
+  }
+  RecalculateAttendance() {
+    this.isLoading=true;
+      this.service.RecalculateAttendance(this.userId,this.from,this.to).subscribe((res) => {
+          console.log(res);
           this.isLoading=false;
       });
   }

@@ -17,7 +17,7 @@ export class AttendanceService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
-  GetAll = (userId:number) =>
+  GetAll = (userId:number,from:Date,to:Date) =>
     this.http.get(`${this.baseURl}Attendance/GetAll?userId=${userId}`);
   GetAllByUser=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAllByUser?userId=${userId}`);
@@ -40,4 +40,7 @@ export class AttendanceService extends BaseService {
 
     FilterAttendance=()=>
     this.http.post(`${this.baseURl}AttendanceReport/FilterAttendance`, this.filterForm);
+    RecalculateAttendance=(userId:number,from:Date,to:Date)=>
+    this.http.get(`${this.baseURl}Attendance/RecalculateAttendance?userId=${userId}&from=${from}&to=${to}`);
+
 }

@@ -12,6 +12,27 @@
             <button pButton pRipple label="NEU" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
+        <div class="formgrid grid">
+            <div class="field col" *ngIf="userRole==1">
+                <label for="userId">Employees</label>
+                <p-dropdown [options]="Employees" 
+                 class="w-full" 
+                [(ngModel)]="userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
+            </div>
+            <div class="field col">
+                <label for="from">From</label>
+                <input id="from" [(ngModel)]="from" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="field col">
+                <label for="to">To</label>
+                <input id="to" [(ngModel)]="to" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="field col">
+                <button *ngIf="userRole==1" pButton pRipple label="Recalculate"  class="p-button-info mt-3 mr-1" (click)="RecalculateAttendance()"></button>
+                <button pButton pRipple label="Search"  class="p-button-info mt-3 ml-1" (click)="GetAllAttendance()"></button>
+            </div>
+        </div>
+         
     <div class="flex justify-content-center" *ngIf="isLoading"> 
         <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
     </div>
@@ -40,6 +61,7 @@
                 <th pSortableColumn="endBreak">Pause beendet<p-sortIcon field="endBreak"></p-sortIcon></th>
                 <th pSortableColumn="endDay">Beenden<p-sortIcon field="endDay"></p-sortIcon></th>
                 <th pSortableColumn="lag">Verzögerung  <p-sortIcon field="lag"></p-sortIcon></th>
+                <th pSortableColumn="overtime">overtime  <p-sortIcon field="overtime"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -52,6 +74,7 @@
                 <td>{{ attnd.endBreak |date:'HH.mm.ss'}}</td>
                 <td>{{ attnd.endDay |date:'HH.mm.ss'}}</td>
                 <td>{{ attnd.lag }}</td>
+                <td>{{ attnd.overtime }}</td>
                
                 <td *ngIf="userRole==1">
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editAttendance(attnd)"></button>
