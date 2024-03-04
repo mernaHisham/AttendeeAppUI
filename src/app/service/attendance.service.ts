@@ -17,8 +17,8 @@ export class AttendanceService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
-  GetAll = (userId:number,from:Date,to:Date) =>
-    this.http.get(`${this.baseURl}Attendance/GetAll?userId=${userId}`);
+  GetAll = (userId:number,from:any,to:any) =>
+    this.http.get(`${this.baseURl}Attendance/GetAll?userId=${userId}&from=${from}&to=${to}`);
   GetAllByUser=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAllByUser?userId=${userId}`);
   GetById = (AttendanceId: number) =>
@@ -34,13 +34,13 @@ export class AttendanceService extends BaseService {
   EndBreak = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}Attendance/EndBreak?AttendanceId=${AttendanceId}`);
   EndDay = (AttendanceId: number,loginUserEndTime:Date) =>
-    this.http.get(`${this.baseURl}Attendance/EndDay?AttendanceId=${AttendanceId}&&loginUserEndTime=${loginUserEndTime}`);
+    this.http.get(`${this.baseURl}Attendance/EndDay?AttendanceId=${AttendanceId}&loginUserEndTime=${loginUserEndTime}`);
     GetAttendance=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAttendance?userId=${userId}`);
 
     FilterAttendance=()=>
     this.http.post(`${this.baseURl}AttendanceReport/FilterAttendance`, this.filterForm);
-    RecalculateAttendance=(userId:number,from:Date,to:Date)=>
+    RecalculateAttendance=(userId:number,from:any,to:any)=>
     this.http.get(`${this.baseURl}Attendance/RecalculateAttendance?userId=${userId}&from=${from}&to=${to}`);
 
 }

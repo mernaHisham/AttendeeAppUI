@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { AttendanceRequestService } from '../service/attendance-request.service';
 import { AttendanceRequest } from '../model/attendance-request.model';
 import { UsersService } from '../service/users.service';
+import { ReportApprovalService } from '../service/report-approval.service';
+import { ReportApproval } from '../model/report-approval.model';
 
 @Component({
   selector: 'app-attendance',
@@ -22,16 +24,23 @@ export class AttendanceComponent implements OnInit {
   userId:number=0;
   from:any;
   to:any;
+  userRep! :ReportApproval;
+  isPreMonthApproved:boolean=false;
   constructor(public service: AttendanceService, public attReqService:AttendanceRequestService,
     public messageService: MessageService ,public userService: UsersService,
     private datePipe:DatePipe,
+    public reportService:ReportApprovalService,
     public confirmationService: ConfirmationService) { }
     Employees:any;
   ngOnInit() {
+    //this.getFirstAndLastDayOfMonth();
     this.userRole=JSON.parse(this.loginUser).fkRoleId;
-      this.GetAllAttendance();
-      if(this.userRole==1)
+      if(this.userRole==1){
       this.GetAllEmployees();
+      this.GetAllAttendance();
+      }else{
+        this.GetReportApproval();
+      }
   }
   GetAllEmployees() {
     this.userService.GetUsersSelectList().subscribe((data) => {
@@ -41,14 +50,29 @@ export class AttendanceComponent implements OnInit {
   GetAllAttendance() {
     this.isLoading=true;
     let userId=this.userRole==Roles.Admin?this.userId:JSON.parse(this.loginUser).id;
-   // let userId=JSON.parse(this.loginUser).id;
-      this.service.GetAll(userId,this.from,this.to).subscribe((data) => {
+    var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
+   var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
+   if(this.userRole==Roles.Employee){
+    var firstAndLastDay = this.getFirstAndLastDayOfMonth();
+     from=this.isPreMonthApproved? this.datePipe.transform(firstAndLastDay.firstDayOfMonth,"yyyy/MM/dd")??"":"";
+      to=this.isPreMonthApproved? this.datePipe.transform(firstAndLastDay.lastDayOfMonth,"yyyy/MM/dd")??"":"";
+   }
+
+      this.service.GetAll(userId,from,to).subscribe((data) => {
           this.service.attends = data as Attendance[];
           this.isLoading=false;
       });
   }
+  GetReportApproval = () =>{
+    this.reportService.GetReportApproval(JSON.parse(this.loginUser).id).subscribe(res=>{
+      this.userRep= res as ReportApproval;
+      this.isPreMonthApproved = this.userRep?.id>0?true:false;
+      this.GetAllAttendance();
+    })}
   RecalculateAttendance() {
-    this.isLoading=true;
+    this.isLoading=true;  
+  //   let from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
+  //  let to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
       this.service.RecalculateAttendance(this.userId,this.from,this.to).subscribe((res) => {
         console.log(res);
         
@@ -64,6 +88,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   timeConvert(minutes:number) {
+    
     var hours = Math.floor(minutes / 60);
     var remainingMinutes = minutes % 60;
 
@@ -148,4 +173,24 @@ export class AttendanceComponent implements OnInit {
         });
       }
   }
+  getFirstAndLastDayOfMonth() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth(); // Note: Months are zero-based in JavaScript
+
+    // First day of the month
+    var firstDayOfMonth = new Date(year, month, 1);
+    var formattedFirstDayOfMonth = firstDayOfMonth.toLocaleDateString().split('T')[0];
+
+    // Last day of the month
+    var lastDayOfMonth = new Date(year, month + 1, 0);
+    var formattedLastDayOfMonth = lastDayOfMonth.toLocaleDateString().split('T')[0];
+    return {
+        firstDayOfMonth: formattedFirstDayOfMonth,
+        lastDayOfMonth: formattedLastDayOfMonth
+    };
+}
+
+
+
 }
