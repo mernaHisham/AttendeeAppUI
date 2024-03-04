@@ -50,8 +50,11 @@ export class AttendanceComponent implements OnInit {
   RecalculateAttendance() {
     this.isLoading=true;
       this.service.RecalculateAttendance(this.userId,this.from,this.to).subscribe((res) => {
-          console.log(res);
+        console.log(res);
+        
           this.isLoading=false;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Deleted', life: 3000 });
+          this.GetAllAttendance();
       });
   }
   openNew() {
@@ -60,8 +63,16 @@ export class AttendanceComponent implements OnInit {
       this.service.attenDialog = true;
   }
 
+  timeConvert(minutes:number) {
+    var hours = Math.floor(minutes / 60);
+    var remainingMinutes = minutes % 60;
 
+    // Formatting to ensure leading zeros if necessary
+    var hoursStr = hours < 10 ? '0' + hours : hours;
+    var minutesStr = remainingMinutes < 10 ? '0' + remainingMinutes : remainingMinutes;
 
+    return hoursStr + ':' + minutesStr;
+}
   editAttendance(attnd: Attendance) {
     if(this.userRole==1){
       this.service.attendance = { ...attnd };

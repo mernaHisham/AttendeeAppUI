@@ -50,10 +50,10 @@
             <tr>
                 <td>{{ attnd.userName }}</td>
                 <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
-                <td>{{ attnd.startDay|date:'HH.mm.ss' }}</td>
-                <td>{{ attnd.startBreak |date:'HH.mm.ss'}}</td>
-                <td>{{ attnd.endBreak |date:'HH.mm.ss'}}</td>
-                <td>{{ attnd.endDay |date:'HH.mm.ss'}}</td>
+                <td>{{ attnd.startDay|date:'HH:mm' }}</td>
+                <td>{{ attnd.startBreak |date:'HH:mm'}}</td>
+                <td>{{ attnd.endBreak |date:'HH:mm'}}</td>
+                <td>{{ attnd.endDay |date:'HH:mm'}}</td>
                 <td>{{ attnd.lag }}</td>
                
              

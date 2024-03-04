@@ -52,7 +52,7 @@
                 <td>{{ user.weeklyHours }}</td>
                 <td>
                     {{ user.startDate|date:'dd.MM.yyyy' }}<br/>
-                    <span class="text-sm font-light">{{ user.startTime|date:'HH.mm.ss' }} - {{ user.endTime|date:'HH.mm.ss' }}</span>
+                    <span class="text-sm font-light">{{ user.startTime|date:'HH:mm' }} - {{ user.endTime|date:'HH:mm' }}</span>
                 </td>
                 <td>
                     <p-tag [value]="user.isActive?'Active':'Un-Active'" [severity]="user.isActive?'success':'danger'"></p-tag>

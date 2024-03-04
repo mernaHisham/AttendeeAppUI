@@ -19,16 +19,16 @@
                        <p-button (click)="EndDay()" [disabled]="attnd?.startDay==null||attnd?.endDay!=null" label="Beenden" icon="pi pi-stop" class="m-1" [text]="true" [raised]="true" severity="danger" pTooltip="Beenden"></p-button>
                    </div>
                    <div class="px-6 col">
-                       <p><span class="font-bold text-primary">Start : </span> <span>{{ attnd?.startDay|date:'HH:mm:ss'}}</span></p>
-                       <p><span class="font-bold text-primary">Beendet : </span> <span>{{ attnd?.endDay|date:'HH:mm:ss'}}</span></p> 
+                       <p><span class="font-bold text-primary">Start : </span> <span>{{ attnd?.startDay|date:'HH:mm'}}</span></p>
+                       <p><span class="font-bold text-primary">Beendet : </span> <span>{{ attnd?.endDay|date:'HH:mm'}}</span></p> 
                     </div>
                    <div class="px-6 col">
                        <p-button (click)="StartBreak()" [disabled]="attnd?.startDay==null||attnd?.endDay!=null"  label="Pause" icon="pi pi-pause" class="m-1" [text]="true" [raised]="true" severity="warning" pTooltip="Pause"></p-button>
                        <p-button (click)="EndBreak()" [disabled]="attnd?.startBreak==null||attnd?.endDay!=null" label="Pause beendet" icon="pi pi-replay" class="m-1" [text]="true" [raised]="true" severity="primary" pTooltip="Pause beendet"></p-button>
                    </div>
                    <div class="px-6 col">
-                       <p><span class="font-bold text-primary">Von : </span> <span>{{ attnd?.startBreak|date:'HH:mm:ss'}}</span></p>
-                       <p><span class="font-bold text-primary">Bis : </span> <span>{{ attnd?.endBreak|date:'HH:mm:ss'}}</span></p> 
+                       <p><span class="font-bold text-primary">Von : </span> <span>{{ attnd?.startBreak|date:'HH:mm'}}</span></p>
+                       <p><span class="font-bold text-primary">Bis : </span> <span>{{ attnd?.endBreak|date:'HH:mm'}}</span></p> 
                     </div>
                
            </div>
