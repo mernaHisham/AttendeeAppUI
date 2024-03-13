@@ -112,6 +112,7 @@ import { AttendanceReportComponent } from './attendance-report/attendance-report
 import { FilterFormComponent } from './attendance-report/filter-form/filter-form.component';
 import { ReportApprovalComponent } from './report-approval/report-approval.component';
 import { ReportApprovalFormComponent } from './report-approval/report-approval-form/report-approval-form.component';
+import { AttendanceExportComponent } from './attendance/attendance-export/attendance-export.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { ReportApprovalFormComponent } from './report-approval/report-approval-f
     AttendanceReportComponent,
     FilterFormComponent,
     ReportApprovalComponent,
-    ReportApprovalFormComponent
+    ReportApprovalFormComponent,
+    AttendanceExportComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,MenubarModule,ToolbarModule,ButtonModule,SplitButtonModule,TableModule,ToastModule,FileUploadModule,

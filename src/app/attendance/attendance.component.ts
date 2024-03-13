@@ -10,6 +10,7 @@ import { AttendanceRequest } from '../model/attendance-request.model';
 import { UsersService } from '../service/users.service';
 import { ReportApprovalService } from '../service/report-approval.service';
 import { ReportApproval } from '../model/report-approval.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-attendance',
@@ -29,6 +30,7 @@ export class AttendanceComponent implements OnInit {
   constructor(public service: AttendanceService, public attReqService:AttendanceRequestService,
     public messageService: MessageService ,public userService: UsersService,
     private datePipe:DatePipe,
+    private router:Router,
     public reportService:ReportApprovalService,
     public confirmationService: ConfirmationService) { }
     Employees:any;
@@ -192,5 +194,11 @@ export class AttendanceComponent implements OnInit {
 }
 
 
-
+Export(){
+  let userId=this.userId;
+  var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
+  var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
+  if(userId>0)
+  this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+}
 }

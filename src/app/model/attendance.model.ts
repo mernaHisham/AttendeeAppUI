@@ -15,6 +15,9 @@ export class Attendance {
     updatedBy: number=0;
     updatedDate: Date=new Date;
     isDeleted: boolean=false;
+    overtime:number=0;
+    totalWorkMinutes:number=0;
+    totalBreakMinutes:number=0;
 }
 export class AttendanceFilterRequest{
     userId:number=0;

@@ -1,0 +1,49 @@
+<div> <button (click)="downloadAsPDF()">Export To PDF</button></div>
+
+<div id="pdfTable" #pdfTable style="width: 40rem;">
+    <div class="grid p-3">
+        <div class="col">
+            <h3>Stundenabrechnung</h3>
+            <p>Zeitraum : <span>{{reportDt|date:'dd.MM.yyyy'}}</span></p>
+           <p>Mitarbeiter : <span>{{service.attends[0].userName}}</span></p>
+        </div>
+        <div class="col"></div>
+        <div class="col text-center">
+            <img src="../../../assets/Images/logo.png" width="90">
+        </div>
+    </div>
+     <table>
+        <thead>
+            <tr>
+                <th>Datum </th>
+                <th>RA </th>
+                <th> Pause</th>
+                <th>Pause beendet</th>
+                <th>B</th>
+                <th>V </th>
+                <th>O </th>
+                <th>W </th>
+                <th>BR </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let attnd of service.attends">
+                <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
+                <td>{{ attnd.startDay|date:'HH:mm' }}</td>
+                <td>{{ attnd.startBreak |date:'HH:mm'}}</td>
+                <td>{{ attnd.endBreak |date:'HH:mm'}}</td>
+                <td>{{ attnd.endDay |date:'HH:mm'}}</td>
+                <td>{{ attnd.lag }}</td>
+                <td>{{ attnd.overtime }}</td>
+                <td>{{ timeConvert(attnd.totalWorkMinutes) }}</td>
+                <td>{{ attnd.totalBreakMinutes }}</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="p-3">
+        <p>Unterschrift Mitarbeiter : </p>
+        <p>Unterschrift Vorgesetzter : </p>
+    </div> 
+</div>

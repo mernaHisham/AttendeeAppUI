@@ -13,6 +13,7 @@ export class VacationComponent implements OnInit {
   isLoading:boolean=false;
   userRole:number=0;
   loginUser: any = localStorage.getItem("user");
+  loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
   vacationTypes:any=[
     {code:1,name:	"U-Urlaub",color:"primary",bgColor:""},
     {code:2,name:	"PF-Pflegeurlaub",color:"secondary",bgColor:""},
@@ -85,8 +86,10 @@ saveVacation() {
       if(this.service.vacation.id>0){
         this.service.vacation.updatedBy =JSON.parse(this.loginUser).id;
         this.service.vacation.updatedDate=new Date();
+        this.service.vacation.userId= this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.id;
+
       }else{
-        this.service.vacation.userId=JSON.parse(this.loginUser)?.id;
+        this.service.vacation.userId= this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.id;
         this.service.vacation.userName=JSON.parse(this.loginUser)?.name;
         this.service.vacation.createdBy =JSON.parse(this.loginUser).id;
         this.service.vacation.createdData=new Date();

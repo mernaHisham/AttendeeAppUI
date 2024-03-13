@@ -5,17 +5,23 @@
         [(ngModel)]="service.vacation.vacationType" optionLabel="name" optionValue="code" [showClear]="true" placeholder="Art aussuchen"></p-dropdown>
         <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationType">Art aussuchen is required.</small>
     </div> 
+    <div class="field col-6" *ngIf="loginUserRole==1">
+        <label>Employees</label>
+        <p-dropdown [options]="Employees" 
+        [(ngModel)]="service.vacation.userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
+        <small class="p-error" *ngIf="service.submitted && !service.vacation.userId">Art aussuchen is required.</small>
+    </div>
     <div class="field col-6">
         <label for="vacationDate">Datum</label>
         <input type="date" pInputText id="vacationDate" [(ngModel)]="service.vacation.vacationDate" required />
         <small class="p-error" *ngIf="service.submitted && !service.vacation.vacationDate">Device is required.</small>
     </div>
-    <div class="field col-6">
+    <div class="field col-3">
         <label for="startTime">Von</label>
         <input [type]="service.dateType" pInputText id="startTime" [(ngModel)]="service.vacation.startTime" required />
         <small class="p-error" *ngIf="service.submitted && !service.vacation.startTime">Device is required.</small>
     </div>
-    <div class="field col-6">
+    <div class="field col-3">
         <label for="endTime">Bis</label>
         <input [type]="service.dateType" pInputText id="endTime" [(ngModel)]="service.vacation.endTime" required />
         <small class="p-error" *ngIf="service.submitted && !service.vacation.endTime">Device is required.</small>

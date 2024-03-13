@@ -16,7 +16,7 @@
             <div class="field col">
                 <label for="userId">Employees</label>
                 <p-dropdown [options]="Employees" 
-                 class="w-full" 
+                [style]="{ 'width': '100%' }" 
                 [(ngModel)]="userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
             </div>
             <div class="field col">
@@ -31,6 +31,7 @@
             <div class="field col">
                 <button *ngIf="userRole==1" pButton pRipple label="Recalculate"  class="p-button-info mt-3 mr-1" (click)="RecalculateAttendance()"></button>
                 <button pButton pRipple label="Search"  class="p-button-info mt-3 ml-1" (click)="GetAllAttendance()"></button>
+                <button pButton pRipple icon="pi pi-print"  class="p-button-info mt-3 ml-1" (click)="Export()"></button>
             </div>
         </div>
          

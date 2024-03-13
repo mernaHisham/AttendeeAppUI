@@ -13,6 +13,7 @@ import { UserStatusComponent } from './user-status/user-status.component';
 import { AttendanceRequestComponent } from './attendance-request/attendance-request.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { ReportApprovalComponent } from './report-approval/report-approval.component';
+import { AttendanceExportComponent } from './attendance/attendance-export/attendance-export.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path:'reportapprovals',component:ReportApprovalComponent},
   {path:'accessdenied',component:AccessDeniedComponent},
   {path:'userstatus',component:UserStatusComponent},
-  {path:'vacation',component:VacationComponent}
+  {path:'vacation',component:VacationComponent},
+  {path:'export',component:AttendanceExportComponent}
 ];
 
 @NgModule({
