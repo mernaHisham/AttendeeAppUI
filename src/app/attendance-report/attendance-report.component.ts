@@ -26,11 +26,11 @@ export class AttendanceReportComponent {
   GetAllAttendance() {
     this.isLoading=true;
     let userId=JSON.parse(this.loginUser).id;
-      this.service.FilterAttendance().subscribe((data) => {
-        console.log(this.service.filterForm);
+      // this.service.FilterAttendance(userId,).subscribe((data) => {
+      //   console.log(this.service.filterForm);
         
-          this.service.attends = data as Attendance[];
-          this.isLoading=false;
-      });
+      //     this.service.attends = data as Attendance[];
+      //     this.isLoading=false;
+      // });
   }
 }

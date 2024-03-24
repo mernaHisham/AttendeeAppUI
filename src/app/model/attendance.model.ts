@@ -24,3 +24,9 @@ export class AttendanceFilterRequest{
     from :any;
     to:any;
 }
+export class TotalsVals{
+    lagSum:number=0;
+    overTimeSum :number=0;
+    twmSum:number=0;
+    tbmSum:number=0;
+}

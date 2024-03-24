@@ -86,11 +86,11 @@ export class HeaderComponent {
         routerLink:'/requests',
         styleClass:this.loginUserRole==2?"hidden":""
       }
-      ,{
-        label: 'Reports',
-        routerLink:'/report',
-        styleClass:this.loginUserRole==2?"hidden":""
-      }
+      // ,{
+      //   label: 'Reports',
+      //   routerLink:'/report',
+      //   styleClass:this.loginUserRole==2?"hidden":""
+      // }
       ,{
         label: 'ReportsApprovals',
         routerLink:'/reportapprovals',

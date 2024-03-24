@@ -31,5 +31,7 @@ this.http.post(`${this.baseURl}Vacations/PostVacation`,vacation);
 
 DeleteVacation = (VacationId:number) =>
 this.http.get(`${this.baseURl}Vacations/DeleteVacation?VacationId=${VacationId}`);
+ GetVacationsReport=( userId:number,  from:any,  to:any)=>
+ this.http.get(`${this.baseURl}Vacations/GetVacationsReport?userId=${userId}&from=${from}&to=${to}`);
 
 }

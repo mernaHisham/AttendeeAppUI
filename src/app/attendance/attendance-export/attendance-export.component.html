@@ -1,49 +1,96 @@
-<div> <button (click)="downloadAsPDF()">Export To PDF</button></div>
 
-<div id="pdfTable" #pdfTable style="width: 40rem;">
-    <div class="grid p-3">
+<div class="card" [style]="{ 'min-width': '85vw' }">
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <h2>Export</h2>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple icon="pi pi-print" 
+            class="p-button-rounded p-button-info mr-2" 
+           (click)="downloadAsPDF()"></button>        </ng-template>
+    </p-toolbar>
+    <div id="pdfTable" #pdfTable class="m-auto p-3" style="width: 36rem;background-color: #fff;">
+        <div class="grid p-3">
+            <div class="col">
+                <h5>Stundenabrechnung</h5>
+                <p>Zeitraum : <span>{{from|date:'dd.MM.yyyy'}} - {{to|date:'dd.MM.yyyy'}}</span></p>
+               <p>Mitarbeiter : <span>{{service.attends[0].userName}}</span></p>
+            </div>
+            <div class="col"></div>
+            <div class="col text-center">
+                <img src="../../../assets/Images/logo.png" width="90">
+            </div>
+        </div>
+         <table *ngIf="service.attends">
+            <thead>
+                <tr>
+                    <th>Datum </th>
+                    <th>W-AZ </th>
+                    <th>P</th>
+                    <th>LT- VZ</th>
+                    <th>ÜS</th>
+                    <th>AS </th>
+                    <th>PZ </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let attnd of service.attends">
+                    <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
+                    <td>{{ attnd.startDay |date:'HH:mm'}} - {{ attnd.endDay |date:'HH:mm'}}</td>
+                    <td> {{ attnd.startBreak |date:'HH:mm'}} - {{ attnd.endBreak |date:'HH:mm'}}</td>
+                    <td>{{ attnd.lag }}</td>
+                    <td>{{ attnd.overtime }}</td>
+                    <td>{{ timeConvert(attnd.totalWorkMinutes) }}</td>
+                    <td>{{ attnd.totalBreakMinutes }}</td>
+                </tr>
+                <tr>
+                    <td>Totals</td>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                      -
+                    </td>
+                    <td>{{timeConvert(totals.lagSum)}}</td>
+                    <td>{{timeConvert(totals.overTimeSum)}}</td>
+                    <td>{{timeConvert(totals.twmSum)}}</td>
+                    <td>{{timeConvert(totals.tbmSum)}}</td>
+                </tr>
+            </tbody>
+        </table>
+    
         <div class="col">
-            <h3>Stundenabrechnung</h3>
-            <p>Zeitraum : <span>{{reportDt|date:'dd.MM.yyyy'}}</span></p>
-           <p>Mitarbeiter : <span>{{service.attends[0].userName}}</span></p>
+            <h5>Abwesenheit</h5>
         </div>
-        <div class="col"></div>
-        <div class="col text-center">
-            <img src="../../../assets/Images/logo.png" width="90">
-        </div>
+        <table *ngIf="vacAttendance">
+            <thead>
+                <tr>
+                    <th>Datum </th>
+                    <th>W-AZ </th>
+                    <th>P</th>
+                    <th>LT- VZ</th>
+                    <th>ÜS</th>
+                    <th>AS </th>
+                    <th>PZ </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vac of vacAttendance">
+                    <td>{{ vac.attendanceDate|date:'dd.MM.yyyy' }}</td>
+                    <td>{{ vacationTypes[+vac.comment-1]?.name }}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+               
+            </tbody>
+        </table>
+        <div class="p-3">
+            <p>Unterschrift Mitarbeiter : </p>
+            <p>Unterschrift Vorgesetzter : </p>
+        </div> 
     </div>
-     <table>
-        <thead>
-            <tr>
-                <th>Datum </th>
-                <th>RA </th>
-                <th> Pause</th>
-                <th>Pause beendet</th>
-                <th>B</th>
-                <th>V </th>
-                <th>O </th>
-                <th>W </th>
-                <th>BR </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let attnd of service.attends">
-                <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
-                <td>{{ attnd.startDay|date:'HH:mm' }}</td>
-                <td>{{ attnd.startBreak |date:'HH:mm'}}</td>
-                <td>{{ attnd.endBreak |date:'HH:mm'}}</td>
-                <td>{{ attnd.endDay |date:'HH:mm'}}</td>
-                <td>{{ attnd.lag }}</td>
-                <td>{{ attnd.overtime }}</td>
-                <td>{{ timeConvert(attnd.totalWorkMinutes) }}</td>
-                <td>{{ attnd.totalBreakMinutes }}</td>
-
-
-            </tr>
-        </tbody>
-    </table>
-    <div class="p-3">
-        <p>Unterschrift Mitarbeiter : </p>
-        <p>Unterschrift Vorgesetzter : </p>
-    </div> 
 </div>

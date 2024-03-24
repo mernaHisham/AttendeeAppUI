@@ -198,7 +198,10 @@ Export(){
   let userId=this.userId;
   var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
   var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
-  if(userId>0)
-  this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+  if(userId == 0||from == ""||to ==""){
+    this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'please make sure to choose employee, and pick from - to date!', life: 3000 });
+  }else{
+    this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+  }
 }
 }

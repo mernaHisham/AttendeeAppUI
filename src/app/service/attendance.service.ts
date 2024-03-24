@@ -38,8 +38,8 @@ export class AttendanceService extends BaseService {
     GetAttendance=(userId:number)=>
     this.http.get(`${this.baseURl}Attendance/GetAttendance?userId=${userId}`);
 
-    FilterAttendance=()=>
-    this.http.post(`${this.baseURl}AttendanceReport/FilterAttendance`, this.filterForm);
+    FilterAttendance=(userId:number,from:any,to:any)=>
+    this.http.get(`${this.baseURl}AttendanceReport/FilterAttendance?userId=${userId}&from=${from}&to=${to}`);
     RecalculateAttendance=(userId:number,from:any,to:any)=>
     this.http.get(`${this.baseURl}Attendance/RecalculateAttendance?userId=${userId}&from=${from}&to=${to}`);
 
