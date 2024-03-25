@@ -15,7 +15,7 @@
             <div class="col">
                 <h5>Stundenabrechnung</h5>
                 <p>Zeitraum : <span>{{from|date:'dd.MM.yyyy'}} - {{to|date:'dd.MM.yyyy'}}</span></p>
-               <p>Mitarbeiter : <span>{{service.attends[0].userName}}</span></p>
+               <p *ngIf="service.attends">Mitarbeiter : <span>{{service.attends[0].userName}}</span></p>
             </div>
             <div class="col"></div>
             <div class="col text-center">
@@ -60,10 +60,10 @@
             </tbody>
         </table>
     
-        <div class="col">
+        <div class="col" *ngIf="vacAttendance.length>0">
             <h5>Abwesenheit</h5>
         </div>
-        <table *ngIf="vacAttendance">
+        <table *ngIf="vacAttendance.length>0">
             <thead>
                 <tr>
                     <th>Datum </th>

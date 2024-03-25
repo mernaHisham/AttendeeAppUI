@@ -3,8 +3,6 @@
     <p-toast></p-toast>
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
             <h2>Teilnahme</h2>
         </ng-template>
 
@@ -29,9 +27,9 @@
                 <input id="to" [(ngModel)]="to" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             </div>
             <div class="field col">
-                <button *ngIf="userRole==1" pButton pRipple label="Recalculate"  class="p-button-info mt-3 mr-1" (click)="RecalculateAttendance()"></button>
-                <button pButton pRipple label="Search"  class="p-button-info mt-3 ml-1" (click)="GetAllAttendance()"></button>
-                <button pButton pRipple icon="pi pi-print"  class="p-button-info mt-3 ml-1" (click)="Export()"></button>
+                <button *ngIf="userRole==1" pButton pRipple icon="pi pi-calculator" pTooltip="Recalculate"  class="p-button-danger mt-3 mr-1" (click)="RecalculateAttendance()"></button>
+                <button pButton pRipple icon="pi pi-search"  class="p-button-warning mt-3 ml-1" pTooltip="Search" (click)="GetAllAttendance()"></button>
+                <button pButton pRipple icon="pi pi-print"  class="p-button-help mt-3 ml-1" pTooltip="Print" (click)="Export()"></button>
             </div>
         </div>
          
@@ -56,16 +54,14 @@
         
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="userName">Name <p-sortIcon field="userName"></p-sortIcon></th>
-                <th pSortableColumn="attendanceDate">Datum <p-sortIcon field="attendanceDate"></p-sortIcon></th>
-                <th pSortableColumn="startDay">Allgemein <p-sortIcon field="startDay"></p-sortIcon></th>
-                <th pSortableColumn="startBreak"> Pause <p-sortIcon field="startBreak"></p-sortIcon></th>
-                <th pSortableColumn="endBreak">Pause beendet<p-sortIcon field="endBreak"></p-sortIcon></th>
-                <th pSortableColumn="endDay">Beenden<p-sortIcon field="endDay"></p-sortIcon></th>
-                <th pSortableColumn="lag">Verzögerung  <p-sortIcon field="lag"></p-sortIcon></th>
-                <th pSortableColumn="overtime">overtime  <p-sortIcon field="overtime"></p-sortIcon></th>
-                <th pSortableColumn="totalWorkMinutes">totalWorkMinutes  <p-sortIcon field="totalWorkMinutes"></p-sortIcon></th>
-                <th pSortableColumn="totalBreakMinutes">totalBreakMinutes  <p-sortIcon field="totalBreakMinutes"></p-sortIcon></th>
+                <th pSortableColumn="userName">Name </th>
+                <th pSortableColumn="attendanceDate">Datum</th>
+                <th>W-AZ </th>
+                <th>P</th>
+                <th>LT- VZ</th>
+                <th>ÜS</th>
+                <th>AS </th>
+                <th>PZ </th>
                 <th></th>
             </tr>
         </ng-template>
@@ -73,10 +69,8 @@
             <tr>
                 <td>{{ attnd.userName }}</td>
                 <td>{{ attnd.attendanceDate|date:'dd.MM.yyyy' }}</td>
-                <td>{{ attnd.startDay|date:'HH:mm' }}</td>
-                <td>{{ attnd.startBreak |date:'HH:mm'}}</td>
-                <td>{{ attnd.endBreak |date:'HH:mm'}}</td>
-                <td>{{ attnd.endDay |date:'HH:mm'}}</td>
+                <td>{{ attnd.startDay|date:'HH:mm' }} - {{ attnd.endDay |date:'HH:mm'}}</td>
+                <td>{{ attnd.startBreak |date:'HH:mm'}} - {{ attnd.endBreak |date:'HH:mm'}}</td>
                 <td>{{ attnd.lag }}</td>
                 <td>{{ attnd.overtime }}</td>
                 <td>{{ timeConvert(attnd.totalWorkMinutes) }}</td> 

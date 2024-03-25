@@ -76,10 +76,8 @@ export class AttendanceComponent implements OnInit {
   //   let from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
   //  let to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
       this.service.RecalculateAttendance(this.userId,this.from,this.to).subscribe((res) => {
-        console.log(res);
-        
           this.isLoading=false;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Deleted', life: 3000 });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated successfully', life: 3000 });
           this.GetAllAttendance();
       });
   }

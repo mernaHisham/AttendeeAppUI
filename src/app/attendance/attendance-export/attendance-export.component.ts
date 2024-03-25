@@ -72,9 +72,7 @@ export class AttendanceExportComponent {
   GetUserVacs() {
 
     this.vacService.GetVacationsReport(this.userId, this.from, this.to).subscribe((data) => {
-     // this.vacService.vacations = data as Vacation[];
      this.vacAttendance = data as Attendance[];
-     console.log(this.vacAttendance);
      
     });
   }

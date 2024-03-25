@@ -91,6 +91,7 @@ export class AttendanceRequestComponent {
     }
     ApproveAttendance = (attendanceId:number) =>{
       this.service.ApproveAttendance(attendanceId).subscribe(res =>{
+        this.GetAllAttendance();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
       })
     }
