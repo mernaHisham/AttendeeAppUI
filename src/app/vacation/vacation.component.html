@@ -47,8 +47,8 @@
                 <td>{{ vac.userName }}</td>
                 <td>{{ vacationTypes[vac.vacationType-1]?.name }}</td>
                 <td>{{ vac.vacationDate |date:'dd.MM.yyyy'}}</td>
-                <td *ngIf="vac.vacationType==6">{{ vac.startTime |date:'HH:mm'}} - {{ vac.endTime |date:'HH:mm'}}</td>
-                <td *ngIf="vac.vacationType!=6">{{ vac.startTime |date:'dd.MM.yyyy'}} - {{ vac.endTime |date:'dd.MM.yyyy'}}</td>
+                <td *ngIf="vac.vacationType>=6">{{ vac.startTime |date:'HH:mm'}} - {{ vac.endTime |date:'HH:mm'}}</td>
+                <td *ngIf="vac.vacationType<6">{{ vac.startTime |date:'dd.MM.yyyy'}} - {{ vac.endTime |date:'dd.MM.yyyy'}}</td>
                 <!-- <td>
                     <p-tag [value]="vac.status?'Active':'Un-Active'" [severity]="vac.status?'success':'danger'"></p-tag>
                 </td> -->
@@ -65,7 +65,7 @@
 </div>
 <p-dialog [(visible)]="service.vacationDialog" [style]="{ width: '50vw' }" header="Einzelheiten" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <app-vacation-form></app-vacation-form>
+        <app-vacation-form [Employees]="Employees"></app-vacation-form>
     </ng-template>
     
    <ng-template pTemplate="footer">

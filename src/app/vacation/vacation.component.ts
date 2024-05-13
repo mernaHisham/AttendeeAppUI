@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Vacation } from '../model/vacation.model';
 import { VacationService } from '../service/vacation.service';
 import { Roles } from '../model/users.model';
+import { UsersService } from '../service/users.service';
 
 @Component({
   selector: 'app-vacation',
@@ -12,6 +13,7 @@ import { Roles } from '../model/users.model';
 export class VacationComponent implements OnInit {
   isLoading:boolean=false;
   userRole:number=0;
+  Employees:any;
   loginUser: any = localStorage.getItem("user");
   loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
   vacationTypes:any=[
@@ -23,12 +25,19 @@ export class VacationComponent implements OnInit {
     {code:6,name:	"T-Termin",color:"help",bgColor:""},
     {code:7,name:	"T-Arbeitsstunden",color:"danger",bgColor:""}
   ]
-constructor(public service: VacationService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
+constructor(public service: VacationService,
+   public messageService: MessageService,
+    public confirmationService: ConfirmationService,public userService:UsersService) { }
 
 ngOnInit() {
   this.userRole=JSON.parse(this.loginUser).fkRoleId;
+  this.GetAllEmployees();
     this.GetAllVacations();
 }
+GetAllEmployees() {
+  this.userService.GetUsersSelectList().subscribe((data) => {
+      this.Employees = data;
+  });}
 GetAllVacations() {
   this.isLoading=true;
   let userId=this.userRole==Roles.Admin?0:JSON.parse(this.loginUser).id;
@@ -87,14 +96,28 @@ saveVacation() {
       if(this.service.vacation.id>0){
         this.service.vacation.updatedBy =JSON.parse(this.loginUser).id;
         this.service.vacation.updatedDate=new Date();
-        this.service.vacation.userId= this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.id;
+        
+        this.service.vacation.userId= this.loginUserRole==1?
+         this.service.vacation.userId
+         :JSON.parse(this.loginUser)?.id;
+
+         this.service.vacation.userName=this.loginUserRole==1? 
+        this.Employees.filter((emp:any)=>emp.id==this.service.vacation.userId)[0]?.name
+        :JSON.parse(this.loginUser)?.name;
 
       }else{
-        this.service.vacation.userId= this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.id;
-        this.service.vacation.userName=this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.name;
+        
+        this.service.vacation.userId= this.loginUserRole==1? 
+        this.service.vacation.userId
+        :JSON.parse(this.loginUser)?.id;
+
+        this.service.vacation.userName=this.loginUserRole==1? 
+        this.Employees.filter((emp:any)=>emp.id==this.service.vacation.userId)[0]?.name
+        :JSON.parse(this.loginUser)?.name;
         this.service.vacation.createdBy =JSON.parse(this.loginUser).id;
         this.service.vacation.createdData=new Date();
       }
+      
     this.service.PostVacation(this.service.vacation).subscribe(res => {
         this.GetAllVacations();
         this.service.vacationDialog = false;

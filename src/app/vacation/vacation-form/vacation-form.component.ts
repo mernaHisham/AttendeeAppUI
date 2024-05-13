@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UsersService } from 'src/app/service/users.service';
 import { VacationService } from 'src/app/service/vacation.service';
 
@@ -8,10 +8,11 @@ import { VacationService } from 'src/app/service/vacation.service';
   styleUrls: ['./vacation-form.component.css']
 })
 export class VacationFormComponent {
-  Employees:any;
+  @Input() Employees:any;
   loginUser: any = localStorage.getItem("user");
   loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
-  constructor(public service: VacationService,public userService:UsersService) {}
+  constructor(public service: VacationService
+  ) {}
   vacationTypes:any=[
     {code:1,name:	"U-Urlaub",color:"primary",bgColor:""},
     {code:2,name:	"PF-Pflegeurlaub",color:"secondary",bgColor:""},
@@ -22,12 +23,6 @@ export class VacationFormComponent {
     {code:7,name:	"T-Arbeitsstunden",color:"help",bgColor:""}
   ]
   ngOnInit() {
-    this.GetAllEmployees();
- }
-   GetAllEmployees() {
-     this.userService.GetUsersSelectList().subscribe((data) => {
-         this.Employees = data;
-     });
  }
   SetDateType = () => 
     this.service.dateType=this.service.vacation.vacationType==6

@@ -4,6 +4,7 @@ import { Attendance } from '../model/attendance.model';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { VacationService } from '../service/vacation.service';
 import { Vacation } from '../model/vacation.model';
+import { UsersService } from '../service/users.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,9 @@ export class HomeComponent {
   vacations!: Vacation[];
   OT: Vacation = new Vacation();
   attnd: Attendance = new Attendance();
+  Employees:any;
   loginUser: any = localStorage.getItem("user");
+  loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
   vacationTypes: any = [
     { code: 1, name: "U-Urlaub", color: "#3b82f6", bgColor: "#f9fafb" },
     { code: 2, name: "PF-Pflegeurlaub", color: "#22c55e", bgColor: "#f9fafb" },
@@ -25,12 +28,18 @@ export class HomeComponent {
     { code: 7, name: "T-Arbeitsstunden", color: "#51374f", bgColor: "#51374f" }
   ]
   constructor(public vacService: VacationService, public confirmationService: ConfirmationService,
-    public service: AttendanceService, public messageService: MessageService) { }
+    public service: AttendanceService, public messageService: MessageService
+    ,public userService:UsersService) { }
 
   ngOnInit() {
+    this.GetAllEmployees();
     this.GetAllVacations();
     this.GetAttendance();
   }
+  GetAllEmployees() {
+    this.userService.GetUsersSelectList().subscribe((data) => {
+        this.Employees = data;
+    });}
   GetAllVacations = () => {
     var userId = JSON.parse(this.loginUser).id;
     this.vacService.GetUserVacations(userId)
@@ -132,8 +141,13 @@ export class HomeComponent {
     }
     else {
       this.vacService.submitted = true;
-      this.vacService.vacation.userId = JSON.parse(this.loginUser).id;
-      this.vacService.vacation.userName = JSON.parse(this.loginUser).name;
+      this.vacService.vacation.userId= this.loginUserRole==1?
+      this.vacService.vacation.userId
+      :JSON.parse(this.loginUser)?.id;
+
+      this.vacService.vacation.userName=this.loginUserRole==1? 
+     this.Employees.filter((emp:any)=>emp.id==this.vacService.vacation.userId)[0]?.name
+     :JSON.parse(this.loginUser)?.name;
       if (this.vacService.vacation.id > 0) {
         this.vacService.vacation.updatedBy = JSON.parse(this.loginUser).id;
         this.vacService.vacation.updatedDate = new Date();

@@ -80,7 +80,7 @@
 
 <p-dialog [(visible)]="vacService.vacationDialog" [style]="{ width: '50vw' }" header="Einzelheiten" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <app-vacation-form></app-vacation-form>
+        <app-vacation-form [Employees]="Employees"></app-vacation-form>
     </ng-template>
     
    <ng-template pTemplate="footer">
