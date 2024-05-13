@@ -145,15 +145,20 @@ export class AttendanceComponent implements OnInit {
   saveAttendance() {
       this.service.submitted = true;
       if(this.userRole==1){
+      
         if(this.service.attendance.id>0){
             this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
             this.service.attendance.updatedDate=new Date();
+            this.service.attendance.userName=
+            this.Employees.filter((z:any)=>z.id== this.service.attendance.userId)[0]?.name;
         }else{
-          this.service.attendance.userId=JSON.parse(this.loginUser).id;
-          this.service.attendance.userName=JSON.parse(this.loginUser).name;
+          // this.service.attendance.userId=JSON.parse(this.loginUser).id;
+          // this.service.attendance.userName=JSON.parse(this.loginUser).name;
+          this.service.attendance.userName=
+          this.Employees.filter((z:any)=>z.id== this.service.attendance.userId)[0]?.name;
           this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
           this.service.attendance.createdData=new Date();
-        }
+        }        
         this.service.PostAttendance(this.service.attendance).subscribe(res => {
           this.GetAllAttendance();
           this.service.attenDialog = false;
