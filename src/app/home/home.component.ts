@@ -12,6 +12,7 @@ import { Vacation } from '../model/vacation.model';
 })
 export class HomeComponent {
   vacations!: Vacation[];
+  OT: Vacation = new Vacation();
   attnd: Attendance = new Attendance();
   loginUser: any = localStorage.getItem("user");
   vacationTypes: any = [
@@ -21,6 +22,7 @@ export class HomeComponent {
     { code: 4, name: "UU-Unbezahlter Urlaub", color: "#f97316", bgColor: "#f9fafb" },
     { code: 5, name: "UM-Umzugsurlaub", color: "#ef4444", bgColor: "#f9fafb" },
     { code: 6, name: "T-Termin", color: "#a855f7", bgColor: "#f9fafb" },
+    { code: 7, name: "T-Arbeitsstunden", color: "#51374f", bgColor: "#51374f" }
   ]
   constructor(public vacService: VacationService, public confirmationService: ConfirmationService,
     public service: AttendanceService, public messageService: MessageService) { }
@@ -32,8 +34,11 @@ export class HomeComponent {
   GetAllVacations = () => {
     var userId = JSON.parse(this.loginUser).id;
     this.vacService.GetUserVacations(userId)
-      .subscribe((data) => (this.vacations = data as Vacation[]));
-
+      .subscribe((data: any) => {
+        this.vacations = data.filter((z: Vacation) => z.vacationType != 8) as Vacation[];
+        this.OT = data.filter((z: Vacation) => z.vacationType == 8
+          && new Date(z.vacationDate).toLocaleDateString() == new Date().toLocaleDateString())[0];
+      });
   }
   GetAttendance = () => {
     var userId = JSON.parse(this.loginUser).id;
@@ -48,7 +53,7 @@ export class HomeComponent {
     this.attnd.attendanceDate = new Date();
     this.attnd.startDay = new Date();
 
-    this.service.StartDay(this.attnd,JSON.parse(this.loginUser).startTime).subscribe((res: any) => {
+    this.service.StartDay(this.attnd, JSON.parse(this.loginUser).startTime).subscribe((res: any) => {
       if (res.result) {
         this.GetAttendance();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });
@@ -80,11 +85,11 @@ export class HomeComponent {
   }
   EndDay = () => {
     this.confirmationService.confirm({
-      message: 'Hello '+ JSON.parse(this.loginUser).name +',Are you sure you want to Logout?',
+      message: 'Hello ' + JSON.parse(this.loginUser).name + ',Are you sure you want to Logout?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.service.EndDay(this.attnd.id,JSON.parse(this.loginUser).endTime).subscribe((res: any) => {
+        this.service.EndDay(this.attnd.id, JSON.parse(this.loginUser).endTime).subscribe((res: any) => {
           if (res.result) {
             this.GetAttendance();
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.msg, life: 3000 });
@@ -94,9 +99,9 @@ export class HomeComponent {
         })
 
       }
-  });
+    });
 
- 
+
   }
   openNew() {
     this.vacService.vacation = new Vacation();
@@ -108,16 +113,34 @@ export class HomeComponent {
     this.vacService.submitted = false;
   }
 
-  saveVacation() {
-    this.vacService.submitted = true;
-    this.vacService.vacation.userId = JSON.parse(this.loginUser).id;
-    this.vacService.vacation.userName = JSON.parse(this.loginUser).name;
-    if (this.vacService.vacation.id > 0) {
-      this.vacService.vacation.updatedBy = JSON.parse(this.loginUser).id;
-      this.vacService.vacation.updatedDate = new Date();
-    } else {
+  saveVacation(overTime: string = "") {
+    if (overTime == "start") {
+      this.vacService.vacation = new Vacation();
+      this.vacService.vacation.id = 0;
+      this.vacService.vacation.userId = JSON.parse(this.loginUser).id;
+      this.vacService.vacation.userName = JSON.parse(this.loginUser).name;
       this.vacService.vacation.createdBy = JSON.parse(this.loginUser).id;
       this.vacService.vacation.createdData = new Date();
+      this.vacService.vacation.vacationDate = new Date();
+      this.vacService.vacation.startTime = new Date();
+      this.vacService.vacation.vacationType = 8;
+    }
+    else if (overTime == "end") {
+      this.vacService.vacation = this.OT;
+      this.vacService.vacation.endTime = new Date();
+
+    }
+    else {
+      this.vacService.submitted = true;
+      this.vacService.vacation.userId = JSON.parse(this.loginUser).id;
+      this.vacService.vacation.userName = JSON.parse(this.loginUser).name;
+      if (this.vacService.vacation.id > 0) {
+        this.vacService.vacation.updatedBy = JSON.parse(this.loginUser).id;
+        this.vacService.vacation.updatedDate = new Date();
+      } else {
+        this.vacService.vacation.createdBy = JSON.parse(this.loginUser).id;
+        this.vacService.vacation.createdData = new Date();
+      }
     }
     this.vacService.PostVacation(this.vacService.vacation).subscribe(res => {
       this.GetAllVacations();

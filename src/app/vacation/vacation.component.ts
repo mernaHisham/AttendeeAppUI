@@ -20,7 +20,8 @@ export class VacationComponent implements OnInit {
     {code:3,name:	"K-Krankenstand",color:"success",bgColor:""},
     {code:4,name:	"UU-Unbezahlter Urlaub",color:"info",bgColor:""},
     {code:5,name:	"UM-Umzugsurlaub",color:"warning",bgColor:""},
-    {code:6,name:	"T-Termin",color:"help",bgColor:""}
+    {code:6,name:	"T-Termin",color:"help",bgColor:""},
+    {code:7,name:	"T-Arbeitsstunden",color:"danger",bgColor:""}
   ]
 constructor(public service: VacationService, public messageService: MessageService, public confirmationService: ConfirmationService) { }
 
@@ -90,7 +91,7 @@ saveVacation() {
 
       }else{
         this.service.vacation.userId= this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.id;
-        this.service.vacation.userName=JSON.parse(this.loginUser)?.name;
+        this.service.vacation.userName=this.loginUserRole==1? this.service.vacation.userId:JSON.parse(this.loginUser)?.name;
         this.service.vacation.createdBy =JSON.parse(this.loginUser).id;
         this.service.vacation.createdData=new Date();
       }

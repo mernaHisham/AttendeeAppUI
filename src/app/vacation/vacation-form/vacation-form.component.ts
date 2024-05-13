@@ -18,8 +18,8 @@ export class VacationFormComponent {
     {code:3,name:	"K-Krankenstand",color:"success",bgColor:""},
     {code:4,name:	"UU-Unbezahlter Urlaub",color:"info",bgColor:""},
     {code:5,name:	"UM-Umzugsurlaub",color:"warning",bgColor:""},
-    {code:6,name:	"T-Termin",color:"help",bgColor:""}//,
-    //{code:7,name:	"T-Termin",color:"help",bgColor:""}
+    {code:6,name:	"T-Termin",color:"help",bgColor:""},
+    {code:7,name:	"T-Arbeitsstunden",color:"help",bgColor:""}
   ]
   ngOnInit() {
     this.GetAllEmployees();
@@ -29,6 +29,8 @@ export class VacationFormComponent {
          this.Employees = data;
      });
  }
-  SetDateType = () => this.service.dateType=this.service.vacation.vacationType==6||this.service.vacation.vacationType==7?"time":"date";
+  SetDateType = () => 
+    this.service.dateType=this.service.vacation.vacationType==6
+  ||this.service.vacation.vacationType==7?"time":"date";
   
 }
