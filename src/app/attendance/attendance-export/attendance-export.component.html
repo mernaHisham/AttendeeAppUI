@@ -79,7 +79,8 @@
                 <tr *ngFor="let vac of vacAttendance">
                     <td>{{ vac.attendanceDate|date:'dd.MM.yyyy' }}</td>
                     <td>{{ vacationTypes[+vac.comment-1]?.name }}</td>
-                    <td>0</td>
+                    <td *ngIf="vac.comment=='6'"> {{ vac.startBreak |date:'HH:mm'}} - {{ vac.endBreak |date:'HH:mm'}}</td>
+                    <td *ngIf="vac.comment!='6'">0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>

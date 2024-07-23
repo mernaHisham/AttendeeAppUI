@@ -39,6 +39,7 @@
                 <th pSortableColumn="startBreak"> Pause <p-sortIcon field="startBreak"></p-sortIcon></th>
                 <th pSortableColumn="endBreak">Pause beendet<p-sortIcon field="endBreak"></p-sortIcon></th>
                 <th pSortableColumn="endDay">Beenden<p-sortIcon field="endDay"></p-sortIcon></th>
+                <th pSortableColumn="notes">Notizen<p-sortIcon field="notes"></p-sortIcon></th>
                 <th *ngIf="userRole==1"></th>
             </tr>
         </ng-template>
@@ -50,11 +51,12 @@
                 <td>{{ attnd.startBreak |date:'HH:mm'}}</td>
                 <td>{{ attnd.endBreak |date:'HH:mm'}}</td>
                 <td>{{ attnd.endDay |date:'HH:mm'}}</td>
+                <td>{{ attnd.notes}}</td>
                
                 <td *ngIf="userRole==1">
                     <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-info mr-2" (click)="ApproveAttendance(attnd.id)"></button>
-                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editAttendance(attnd)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteAttendance(attnd)"></button> -->
+                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="editAttendance(attnd)"></button>-->
+                    <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="deleteAttendance(attnd)"></button> 
                 </td>
             </tr>
         </ng-template>

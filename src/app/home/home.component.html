@@ -60,7 +60,9 @@
                                            <div class="flex align-items-center gap-3">
                                                <span class="flex align-items-center gap-2">
                                                    <i class="pi pi-tag"></i>
-                                                   <span class="font-semibold">{{ vac.notes }}</span>
+                                                   <span class="font-semibold">{{ vac.notes }}</span><br/>
+                                                   <span class="dates-font" *ngIf="vac.vacationType>=6">{{ vac.startTime |date:'HH:mm'}} - {{ vac.endTime |date:'HH:mm'}}</span>
+                                                   <span class="dates-font" *ngIf="vac.vacationType<6">{{ vac.startTime |date:'dd.MM.yyyy'}} - {{ vac.endTime |date:'dd.MM.yyyy'}}</span>
                                                </span>
                                                <p-tag [style]="{ 'background': vacationTypes[vac.vacationType-1]?.color}"
                                                [value]="vacationTypes[vac.vacationType-1]?.name"></p-tag>

@@ -50,7 +50,7 @@ export class AttendanceRequestComponent {
   
     deleteAttendance(attnd: AttendanceRequest) {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + attnd.userName + '?',
+            message: 'Are you sure you want to decline ' + attnd.userName + ' request?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {

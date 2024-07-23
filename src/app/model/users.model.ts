@@ -7,6 +7,7 @@ export class Users {
     email: string='';
     phoneNumber: string='';
     weeklyHours: number=0;
+    dailyHours:number = 0;
     startDate: any;
     endDate: any;
     startTime:any;
