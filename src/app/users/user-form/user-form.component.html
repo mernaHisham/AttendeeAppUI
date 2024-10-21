@@ -64,15 +64,22 @@
             <label for="endDate">End Date</label>
             <input type="date" pInputText id="endDate" [(ngModel)]="service.user.endDate" />
         </div>
-        <div class="field col-6">
+        <div class="field col-4">
             <label for="startTime">Von</label>
             <input type="time" pInputText id="startTime" [(ngModel)]="service.user.startTime" required />
             <small class="p-error" *ngIf="service.submitted && !service.user.startTime">startTime is required.</small>
         </div>
-        <div class="field col-6">
+        <div class="field col-4">
             <label for="endTime">Bis</label>
             <input type="time" pInputText id="endTime" [(ngModel)]="service.user.endTime" required />
             <small class="p-error" *ngIf="service.submitted && !service.user.endTime">endTime is required.</small>
+        </div>
+        <div class="field col-4 p-5">
+        <label for="isNordstern" class="pr-3">Is Nordstern</label>
+         <p-checkbox 
+         name="isNordstern" [(ngModel)]="service.user.isNordstern"
+         [binary]="true" 
+         inputId="binary" />
         </div>
     </div>
     <div class="field">

@@ -21,6 +21,7 @@ export class Users {
     updatedBy: number=0;
     updatedDate: Date= new Date;
     isDeleted: boolean=false;
+    isNordstern: boolean=false;
 }
 export enum Roles{
     Admin=1,

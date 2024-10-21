@@ -43,4 +43,7 @@ export class AttendanceService extends BaseService {
     RecalculateAttendance=(userId:number,from:any,to:any)=>
     this.http.get(`${this.baseURl}Attendance/RecalculateAttendance?userId=${userId}&from=${from}&to=${to}`);
 
+
+    ExportAttendance=(userId:number,userName:string,from:string,to:string)=>
+    this.http.get(`${this.baseURl}AttendanceReport/ExportAttendance?userId=${userId}&userName=${userName}&from=${from}&to=${to}`,{ responseType: 'blob' });
 }

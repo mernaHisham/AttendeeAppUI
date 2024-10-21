@@ -11,6 +11,7 @@ import { UsersService } from '../service/users.service';
 import { ReportApprovalService } from '../service/report-approval.service';
 import { ReportApproval } from '../model/report-approval.model';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-attendance',
@@ -196,15 +197,66 @@ export class AttendanceComponent implements OnInit {
     };
 }
 
-
+blob:any;
 Export(){
   let userId=this.userId;
+  let userName=this.Employees.filter((z:any)=>z.id== userId)[0]?.name;
   var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
   var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
   if(userId == 0||from == ""||to ==""){
     this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'please make sure to choose employee, and pick from - to date!', life: 3000 });
   }else{
-    this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+    //this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+    this.service.ExportAttendance(userId,userName,from,to).subscribe((res:any)=>{
+
+        this.blob = new Blob([res], { type: 'application/pdf' });
+        let reportName = 'attendance' + '.pdf';
+     
+
+      if (this.blob) { // Check if blob is defined
+        if (this.blob.size == 0) {
+          // will show error message
+          // this.toastrService.error("file is empty");
+
+        } else {
+          var downloadURL = window.URL.createObjectURL(this.blob);
+          var link = document.createElement('a');
+          link.href = downloadURL;
+          link.download = reportName;
+          link.click();
+        }
+      } else {
+        // Handle the scenario when blob is not defined (fileType didn't match)
+        console.error('Invalid file type');
+      }
+      //console.log(res);
+      
+      //const blob = new Blob([res], { type: 'text/pdf' });
+      //this.downloadFile(res.fileContents);
+    })
+  } 
+}
+
+downloadFile(response: any){
+  debugger;
+  var blob = new Blob([response], { type: 'application/pdf' });
+  var reportName = "Stundenabrechnung.pdf";
+  if (blob) { // Check if blob is defined
+    if (blob.size == 0) {
+      // will show error message
+      // this.toastrService.error("file is empty");
+
+    } else {
+      var downloadURL = window.URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = reportName;
+      link.click();
+    }
+  } else {
+    // Handle the scenario when blob is not defined (fileType didn't match)
+    console.error('Invalid file type');
   }
+
 }
 }
