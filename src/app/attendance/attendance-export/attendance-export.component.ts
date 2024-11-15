@@ -25,7 +25,8 @@ export class AttendanceExportComponent {
     {code:4,name:	"UU-Unbezahlter Urlaub",color:"info",bgColor:""},
     {code:5,name:	"UM-Umzugsurlaub",color:"warning",bgColor:""},
     {code:6,name:	"T-Termin",color:"help",bgColor:""},
-    {code:7,name:	"T-Arbeitsstunden",color:"help",bgColor:""}
+    {code:7,name:	"T-Arbeitsstunden",color:"help",bgColor:""},
+    {code:8,name:	"Überstundenarbeit",color:"success",bgColor:""}
   ]
   constructor(public service: AttendanceService,
     public vacService: VacationService,

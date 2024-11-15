@@ -25,7 +25,8 @@ export class HomeComponent {
     { code: 4, name: "UU-Unbezahlter Urlaub", color: "#f97316", bgColor: "#f9fafb" },
     { code: 5, name: "UM-Umzugsurlaub", color: "#ef4444", bgColor: "#f9fafb" },
     { code: 6, name: "T-Termin", color: "#a855f7", bgColor: "#f9fafb" },
-    { code: 7, name: "T-Arbeitsstunden", color: "#51374f", bgColor: "#51374f" }
+    { code: 7, name: "T-Arbeitsstunden", color: "#51374f", bgColor: "#51374f" },
+    {code: 8 , name: "Überstundenarbeit", color: "#0ea5e9", bgColor: "#f9fafb"}
   ]
   constructor(public vacService: VacationService, public confirmationService: ConfirmationService,
     public service: AttendanceService, public messageService: MessageService
