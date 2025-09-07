@@ -18,7 +18,6 @@ export class AppComponent {
 
   constructor(private router: Router, private deviceService: DeviceDetectorService) {
     this.epicFunction();
-
     router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         this.urlVal = e.url.toLowerCase();

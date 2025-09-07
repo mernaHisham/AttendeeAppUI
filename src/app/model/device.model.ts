@@ -10,3 +10,9 @@ export class Device {
     isDeleted: boolean=false;
     notes: string="";
 }
+export enum FilterStatusEnum
+    {
+        superAdmin = 0,
+        Nordstern = 1,
+        Abendstern = 2
+    }

@@ -12,84 +12,91 @@ import { ReportApprovalService } from '../service/report-approval.service';
 import { ReportApproval } from '../model/report-approval.model';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { FilterStatusEnum } from '../model/device.model';
 
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.css'],
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class AttendanceComponent implements OnInit {
-  isLoading:boolean=false;
+  isLoading: boolean = false;
   loginUser: any = localStorage.getItem("user");
-  userRole:number=0;
-  userId:number=0;
-  from:any;
-  to:any;
-  userRep! :ReportApproval;
-  isPreMonthApproved:boolean=false;
-  constructor(public service: AttendanceService, public attReqService:AttendanceRequestService,
-    public messageService: MessageService ,public userService: UsersService,
-    private datePipe:DatePipe,
-    private router:Router,
-    public reportService:ReportApprovalService,
+  loginUserId: number = JSON.parse(this.loginUser).id;
+  userRole: number = 0;
+  userId: number = this.loginUserId;
+  from: any;
+  to: any;
+  userRep!: ReportApproval;
+  isPreMonthApproved: boolean = false;
+  constructor(public service: AttendanceService, public attReqService: AttendanceRequestService,
+    public messageService: MessageService, public userService: UsersService,
+    private datePipe: DatePipe,
+    private router: Router,
+    public reportService: ReportApprovalService,
     public confirmationService: ConfirmationService) { }
-    Employees:any;
+  Employees: any;
   ngOnInit() {
     //this.getFirstAndLastDayOfMonth();
-    this.userRole=JSON.parse(this.loginUser).fkRoleId;
-      if(this.userRole==1){
+
+    this.userRole = JSON.parse(this.loginUser).fkRoleId;
+    if (this.userRole == 1) {
       this.GetAllEmployees();
       this.GetAllAttendance();
-      }else{
-        this.GetReportApproval();
-      }
+    } else {
+      this.GetReportApproval();
+    }
   }
   GetAllEmployees() {
-    this.userService.GetUsersSelectList().subscribe((data) => {
-        this.Employees = data;
+    let IsNordstern = JSON.parse(this.loginUser).isNordstern;
+    let filterStatus = JSON.parse(this.loginUser).id == 1 ? FilterStatusEnum.superAdmin :
+      IsNordstern ? FilterStatusEnum.Nordstern : FilterStatusEnum.Abendstern;
+    this.userService.GetUsersSelectList(filterStatus).subscribe((data) => {
+      this.Employees = data;
     });
-}
-  GetAllAttendance() {
-    this.isLoading=true;
-    let userId=this.userRole==Roles.Admin?this.userId:JSON.parse(this.loginUser).id;
-    var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
-   var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
-   if(this.userRole==Roles.Employee){
-    var firstAndLastDay = this.getFirstAndLastDayOfMonth();
-     from=this.isPreMonthApproved? this.datePipe.transform(firstAndLastDay.firstDayOfMonth,"yyyy/MM/dd")??"":"";
-      to=this.isPreMonthApproved? this.datePipe.transform(firstAndLastDay.lastDayOfMonth,"yyyy/MM/dd")??"":"";
-   }
-
-      this.service.GetAll(userId,from,to).subscribe((data) => {
-          this.service.attends = data as Attendance[];
-          this.isLoading=false;
-      });
   }
-  GetReportApproval = () =>{
-    this.reportService.GetReportApproval(JSON.parse(this.loginUser).id).subscribe(res=>{
-      this.userRep= res as ReportApproval;
-      this.isPreMonthApproved = this.userRep?.id>0?true:false;
+  GetAllAttendance() {
+    this.isLoading = true;
+    let userId = this.userRole == Roles.Admin ? this.userId ?? this.loginUserId: this.loginUserId;
+    var from = this.datePipe.transform(this.from, "yyyy/MM/dd") ?? "";
+    var to = this.datePipe.transform(this.to, "yyyy/MM/dd") ?? "";
+    if (this.userRole == Roles.Employee) {
+      var firstAndLastDay = this.getFirstAndLastDayOfMonth();
+      from = this.isPreMonthApproved ? this.datePipe.transform(firstAndLastDay.firstDayOfMonth, "yyyy/MM/dd") ?? "" : "";
+      to = this.isPreMonthApproved ? this.datePipe.transform(firstAndLastDay.lastDayOfMonth, "yyyy/MM/dd") ?? "" : "";
+    }
+
+    this.service.GetAll(userId, from, to).subscribe((data) => {
+      this.service.attends = data as Attendance[];
+      this.isLoading = false;
+    });
+  }
+  GetReportApproval = () => {
+    this.reportService.GetReportApproval(this.loginUserId).subscribe(res => {
+      this.userRep = res as ReportApproval;
+      this.isPreMonthApproved = this.userRep?.id > 0 ? true : false;
       this.GetAllAttendance();
-    })}
+    })
+  }
   RecalculateAttendance() {
-    this.isLoading=true;  
-  //   let from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
-  //  let to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
-      this.service.RecalculateAttendance(this.userId,this.from,this.to).subscribe((res) => {
-          this.isLoading=false;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated successfully', life: 3000 });
-          this.GetAllAttendance();
-      });
+    this.isLoading = true;
+    //   let from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
+    //  let to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
+    this.service.RecalculateAttendance(this.userId, this.from, this.to).subscribe((res) => {
+      this.isLoading = false;
+      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated successfully', life: 3000 });
+      this.GetAllAttendance();
+    });
   }
   openNew() {
-      this.service.attendance = new Attendance();
-      this.service.submitted = false;
-      this.service.attenDialog = true;
+    this.service.attendance = new Attendance();
+    this.service.submitted = false;
+    this.service.attenDialog = true;
   }
 
-  timeConvert(minutes:number) {
-    
+  timeConvert(minutes: number) {
+
     var hours = Math.floor(minutes / 60);
     var remainingMinutes = minutes % 60;
 
@@ -98,86 +105,86 @@ export class AttendanceComponent implements OnInit {
     var minutesStr = remainingMinutes < 10 ? '0' + remainingMinutes : remainingMinutes;
 
     return hoursStr + ':' + minutesStr;
-}
+  }
   editAttendance(attnd: Attendance) {
-    if(this.userRole==1){
+    if (this.userRole == 1) {
       this.service.attendance = { ...attnd };
-      this.service.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
-      this.service.attendance.startDay =attnd.startDay==null?null:new Date(attnd.startDay).toTimeString().substring(0,8);
-      this.service.attendance.startBreak =attnd.startBreak==null?null:new Date(attnd.startBreak).toTimeString().substring(0,8);
-      this.service.attendance.endBreak =attnd.endBreak==null?null:new Date(attnd.endBreak).toTimeString().substring(0,8);
-      this.service.attendance.endDay =attnd.endDay==null?null:new Date(attnd.endDay).toTimeString().substring(0,8);
+      this.service.attendance.attendanceDate = attnd.attendanceDate.substring(0, 10);
+      this.service.attendance.startDay = attnd.startDay == null ? null : new Date(attnd.startDay).toTimeString().substring(0, 8);
+      this.service.attendance.startBreak = attnd.startBreak == null ? null : new Date(attnd.startBreak).toTimeString().substring(0, 8);
+      this.service.attendance.endBreak = attnd.endBreak == null ? null : new Date(attnd.endBreak).toTimeString().substring(0, 8);
+      this.service.attendance.endDay = attnd.endDay == null ? null : new Date(attnd.endDay).toTimeString().substring(0, 8);
     }
-    else{
+    else {
       this.attReqService.attendance = new AttendanceRequest();
       this.attReqService.attendance.attendanceId = attnd.id;
       this.attReqService.attendance.userName = attnd.userName;
-      this.attReqService.attendance.attendanceDate =attnd.attendanceDate.substring(0,10);
-      this.attReqService.attendance.startDay =attnd.startDay==null?null:new Date(attnd.startDay).toTimeString().substring(0,8);
-      this.attReqService.attendance.startBreak =attnd.startBreak==null?null:new Date(attnd.startBreak).toTimeString().substring(0,8);
-      this.attReqService.attendance.endBreak =attnd.endBreak==null?null:new Date(attnd.endBreak).toTimeString().substring(0,8);
-      this.attReqService.attendance.endDay =attnd.endDay==null?null:new Date(attnd.endDay).toTimeString().substring(0,8);
+      this.attReqService.attendance.attendanceDate = attnd.attendanceDate.substring(0, 10);
+      this.attReqService.attendance.startDay = attnd.startDay == null ? null : new Date(attnd.startDay).toTimeString().substring(0, 8);
+      this.attReqService.attendance.startBreak = attnd.startBreak == null ? null : new Date(attnd.startBreak).toTimeString().substring(0, 8);
+      this.attReqService.attendance.endBreak = attnd.endBreak == null ? null : new Date(attnd.endBreak).toTimeString().substring(0, 8);
+      this.attReqService.attendance.endDay = attnd.endDay == null ? null : new Date(attnd.endDay).toTimeString().substring(0, 8);
     }
-      
-      this.service.attenDialog = true;
+
+    this.service.attenDialog = true;
   }
 
   deleteAttendance(attnd: Attendance) {
-      this.confirmationService.confirm({
-          message: 'Are you sure you want to delete ' + attnd.userName + '?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.service.DeleteAttendance(attnd.id).subscribe((res) => {
-                  this.GetAllAttendance();
-                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Deleted', life: 3000 });
-              });
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + attnd.userName + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.service.DeleteAttendance(attnd.id).subscribe((res) => {
+          this.GetAllAttendance();
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Deleted', life: 3000 });
+        });
 
-          }
-      });
+      }
+    });
   }
- 
+
 
   hideDialog() {
-      this.service.attenDialog = false;
-      this.service.submitted = false;
+    this.service.attenDialog = false;
+    this.service.submitted = false;
   }
 
   saveAttendance() {
-      this.service.submitted = true;
-      if(this.userRole==1){
-      
-        if(this.service.attendance.id>0){
-            this.service.attendance.updatedBy =JSON.parse(this.loginUser).id;
-            this.service.attendance.updatedDate=new Date();
-            this.service.attendance.userName=
-            this.Employees.filter((z:any)=>z.id== this.service.attendance.userId)[0]?.name;
-        }else{
-          // this.service.attendance.userId=JSON.parse(this.loginUser).id;
-          // this.service.attendance.userName=JSON.parse(this.loginUser).name;
-          this.service.attendance.userName=
-          this.Employees.filter((z:any)=>z.id== this.service.attendance.userId)[0]?.name;
-          this.service.attendance.createdBy =JSON.parse(this.loginUser).id;
-          this.service.attendance.createdData=new Date();
-        }        
-        this.service.PostAttendance(this.service.attendance).subscribe(res => {
-          this.GetAllAttendance();
-          this.service.attenDialog = false;
-          this.service.attendance = new Attendance();
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
-      });
-      
-      }else{
-          this.attReqService.attendance.createdBy =JSON.parse(this.loginUser)?.id;
-          this.attReqService.attendance.createdData=new Date();
-          this.attReqService.PostAttendance(this.attReqService.attendance).subscribe(res => {
-            this.GetAllAttendance();
-            this.service.attenDialog = false;
-            this.service.attendance = new Attendance();
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
-    
-        });
+    this.service.submitted = true;
+    if (this.userRole == 1) {
+
+      if (this.service.attendance.id > 0) {
+        this.service.attendance.updatedBy = this.loginUserId;
+        this.service.attendance.updatedDate = new Date();
+        this.service.attendance.userName =
+          this.Employees.filter((z: any) => z.id == this.service.attendance.userId)[0]?.name;
+      } else {
+        // this.service.attendance.userId=this.loginUserId;
+        // this.service.attendance.userName=JSON.parse(this.loginUser).name;
+        this.service.attendance.userName =
+          this.Employees.filter((z: any) => z.id == this.service.attendance.userId)[0]?.name;
+        this.service.attendance.createdBy = this.loginUserId;
+        this.service.attendance.createdData = new Date();
       }
+      this.service.PostAttendance(this.service.attendance).subscribe(res => {
+        this.GetAllAttendance();
+        this.service.attenDialog = false;
+        this.service.attendance = new Attendance();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+      });
+
+    } else {
+      this.attReqService.attendance.createdBy = JSON.parse(this.loginUser)?.id;
+      this.attReqService.attendance.createdData = new Date();
+      this.attReqService.PostAttendance(this.attReqService.attendance).subscribe(res => {
+        this.GetAllAttendance();
+        this.service.attenDialog = false;
+        this.service.attendance = new Attendance();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Attendance Updated', life: 3000 });
+
+      });
+    }
   }
   getFirstAndLastDayOfMonth() {
     var today = new Date();
@@ -192,71 +199,71 @@ export class AttendanceComponent implements OnInit {
     var lastDayOfMonth = new Date(year, month + 1, 0);
     var formattedLastDayOfMonth = lastDayOfMonth.toLocaleDateString().split('T')[0];
     return {
-        firstDayOfMonth: formattedFirstDayOfMonth,
-        lastDayOfMonth: formattedLastDayOfMonth
+      firstDayOfMonth: formattedFirstDayOfMonth,
+      lastDayOfMonth: formattedLastDayOfMonth
     };
-}
+  }
 
-blob:any;
-Export(){
-  let userId=this.userId;
-  let userName=this.Employees.filter((z:any)=>z.id== userId)[0]?.name;
-  var from = this.datePipe.transform(this.from,"yyyy/MM/dd")??"";
-  var to = this.datePipe.transform(this.to,"yyyy/MM/dd")??"";
-  if(userId == 0||from == ""||to ==""){
-    this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'please make sure to choose employee, and pick from - to date!', life: 3000 });
-  }else{
-    //this.router.navigate(['/export'],{queryParams:{userId,from,to}})
-    this.service.ExportAttendance(userId,userName,from,to).subscribe((res:any)=>{
+  blob: any;
+  Export() {
+    let userId = this.userId;
+    let userName = this.Employees.filter((z: any) => z.id == userId)[0]?.name;
+    var from = this.datePipe.transform(this.from, "yyyy/MM/dd") ?? "";
+    var to = this.datePipe.transform(this.to, "yyyy/MM/dd") ?? "";
+    if (userId == 0 || from == "" || to == "") {
+      this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'please make sure to choose employee, and pick from - to date!', life: 3000 });
+    } else {
+      //this.router.navigate(['/export'],{queryParams:{userId,from,to}})
+      this.service.ExportAttendance(userId, userName, from, to).subscribe((res: any) => {
 
         this.blob = new Blob([res], { type: 'application/pdf' });
         let reportName = 'attendance' + '.pdf';
-     
 
-      if (this.blob) { // Check if blob is defined
-        if (this.blob.size == 0) {
-          // will show error message
-          // this.toastrService.error("file is empty");
 
+        if (this.blob) { // Check if blob is defined
+          if (this.blob.size == 0) {
+            // will show error message
+            // this.toastrService.error("file is empty");
+
+          } else {
+            var downloadURL = window.URL.createObjectURL(this.blob);
+            var link = document.createElement('a');
+            link.href = downloadURL;
+            link.download = reportName;
+            link.click();
+          }
         } else {
-          var downloadURL = window.URL.createObjectURL(this.blob);
-          var link = document.createElement('a');
-          link.href = downloadURL;
-          link.download = reportName;
-          link.click();
+          // Handle the scenario when blob is not defined (fileType didn't match)
+          console.error('Invalid file type');
         }
-      } else {
-        // Handle the scenario when blob is not defined (fileType didn't match)
-        console.error('Invalid file type');
-      }
-      //console.log(res);
-      
-      //const blob = new Blob([res], { type: 'text/pdf' });
-      //this.downloadFile(res.fileContents);
-    })
-  } 
-}
+        //console.log(res);
 
-downloadFile(response: any){
-  debugger;
-  var blob = new Blob([response], { type: 'application/pdf' });
-  var reportName = "Stundenabrechnung.pdf";
-  if (blob) { // Check if blob is defined
-    if (blob.size == 0) {
-      // will show error message
-      // this.toastrService.error("file is empty");
-
-    } else {
-      var downloadURL = window.URL.createObjectURL(blob);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = reportName;
-      link.click();
+        //const blob = new Blob([res], { type: 'text/pdf' });
+        //this.downloadFile(res.fileContents);
+      })
     }
-  } else {
-    // Handle the scenario when blob is not defined (fileType didn't match)
-    console.error('Invalid file type');
   }
 
-}
+  downloadFile(response: any) {
+    debugger;
+    var blob = new Blob([response], { type: 'application/pdf' });
+    var reportName = "Stundenabrechnung.pdf";
+    if (blob) { // Check if blob is defined
+      if (blob.size == 0) {
+        // will show error message
+        // this.toastrService.error("file is empty");
+
+      } else {
+        var downloadURL = window.URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = reportName;
+        link.click();
+      }
+    } else {
+      // Handle the scenario when blob is not defined (fileType didn't match)
+      console.error('Invalid file type');
+    }
+
+  }
 }

@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Users } from '../model/users.model';
 import { UsersService } from '../service/users.service';
 import { Router } from '@angular/router';
+import { FilterStatusEnum } from '../model/device.model';
 
 @Component({
     selector: 'app-users',
@@ -21,8 +22,11 @@ export class UsersComponent implements OnInit {
         this.GetAllUsers();
     }
     GetAllUsers() {
+       let IsNordstern = JSON.parse(this.loginUser).isNordstern;
+       let filterStatus =  JSON.parse(this.loginUser).id == 1 ? FilterStatusEnum.superAdmin:
+       IsNordstern ?FilterStatusEnum.Nordstern:FilterStatusEnum.Abendstern;
         this.isLoading=true;
-        this.service.GetAllUsers().subscribe((data) => {
+        this.service.GetAllUsers(filterStatus).subscribe((data) => {
             this.service.users = data as Users[];
             this.isLoading=false;
         });
