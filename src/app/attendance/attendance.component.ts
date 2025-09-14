@@ -58,7 +58,7 @@ export class AttendanceComponent implements OnInit {
   }
   GetAllAttendance() {
     this.isLoading = true;
-    let userId = this.userRole == Roles.Admin ? this.userId ?? this.loginUserId: this.loginUserId;
+    let userId = this.userRole == Roles.Admin ? (this.userId ?? this.loginUserId): this.loginUserId;
     var from = this.datePipe.transform(this.from, "yyyy/MM/dd") ?? "";
     var to = this.datePipe.transform(this.to, "yyyy/MM/dd") ?? "";
     if (this.userRole == Roles.Employee) {

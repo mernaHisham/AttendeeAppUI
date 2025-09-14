@@ -12,7 +12,15 @@
             <button pButton pRipple  label="NEU" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
-    
+       <div class="formgrid grid" *ngIf="userRole==1">
+            <div class="field col-end-6">
+                <label for="userId">Employees</label>
+                <p-dropdown [options]="Employees" 
+                [style]="{ 'width': '100%' }"
+                (onChange)="GetAllVacations()" 
+                [(ngModel)]="userId" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Please select user"></p-dropdown>
+            </div>
+        </div>
 <div class="card flex justify-content-center" *ngIf="isLoading"> 
     <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="5" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner> 
 </div>
