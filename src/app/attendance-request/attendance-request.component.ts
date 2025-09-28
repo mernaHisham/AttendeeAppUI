@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AttendanceRequest } from '../model/attendance-request.model';
 import { AttendanceRequestService } from '../service/attendance-request.service';
 import { LoginResponse } from '../model/login-response.model';
-import { Roles } from '../model/users.model';
+import { Roles, UserTypeEnum } from '../model/users.model';
 
 @Component({
   selector: 'app-attendance-request',
@@ -13,6 +13,9 @@ import { Roles } from '../model/users.model';
 export class AttendanceRequestComponent {
   isLoading:boolean=false;
   loginUser: any = localStorage.getItem("user");
+  loginUserId: number = JSON.parse(this.loginUser).id;
+  isNordstern: number = JSON.parse(this.loginUser).isNordstern;
+  
   userRole:number=0;
   constructor(public service: AttendanceRequestService, 
     public messageService: MessageService, 
@@ -24,7 +27,9 @@ export class AttendanceRequestComponent {
     }
     GetAllAttendance() {
       this.isLoading=true;
-        this.service.GetAll().subscribe((data) => {
+      let userTypeEnum = this.loginUserId==1?UserTypeEnum.SuperAdmin:
+      this.isNordstern?UserTypeEnum.Nordstern:UserTypeEnum.Abendstern;
+        this.service.GetAll(userTypeEnum).subscribe((data) => {
             this.service.attends = data as AttendanceRequest[];
             this.isLoading=false;
         });

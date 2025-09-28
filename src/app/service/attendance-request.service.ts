@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AttendanceRequest } from '../model/attendance-request.model';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
+import { UserTypeEnum } from '../model/users.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +16,8 @@ export class AttendanceRequestService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
-  GetAll = () =>
-    this.http.get(`${this.baseURl}AttendanceRequest/GetAll`);
+  GetAll = (userTypeEnum:UserTypeEnum) =>
+    this.http.get(`${this.baseURl}AttendanceRequest/GetAll?userTypeEnum=${userTypeEnum}`);
 
   GetById = (AttendanceId: number) =>
     this.http.get(`${this.baseURl}AttendanceRequest/GetById?AttendanceId=${AttendanceId}`);

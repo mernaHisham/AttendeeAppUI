@@ -13,6 +13,7 @@ export class HeaderComponent {
   urlVal:string = "";
   active:string="active";
   loginUser: any = localStorage.getItem("user");
+  loginUserId: number = 0;
   loginUserRole: number = 0;
   loginUserName:string="";
   items: MenuItem[]=[];
@@ -22,6 +23,7 @@ export class HeaderComponent {
   ngOnInit() {
    this.loginUserRole= JSON.parse(this.loginUser)?.fkRoleId;
    this.loginUserName= JSON.parse(this.loginUser)?.name;
+   this.loginUserId =JSON.parse(this.loginUser)?.id;
       // if(new Date().getDate() === 1){
         this.GetReportApproval();
         // }
@@ -62,7 +64,7 @@ export class HeaderComponent {
       {
         label: 'Devices',
         routerLink:'/devices',
-        styleClass:this.loginUserRole==2?"hidden":"" 
+        styleClass:this.loginUserId==1?"":"hidden" 
       },
       {
         label: 'Users',

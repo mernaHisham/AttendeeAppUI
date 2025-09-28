@@ -13,6 +13,7 @@ import { FilterStatusEnum } from '../model/device.model';
 export class UsersComponent implements OnInit {
     isLoading:boolean=false;
     loginUser: any = localStorage.getItem("user");
+    loginUserId: number = JSON.parse(this.loginUser).id;
     loginUserRole: number = 0;
     constructor(public service: UsersService, public messageService: MessageService,
          public confirmationService: ConfirmationService,public router:Router) { }

@@ -49,7 +49,7 @@
                 <td>{{ user.firstName + " " + user.lastName }}</td>
                 <td>{{ user.fkRoleId==1?"Admin":"Employee" }}</td>
                 <td>{{ user.userName }}</td>
-                <td>{{ user.password }}</td>
+                <td>{{ (user.id==1&&loginUserId!=1?'******': user.password) }}</td>
                 <td>{{ user.dailyHours }}</td>
                 <td>{{ user.weeklyHours }}</td>
                 <td>
